@@ -9,6 +9,10 @@ import { friendRequestsInterface } from "../../interface/user"
 import SendFriendRequestButton from "../FunctionsButtons/SendFriendRequestButton"
 import RejectFriendRequestButton from "../FunctionsButtons/RejectFriendRequestButton"
 import { FriendRequestSkeletonList } from "../Skeletons/FriendRequestSkeleton"
+import NoContent from "../NoContent"
+import { NO_CONNECTIONS_MESSAGE } from "../../constants/messages"
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const noConnections = require("../../assets/new_connections.png")
 
 export default function FriendRequestSection() {
   const state = useSelector((state: RootState) => state.user)
@@ -16,6 +20,24 @@ export default function FriendRequestSection() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => { fetchFriendsRequests() }, [state.friendRequests, state.friends, state.friendRequestsSent])
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 1.0
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          fetchFriendsRequests()
+        }
+      })
+    }, options)
+
+    const lastProduct = document.querySelector(".last-product")
+
+    if (lastProduct) observer.observe(lastProduct)
+  }, [])
 
   const fetchFriendsRequests = async () => {
     const { data, success } = await getUserFriendRequestsService(state.user.id, state.token)
@@ -25,6 +47,8 @@ export default function FriendRequestSection() {
       setLoading(false)
     }
   }
+
+
 
   return (
     <>
@@ -39,8 +63,15 @@ export default function FriendRequestSection() {
               </Grid>
 
               {
-                friendsInfo.map((req) => (
-                  <Grid item xs={12} sm={6} md={3} key={req.id}>
+                friendsInfo.map((req, index) => (
+                  <Grid
+                    key={req.id}
+                    item
+                    xs={12}
+                    sm={6}
+                    md={3}
+                    className={index === friendsInfo.length - 1 ? "last-product" : ""}
+                  >
                     <FriendRequestCard
                       avatarUrl={req.from.avatarUrl}
                       username={req.from.username}
@@ -55,6 +86,12 @@ export default function FriendRequestSection() {
             </Grid>
 
             {/* <LoadMore /> */}
+
+            {
+              friendsInfo.length === 0 && (
+                <NoContent text={NO_CONNECTIONS_MESSAGE} imgSrc={noConnections} />
+              )
+            }
           </>
         )
       }

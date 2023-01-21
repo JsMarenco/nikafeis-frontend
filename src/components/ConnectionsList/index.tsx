@@ -7,15 +7,35 @@ import getUerConnectionsService from "../../services/api/getUerConnectionsServic
 import FriendRequestCard from "../Cards/FriendRequestCard"
 import SendFriendRequestButton from "../FunctionsButtons/SendFriendRequestButton"
 import { FriendRequestSkeletonList } from "../Skeletons/FriendRequestSkeleton"
+import { NO_FRIEND_REQUEST_MESSAGE } from "../../constants/messages"
+import NoContent from "../NoContent"
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const notFriends = require("../../assets/woman_using_phone.png")
 
 export default function ConnectionsList() {
   const state = useSelector((state: RootState) => state.user)
   const [loading, setLoading] = useState(true)
   const [friendConnections, setFriendConnections] = useState<BasicUserInterface[]>([])
-  const limit = 10
+  const limit = 8
   const [offset, setOffset] = useState(0)
 
   useEffect(() => { fetchUserConnections() }, [state.friendRequestsSent])
+
+  useEffect(() => {
+    const options = { root: null, rootMargin: "0px", threshold: 1.0 }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          fetchUserConnections()
+        }
+      })
+    }, options)
+
+    const lastProduct = document.querySelector(".last-product")
+
+    if (lastProduct) observer.observe(lastProduct)
+  }, [])
 
   const fetchUserConnections = async () => {
     setLoading(true)
@@ -43,8 +63,15 @@ export default function ConnectionsList() {
               </Grid>
 
               {
-                friendConnections.map((friendConnection) => (
-                  <Grid item xs={12} sm={6} md={3} key={friendConnection.id}>
+                friendConnections.map((friendConnection, index) => (
+                  <Grid
+                    key={`${friendConnection.id}_${index}`}
+                    item
+                    xs={12}
+                    sm={6}
+                    md={3}
+                    className={index === friendConnections.length - 1 ? "last-product" : ""}
+                  >
                     <FriendRequestCard
                       key={friendConnection.id}
                       avatarUrl={friendConnection.avatarUrl}
@@ -59,6 +86,12 @@ export default function ConnectionsList() {
             </Grid>
 
             {/* <LoadMore /> */}
+
+            {
+              friendConnections.length === 0 && (
+                <NoContent text={NO_FRIEND_REQUEST_MESSAGE} imgSrc={notFriends} />
+              )
+            }
           </>
         )
       }

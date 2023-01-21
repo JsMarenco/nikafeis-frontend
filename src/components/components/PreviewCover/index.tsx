@@ -3,6 +3,7 @@ import { Box, Stack, Tooltip, Typography } from "@mui/material"
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../app/store"
+import { default_cover } from "../../../constants"
 
 interface Props {
   src: string
@@ -18,12 +19,7 @@ export default function PreviewCover(props: Props) {
       {
         src && (
           <>
-            <Typography
-              variant="subtitle1"
-              color="text.primary"
-              align="center"
-              mb={3}
-            >
+            <Typography variant="subtitle1" color="text.primary" align="center" mb={3}>
               Preview
             </Typography>
 
@@ -40,7 +36,7 @@ export default function PreviewCover(props: Props) {
                   sx={{
                     width: "150px",
                     height: "90px",
-                    backgroundImage: `url(${state.user.coverImageUrl})`,
+                    backgroundImage: `url(${state.user.coverImageUrl ? state.user.coverImageUrl : default_cover})`,
                     backgroundPosition: "center",
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",

@@ -1,5 +1,5 @@
 import React, { ReactNode, useContext } from "react"
-import { ACCOUNT_SETTINGS_ROUTE, FRIENDS_SECTION_ROUTE, HOME_ROUTE, INBOX_ROUTE, LOGOUT_ROUTE, MAIN_USER_PROFILE_ROUTE, NEW_CONNECTIONS_ROUTE, VIDEOS_SECTION_ROUTE } from "../../../../constants/routes"
+import { SETTINGS_ROUTE, FRIENDS_SECTION_ROUTE, HOME_ROUTE, INBOX_ROUTE, LOGOUT_ROUTE, MAIN_USER_PROFILE_ROUTE, NEW_CONNECTIONS_ROUTE, VIDEOS_SECTION_ROUTE } from "../../../../constants/routes"
 import SettingsIcon from "@mui/icons-material/Settings"
 import PersonIcon from "@mui/icons-material/Person"
 import LogoutIcon from "@mui/icons-material/Logout"
@@ -9,16 +9,11 @@ import DarkModeIcon from "@mui/icons-material/DarkMode"
 import LightModeIcon from "@mui/icons-material/LightMode"
 import { menu_link } from "../../../../styles/menu"
 import HomeIcon from "@mui/icons-material/Home"
-import GroupIcon from "@mui/icons-material/Group"
-import OndemandVideoIcon from "@mui/icons-material/OndemandVideo"
+// import GroupIcon from "@mui/icons-material/Group"
+// import OndemandVideoIcon from "@mui/icons-material/OndemandVideo"
 import MessageIcon from "@mui/icons-material/Message"
 import GroupAddIcon from "@mui/icons-material/GroupAdd"
-
-interface MenuLinkInterface {
-  icon: ReactNode,
-  label: string,
-  link: string
-}
+import { MenuLinkInterface } from "../../../../interface/menu"
 
 const icon_size = "medium"
 
@@ -56,7 +51,7 @@ const MenuLinks: MenuLinkInterface[] = [
   {
     icon: <SettingsIcon fontSize={icon_size} />,
     label: "Settings",
-    link: ACCOUNT_SETTINGS_ROUTE
+    link: SETTINGS_ROUTE
   },
   {
     icon: <LogoutIcon fontSize={icon_size} />,

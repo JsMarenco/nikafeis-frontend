@@ -1,20 +1,21 @@
 import { api, UPDATE_USER_INFO } from "../../constants/api"
+import { AccountSettingForm } from "../../constants/enums/accountSettings"
 import GlobalApiResponse from "../../interface/globalApiResponse"
 import { deleteSpacesAndReplaceWithUnderscore } from "../../utils/basic"
 
 const updateAccountInfoService = async (userId: string, token: string) => {
   try {
-    const form = document.getElementById("edit-account-form") as HTMLFormElement
+    const form = document.getElementById(AccountSettingForm.id) as HTMLFormElement
 
     const formData = new FormData(form)
 
-    const firstName = formData.get("firstName")
-    const lastName = formData.get("lastName")
-    const username = formData.get("username")
-    const email = formData.get("email")
-    const website = formData.get("website")
-    const description = formData.get("description")
-    const password = formData.get("password")
+    const firstName = formData.get(AccountSettingForm.firstName_input_name)
+    const lastName = formData.get(AccountSettingForm.lastName_input_name)
+    const username = formData.get(AccountSettingForm.username_input_name)
+    const email = formData.get(AccountSettingForm.email_input_name)
+    const website = formData.get(AccountSettingForm.website_input_name)
+    const description = formData.get(AccountSettingForm.description_input_name)
+    const password = formData.get(AccountSettingForm.password_input_name)
 
     const config = {
       headers: {

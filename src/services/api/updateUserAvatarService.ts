@@ -1,19 +1,15 @@
-import { api } from "../../constants/api"
+import { api, UPDATE_USER_AVATAR } from "../../constants/api"
+import { AvatarForm } from "../../constants/enums/avatar"
 import GlobalApiResponse from "../../interface/globalApiResponse"
 
 const updateUserAvatarService = async (userId: string, token: string) => {
   try {
-    const form = document.getElementById("edit-avatar-form") as HTMLFormElement
+    const form = document.getElementById(AvatarForm.id) as HTMLFormElement
 
     const formData = new FormData(form)
 
-    const avatar = formData.get("user_avatar")
-    const password = formData.get("password")
-
-    const newAvatarInfo = {
-      user_avatar: avatar,
-      password,
-    }
+    const avatar = formData.get(AvatarForm.avatar_input_file_name)
+    const newAvatarInfo = { user_avatar: avatar, }
 
     const config = {
       headers: {
@@ -22,7 +18,9 @@ const updateUserAvatarService = async (userId: string, token: string) => {
       }
     }
 
-    const { data, status } = await api.put(`${"users"}/${userId}`, newAvatarInfo, config)
+    const url = UPDATE_USER_AVATAR.replace("%userId", userId)
+
+    const { data, status } = await api.put(url, newAvatarInfo, config)
 
     const newResponse: GlobalApiResponse = {
       message: data.message,

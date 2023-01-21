@@ -15,6 +15,8 @@ export const RESET_PASSWORD_ROUTE = "/%userId/reset-password"
 
 // <============= Data Management =============>
 export const UPDATE_USER_INFO = "/users/%userId"
+export const UPDATE_USER_AVATAR = "/users/%userId/avatar"
+export const UPDATE_USER_COVER = "/users/%userId/cover"
 export const DELETE_USER_ROUTE = "/users/%userId"
 export const GET_USER_BY_USERNAME_ROUTE = "/users/%username"
 export const GET_POST_BY_USERNAME_ROUTE = "/users/%s/posts"

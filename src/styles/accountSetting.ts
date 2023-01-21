@@ -1,17 +1,13 @@
+import { settings_container } from "./settings"
+
 export const account__settings_form__container = {
-  width: "95%",
   mx: "auto",
-  maxWidth: "700px",
-  p: 2,
-  borderRadius: "15px",
-  boxShadow: 5,
+  height: "100%"
 }
 
 export const account__settings_password__button = {
-  mt: 2,
-  width: "50%",
-  mx: "auto",
   display: "block",
+  mx: "auto",
   borderRadius: "15px",
 }
 
@@ -20,4 +16,5 @@ export const account__settings_container = {
   flexDirrection: "column",
   justifyContent: "center",
   alignItems: "center",
+  ...settings_container,
 }
