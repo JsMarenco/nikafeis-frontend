@@ -10,10 +10,7 @@ export default function UserHomeCard() {
 
   return (
     <>
-      <Stack
-        direction="column"
-        sx={user__card_container}
-      >
+      <Stack direction="column" sx={user__card_container}>
         <Box sx={{ ...global_flex, justifyItems: "initial" }} >
           <Avatar
             src={state.user.avatarUrl}

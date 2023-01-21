@@ -1,23 +1,28 @@
-import React, { useContext, useEffect, useState } from "react"
-import { Typography, Tooltip, Button, ButtonGroup } from "@mui/material"
+import React, { ReactNode, useContext, useEffect, useState } from "react"
+import { Typography, Tooltip, Button, ButtonGroup, Box, Divider } from "@mui/material"
 import UserInterface from "../../../interface/user"
-import { copyToClipboard } from "../../../utils/basic"
-import { messageContext } from "../../../context/MessageContext"
-import { COPY_CLIPBOARD_MESSAGE } from "../../../constants/messages"
-import PeopleIcon from "@mui/icons-material/People"
+import { convertDate } from "../../../utils/basic"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../app/store"
-import DynamicFeedIcon from "@mui/icons-material/DynamicFeed"
 import { useParams } from "react-router-dom"
 import { USER_USERNAME_APP_ROUTE } from "../../../constants/routes"
+import { main__container_grid } from "../../../styles/container"
+import { global_flex } from "../../../styles"
+import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined"
+import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined"
+import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined"
+import { profile_about_icon } from "../../../styles/profile"
+import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined"
+import DynamicFeedOutlinedIcon from "@mui/icons-material/DynamicFeedOutlined"
 
 interface UserInterfaceV2 extends UserInterface {
   posts: string[]
   friends: string[]
 }
 
+const icon_size = "large"
+
 export default function AboutUser() {
-  const { handleMessage } = useContext(messageContext)
   const state = useSelector((state: RootState) => state.user)
   const visitedUserState = useSelector((state: RootState) => state.visitedUser)
   const { the_username } = useParams()
@@ -35,73 +40,59 @@ export default function AboutUser() {
       setUserFriends(visitedUserState.friends)
       setUserPosts(visitedUserState.posts)
     }
-  }, [the_username, state.user])
-
-  const handleCopy = () => {
-    copyToClipboard(userInfo.username)
-    handleMessage(COPY_CLIPBOARD_MESSAGE)
-  }
+  }, [the_username, state.user, state.friends])
 
   return (
     <>
-      <Typography
-        variant="h6"
-        color="text.primary"
-        align="center"
-        sx={{ mt: 2 }}
-      >
-        {`${userInfo.firstName} ${userInfo.lastName}`}
-      </Typography>
+      <Box sx={main__container_grid}>
+        <Box>
+          <Typography sx={{ mb: 1 }} variant="h6" color="text.primary">About</Typography>
 
-      <Tooltip title="Copy username" arrow>
-        <Typography
-          variant="body2"
-          color="text.primary"
-          align="center"
-          sx={{ fontSize: "0.8em", cursor: "pointer" }}
-          onClick={handleCopy}
-        >
-          {`@${userInfo.username}`}
-        </Typography>
-      </Tooltip>
+          <Typography variant="body1" sx={{ fontWeight: "300" }} color="text.primary">{state.user.description}</Typography>
+        </Box>
 
-      <Typography
-        variant="subtitle1"
-        color="text.primary"
-        align="center"
-        m={0.5}
-      >
-        {userInfo.description}
-      </Typography>
+        <Divider sx={{ my: 2 }} />
 
-      <ButtonGroup
-        aria-label="text button group"
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Tooltip title="View friends" arrow>
-          <Button
-            variant="text"
-            startIcon={<PeopleIcon />}
-            sx={{ color: "text.primary", }}
-          >
-            {`Friends ${userFriends.length}`}
-          </Button>
-        </Tooltip>
+        <OptionView
+          icon={<RoomOutlinedIcon sx={profile_about_icon} fontSize={icon_size} />}
+          text={"Unkwon"}
+        />
 
-        <Tooltip title="View friends" arrow>
-          <Button
-            variant="text"
-            startIcon={<DynamicFeedIcon />}
-            sx={{ color: "text.primary", }}
-          >
-            {`Post ${userPosts.length}`}
-          </Button>
-        </Tooltip>
-      </ButtonGroup>
+        <OptionView
+          icon={<GroupOutlinedIcon sx={profile_about_icon} fontSize={icon_size} />}
+          text={`Member from ${convertDate(userInfo.createdAt)}`}
+        />
+
+        <OptionView
+          icon={<AlternateEmailOutlinedIcon sx={profile_about_icon} fontSize={icon_size} />}
+          text={userInfo.username}
+        />
+
+        <OptionView
+          icon={<GroupsOutlinedIcon sx={profile_about_icon} fontSize={icon_size} />}
+          text={`${userFriends.length} friends`}
+        />
+
+        <OptionView
+          icon={<DynamicFeedOutlinedIcon sx={profile_about_icon} fontSize={icon_size} />}
+          text={String(userPosts.length)}
+        />
+      </Box>
     </>
+  )
+}
+
+interface PropsV2 {
+  icon: ReactNode,
+  text: string
+}
+
+const OptionView = (props: PropsV2) => {
+  return (
+    <Box sx={{ ...global_flex, justifyContent: "initial", color: "text.primary", py: 1 }}>
+      {props.icon}
+
+      <Typography variant="body1" color="text.primary">{props.text}</Typography>
+    </Box>
   )
 }

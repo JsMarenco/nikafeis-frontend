@@ -1,18 +1,27 @@
 import React from "react"
-import { Box, Typography } from "@mui/material"
+import { Stack } from "@mui/material"
 import CreatePost from "../../CreatePost"
 import PostsLst from "../../PostsLst"
+import Grid from "@mui/material/Unstable_Grid2"
 
 export default function HomeSection() {
   return (
     <>
-      <Box sx={{ mb: 5 }}>
-        <CreatePost />
+      <Grid container spacing={2} disableEqualOverflow>
+        <Grid xs={12} md={8}>
+          <Stack spacing={2} sx={{ width: "100%", }}>
+            <CreatePost />
 
-        <Typography variant="subtitle1" color="text.primary">Suggestion for you</Typography>
+            <PostsLst />
+          </Stack>
+        </Grid>
 
-        <PostsLst />
-      </Box>
+        <Grid xs={12} md={4}>
+          <Stack spacing={2}>
+
+          </Stack>
+        </Grid>
+      </Grid>
     </>
   )
 }

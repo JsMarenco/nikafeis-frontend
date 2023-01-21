@@ -1,20 +1,17 @@
-import React, { ReactNode, useContext, useEffect, useState } from "react"
+import React, { ReactNode, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useLocation, useNavigate } from "react-router-dom"
 import { RootState } from "../app/store"
 import CustomLoader from "../components/CustomLoader"
-import { ERROR_USER_IS_NOT_LOGGED_ERROR } from "../constants/errors"
 import { HOME_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, RESET_PASSWORD } from "../constants/routes"
 import { setMainUser } from "../features/users/userSlice"
 import { getFromLocalStorage } from "../utils/basic"
-import { messageContext } from "./MessageContext"
 
 interface AuthInterface {
   children: ReactNode
 }
 
 export default function IsAuthenticated(props: AuthInterface) {
-  const { handleMessage } = useContext(messageContext)
   const state = useSelector((state: RootState) => state.user)
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
@@ -46,7 +43,6 @@ export default function IsAuthenticated(props: AuthInterface) {
       const isInResetPasswordForm = currentPath !== RESET_PASSWORD
 
       if (isInLoginForm && isInRegisterForm && isInResetPasswordForm) {
-        handleMessage(ERROR_USER_IS_NOT_LOGGED_ERROR)
         navigate(LOGIN_ROUTE)
       }
     }

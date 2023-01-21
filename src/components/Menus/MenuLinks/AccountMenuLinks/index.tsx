@@ -40,7 +40,7 @@ const MenuLinks: MenuLinkInterface[] = [
   // },
   {
     icon: <GroupAddIcon fontSize={icon_size} />,
-    label: "New connections",
+    label: "Connections",
     link: NEW_CONNECTIONS_ROUTE
   },
   // {

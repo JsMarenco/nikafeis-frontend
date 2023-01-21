@@ -34,7 +34,6 @@ export const menu_link = {
 }
 
 const menu_container_base_styles = {
-  px: 2,
   backgroundColor: "background.paper",
   zIndex: 9,
 }
@@ -46,17 +45,16 @@ export const menu_container_desktop = {
     sm: "relative",
   },
   top: 0,
+  height: "100%",
   width: {
     xs: "250px",
     sm: "100%"
-  },
-  height: {
-    xs: "100%",
-    sm: "90vh"
   },
   overflowY: "auto",
   boxShadow: {
     xs: 6,
     sm: 0
-  }
+  },
+  pt: { xs: 2, sm: 0 },
+  px: 2
 }

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
-import { Stack, Button, TextField, Divider, Grid } from "@mui/material"
+import { Stack, Button, TextField, Divider } from "@mui/material"
 import { RootState } from "../../../app/store"
 import { messageContext } from "../../../context/MessageContext"
 import { useDispatch, useSelector } from "react-redux"
@@ -10,10 +10,11 @@ import { PROFILE_UPDATE_MESSAGE } from "../../../constants/messages"
 import { MAIN_USER_PROFILE_ROUTE } from "../../../constants/routes"
 import { account__settings_container, account__settings_form__container, account__settings_password__button } from "../../../styles/accountSetting"
 import { AccountSettingForm } from "../../../constants/enums/accountSettings"
+import Grid from "@mui/material/Unstable_Grid2"
 
 export default function AccountSettings() {
   return (
-    <Grid item xs={12}>
+    <Grid xs={12}>
       <Stack spacing={2} sx={account__settings_container}>
         <Stack spacing={2} component={"form"} sx={{ ...account__settings_form__container, }} id={AccountSettingForm.id}>
           <Form />

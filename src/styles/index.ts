@@ -1,22 +1,3 @@
-export const avatarStyles = {
-  display: "block",
-  width: "40px",
-  height: "40px",
-  borderRadius: "50%",
-  marginRight: "10px",
-  flexShrink: "0",
-}
-
-export const contentStyles = {
-  display: "block",
-  width: "95%",
-  maxWidth: "700px",
-  margin: "0 auto",
-  mb: 2,
-  p: 2,
-  borderradius: "5px",
-}
-
 export const commentStyles = {
   display: "flex",
   alignItems: "center",
@@ -62,11 +43,15 @@ export const floatButton = {
 }
 
 export const section_scroll = {
-  position: "relative",
   bgcolor: "background.default",
-  p: 4,
-  pb: 8,
-  borderRadius: "15px",
-  height: "100vh",
-  overflowY: "scroll",
+  p: 2,
+  py: 0,
+  pb: 2,
+  overflowY: "auto",
+  borderStartStartRadius: "15px",
+  borderStartEndRadius: {
+    xs: "15px",
+    sm: 0
+  }
 }
+

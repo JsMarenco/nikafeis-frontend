@@ -25,7 +25,7 @@ export default function MainMenu() {
         ))
       }
 
-      <Box sx={{ mb: 4 }}>
+      <Box>
         <ToggleThemeButton />
       </Box>
     </>

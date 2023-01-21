@@ -83,12 +83,12 @@ const Form = () => {
     if (statusCode !== 200 && !success) {
       handleMessage(message)
       setLoading(false)
-      setLoginInfo({ [LoginForm.email_input_name]: "", [LoginForm.password_input_name]: "" })
     }
 
     if (statusCode === 200 && success) {
       handleMessage(message)
       dispatch(setMainUser(data))
+      setLoginInfo({ [LoginForm.email_input_name]: "", [LoginForm.password_input_name]: "" })
 
       setTimeout(() => { navigate(HOME_ROUTE) }, 1000)
     }

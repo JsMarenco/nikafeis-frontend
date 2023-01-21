@@ -1,5 +1,5 @@
 import React, { useEffect, useState, } from "react"
-import { Box, Grid, IconButton, Typography, } from "@mui/material"
+import { Box, IconButton, Typography, } from "@mui/material"
 import { changeTitle } from "../../utils/basic"
 import { ACCOUNT_SETTINGS } from "../../constants/titles"
 import SettingsMenu from "../../components/Menus/SettingsMenu"
@@ -8,6 +8,7 @@ import { SETTINGS_ROUTE } from "../../constants/routes"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { global_flex } from "../../styles"
 import { settings_container } from "../../styles/settings"
+import Grid from "@mui/material/Unstable_Grid2"
 
 export default function Settings() {
   const navigate = useNavigate()
@@ -24,8 +25,8 @@ export default function Settings() {
   }, [location])
 
   return (
-    <Grid container spacing={2} sx={{ pb: 5 }}>
-      <Grid item xs={12}>
+    <Grid container rowSpacing={2} disableEqualOverflow>
+      <Grid xs={12}>
         <Box sx={{ ...global_flex, justifyContent: "initial", ...settings_container }}>
           <IconButton
             size="large"
@@ -38,7 +39,7 @@ export default function Settings() {
         </Box>
       </Grid>
 
-      <Grid item xs={12} sx={{ display: (!hideMenu ? "block" : "none") }}>
+      <Grid xs={12} sx={{ display: (!hideMenu ? "block" : "none") }}>
         <Box sx={settings_container}>
           {!hideMenu && (<SettingsMenu />)}
         </Box>

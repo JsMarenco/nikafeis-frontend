@@ -1,4 +1,5 @@
 import { global_flex } from "."
+import { main__container_grid } from "./container"
 
 export const profile_option__button = {
   color: "text.primary",
@@ -9,6 +10,7 @@ export const profile_cover_container = {
   width: "100%",
   height: { xs: "600px", sm: "500px" },
   position: "relative",
+  ...main__container_grid
 }
 
 export const profile_avatar = {
@@ -21,7 +23,7 @@ export const profile_avatar = {
 export const profile_avatar_container = {
   bgcolor: "background.default",
   borderRadius: "100%",
-  p: .5,
+  p: 1,
 }
 
 export const profile_cover = {
@@ -71,3 +73,7 @@ export const profile_option__button_v2 = {
 }
 
 export const profile_button_size = "large"
+
+export const profile_about_icon = {
+  mr: 1.5
+}

@@ -89,6 +89,11 @@ const Form = () => {
 
     if (statusCode !== 201 && !success) {
       handleMessage(message)
+    }
+
+    if (statusCode === 201 && success) {
+      handleMessage(message)
+
       setNewUserInfo({
         [RegisterForm.firstName_input_name]: "",
         [RegisterForm.lastName_input_name]: "",
@@ -96,18 +101,12 @@ const Form = () => {
         [RegisterForm.password_input_name]: "",
         [RegisterForm.confirmPassword_input_name]: ""
       })
-    }
-
-    if (statusCode === 201 && success) {
-      handleMessage(message)
 
       setTimeout(() => { navigate(LOGIN_ROUTE) }, 1000)
     }
 
     setLoading(false)
   }
-
-
 
   return (
     <>

@@ -112,7 +112,7 @@ export default function CreatePost() {
   }
 
   return (
-    <Paper sx={post__card_create__form_container} component={"form"} id="create-post-form">
+    <Box sx={post__card_create__form_container} component={"form"} id="create-post-form">
       <Box sx={post__card_create__form}>
 
         <Stack spacing={2} sx={{ width: "100%", }}>
@@ -198,6 +198,6 @@ export default function CreatePost() {
           </>
         )
       }
-    </Paper>
+    </Box>
   )
 }

@@ -5,7 +5,7 @@ import SearchBar from "../SearchBar"
 
 export default function Header() {
   return (
-    <AppBar position="relative" sx={{ bgcolor: "background.paper", boxShadow: 0 }}>
+    <AppBar position="relative" sx={{ bgcolor: "background.default", boxShadow: 0 }}>
       <Toolbar sx={{ boxShadow: 0 }} >
         <Container maxWidth="xl"
           sx={{

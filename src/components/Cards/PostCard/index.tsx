@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react"
-import { Divider, Paper, } from "@mui/material"
+import { Box, Divider, Paper, } from "@mui/material"
 import { copyToClipboard, generateShareLink } from "../../../utils/basic"
 import HeaderPost from "../../components/HeaderPost"
 import ContentPost from "../../components/ContentPost"
@@ -71,7 +71,7 @@ export default function PostCard(props: PostInterface) {
   }
 
   return (
-    <Paper sx={post__card_container}>
+    <Box sx={post__card_container}>
       <HeaderPost
         postId={id}
         authorPostId={author.id}
@@ -113,6 +113,6 @@ export default function PostCard(props: PostInterface) {
         fetchCommentsUpdated={fetchCommentsUpdated}
         limit={limit}
       />
-    </Paper>
+    </Box>
   )
 }

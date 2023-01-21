@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Avatar, Box, Typography, Stack } from "@mui/material"
+import { Avatar, Box, Typography, Stack, Grid } from "@mui/material"
 import UserInterface from "../../../interface/user"
 import { useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
@@ -26,61 +26,63 @@ export default function ProfileHeader() {
 
   return (
     <>
-      <Box sx={{ ...profile_cover_container, }}>
-        <img
-          style={{
-            position: "absolute",
-            backgroundImage: `url(${userInfo.coverImageUrl ? userInfo.coverImageUrl : default_cover})`,
-            ...profile_cover,
-          }}
-        />
+      <Grid item xs={12}>
+        <Box sx={{ ...profile_cover_container, px: 0, }}>
+          <img
+            style={{
+              position: "absolute",
+              backgroundImage: `url(${userInfo.coverImageUrl ? userInfo.coverImageUrl : default_cover})`,
+              ...profile_cover,
+            }}
+          />
 
-        <Box sx={profile_about_container}>
-          <Box sx={{ ...profile_avatar_container }}>
-            <Avatar
-              src={userInfo.avatarUrl}
-              alt={`${userInfo.firstName} ${userInfo.lastName}`}
-              variant="circular"
-              sizes="large"
-              sx={{ ...profile_avatar, }}
-            />
-          </Box>
-
-          <Box flexGrow={1} sx={profile_about}>
-            <Box>
-              <Typography
-                variant="h6"
-                color="text.primary"
-                sx={profile_about_titles}
-              >
-                {`${userInfo.firstName} ${userInfo.lastName}`}
-              </Typography>
-
-              <Typography
-                variant="body1"
-                color="text.primary"
-                sx={profile_about_titles}
-              >
-                {userInfo.email}
-              </Typography>
+          <Box sx={profile_about_container}>
+            <Box sx={{ ...profile_avatar_container }}>
+              <Avatar
+                src={userInfo.avatarUrl}
+                alt={`${userInfo.firstName} ${userInfo.lastName}`}
+                variant="circular"
+                sizes="large"
+                sx={{ ...profile_avatar, }}
+              />
             </Box>
 
-            <Stack
-              spacing={1}
-              direction="row"
-              justifyItems="center"
-            >
-              {
-                the_username === USER_USERNAME_APP_ROUTE || the_username === state.user.username ? (
-                  <UserOptions />
-                ) : (
-                  <VisitorOption />
-                )
-              }
-            </Stack>
+            <Box flexGrow={1} sx={profile_about}>
+              <Box>
+                <Typography
+                  variant="h6"
+                  color="text.primary"
+                  sx={profile_about_titles}
+                >
+                  {`${userInfo.firstName} ${userInfo.lastName}`}
+                </Typography>
+
+                <Typography
+                  variant="body1"
+                  color="text.primary"
+                  sx={profile_about_titles}
+                >
+                  {userInfo.email}
+                </Typography>
+              </Box>
+
+              <Stack
+                spacing={1}
+                direction="row"
+                justifyItems="center"
+              >
+                {
+                  the_username === USER_USERNAME_APP_ROUTE || the_username === state.user.username ? (
+                    <UserOptions />
+                  ) : (
+                    <VisitorOption />
+                  )
+                }
+              </Stack>
+            </Box>
           </Box>
         </Box>
-      </Box>
+      </Grid>
     </>
   )
 }

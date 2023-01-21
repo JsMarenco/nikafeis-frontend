@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
-import { Container, Typography, Divider, } from "@mui/material"
+import { Container, Typography, Divider, Stack, } from "@mui/material"
 import { RootState } from "../../app/store"
 import { useDispatch, useSelector } from "react-redux"
 import { changeTitle } from "../../utils/basic"
@@ -11,6 +11,8 @@ import ProfileHeader from "../../components/components/ProfileHeader"
 import PostsLst from "../../components/PostsLst"
 import CreatePost from "../../components/CreatePost"
 import { setVisitedUser } from "../../features/users/visitedUserSlice"
+import AboutUser from "../../components/components/AboutUser"
+import Grid from "@mui/material/Unstable_Grid2"
 
 export default function Profile() {
   const state = useSelector((state: RootState) => state.user)
@@ -58,30 +60,23 @@ export default function Profile() {
         loading ? (
           <CustomLoader />
         ) : (
-          <>
-            <ProfileHeader />
+          <Grid container spacing={2} disableEqualOverflow>
+            <Grid xs={12}>
+              <ProfileHeader />
+            </Grid>
 
-            <Container maxWidth="lg">
-              <Divider sx={{ mt: 1, mb: 2 }} />
+            <Grid xs={12} md={4}>
+              <AboutUser />
+            </Grid>
 
-              <Typography
-                variant="h6"
-                color="text.primary"
-              >
-                Latest posts
-              </Typography>
-
-              <Divider sx={{ mt: 1, mb: 2 }} />
-            </Container>
-
-            {
-              (the_username === USER_USERNAME_APP_ROUTE || the_username === state.user.username) && (
+            <Grid xs={12} md={8}>
+              <Stack spacing={2}>
                 <CreatePost />
-              )
-            }
 
-            <PostsLst />
-          </>
+                <PostsLst />
+              </Stack>
+            </Grid>
+          </Grid>
         )
       }
     </>

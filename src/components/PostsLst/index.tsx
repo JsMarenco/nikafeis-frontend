@@ -53,7 +53,7 @@ export default function PostsLst() {
 
   return (
     <>
-      <Stack direction="column">
+      <Stack spacing={2}>
         {
           loading ? (
             <>
@@ -89,16 +89,6 @@ export default function PostsLst() {
                   )
                 })
               }
-
-              <Button
-                variant="contained"
-                color="primary"
-                sx={{ mx: "auto" }}
-                size="large"
-                onClick={() => fetchPosts()}
-              >
-                Load more
-              </Button>
             </>
           ) : (
             <>
