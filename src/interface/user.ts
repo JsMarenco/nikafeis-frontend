@@ -32,6 +32,7 @@ export interface UserStateInterface {
   user: UserInterface
   token: string,
   isLogin: boolean,
+  fullName: string,
   friends: string[],
   friendRequestsSent: string[],
   friendRequests: string[],

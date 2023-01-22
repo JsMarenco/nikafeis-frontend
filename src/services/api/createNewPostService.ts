@@ -1,14 +1,15 @@
 import { api, CREATE_POST_ROUTE } from "../../constants/api"
+import { CreatePostForm } from "../../constants/enums/createPost"
 import GlobalApiResponse from "../../interface/globalApiResponse"
 
 const createNewPostService = async (userId: string, token: string) => {
   try {
-    const form = document.getElementById("create-post-form") as HTMLFormElement
+    const form = document.getElementById(CreatePostForm.id) as HTMLFormElement
     const formData = new FormData(form)
 
-    const title = formData.get("titleInput")
-    const content = formData.get("contentInput")
-    const post_images = formData.get("post_images")
+    const title = formData.get(CreatePostForm.title_input_name)
+    const content = formData.get(CreatePostForm.content_input_name)
+    const post_images = formData.get(CreatePostForm.post_images_input_file_name)
 
     // process the images array as needed
     const newPostInfo = {

@@ -13,6 +13,7 @@ const initialVisitedUser: VisitedUserStateInterface = {
     username: "",
     website: "",
   },
+  fullName: "",
   friends: [],
   friendRequests: [],
   friendRequestsSent: [],
@@ -34,6 +35,7 @@ const visitedUserSlice = createSlice({
       state.friends = action.payload.friends
       state.friendRequestsSent = action.payload.friendRequestsSent
       state.posts = action.payload.posts
+      state.fullName = `${action.payload.firstName} ${action.payload.lastName}`
     }
   }
 })

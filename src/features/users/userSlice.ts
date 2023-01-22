@@ -18,6 +18,7 @@ const initialUser: UserStateInterface = {
   },
   token: "",
   isLogin: false,
+  fullName: "",
   friends: [],
   friendRequests: [],
   friendRequestsSent: [],
@@ -37,6 +38,7 @@ const userSlice = createSlice({
       state.friendRequestsSent = action.payload.friendRequestsSent
       state.posts = action.payload.posts
       state.isLogin = true
+      state.fullName = `${action.payload.firstName} ${action.payload.lastName}`
 
       saveInLocalStorage("MAIN_USER", action.payload)
       saveInLocalStorage("USER_TOKEN", action.payload.token)

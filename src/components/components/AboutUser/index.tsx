@@ -14,6 +14,7 @@ import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlin
 import { profile_about_icon } from "../../../styles/profile"
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined"
 import DynamicFeedOutlinedIcon from "@mui/icons-material/DynamicFeedOutlined"
+import LanguageIcon from "@mui/icons-material/Language"
 
 interface UserInterfaceV2 extends UserInterface {
   posts: string[]
@@ -75,7 +76,12 @@ export default function AboutUser() {
 
         <OptionView
           icon={<DynamicFeedOutlinedIcon sx={profile_about_icon} fontSize={icon_size} />}
-          text={String(userPosts.length)}
+          text={`${userPosts.length} posts`}
+        />
+
+        <OptionView
+          icon={<LanguageIcon sx={profile_about_icon} fontSize={icon_size} />}
+          text={userInfo.website ? userInfo.website : "Unkwon"}
         />
       </Box>
     </>

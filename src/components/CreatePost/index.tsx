@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, } from "react"
-import { Box, Divider, Stack, Button, IconButton, Avatar, Tooltip, Paper, InputBase } from "@mui/material"
+import { Box, Stack, Button, IconButton, Avatar, Tooltip, InputBase } from "@mui/material"
 import { PhotoCamera } from "@mui/icons-material"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../app/store"
@@ -8,42 +8,35 @@ import { messageContext } from "../../context/MessageContext"
 import createNewPostService from "../../services/api/createNewPostService"
 import { setMainUser } from "../../features/users/userSlice"
 import getUserByUsernameService from "../../services/api/getUserByUsernameService"
-import { post__card_create__form, post__card_create__form_container } from "../../styles/post"
-import { global_flex, user__avatar } from "../../styles"
+import { post__card_create__form_container } from "../../styles/post"
+import { user__avatar } from "../../styles"
 import { input } from "../../styles/inputs"
+import { CreatePostForm } from "../../constants/enums/createPost"
 
 export default function CreatePost() {
+  return (
+    <Box sx={post__card_create__form_container} component={"form"} id={CreatePostForm.id}>
+      <Stack spacing={2} sx={{ width: "100%", }}>
+        <Form />
+      </Stack>
+    </Box>
+  )
+}
+
+const Form = () => {
   const state = useSelector((state: RootState) => { return state.user })
-  const dispatch = useDispatch()
   const { handleMessage } = useContext(messageContext)
-  const [name, setName] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [showContentInput, setShowContentInput] = useState(false)
+  const dispatch = useDispatch()
   const [selectedFile, setSelectedFile] = useState<File[]>([])
   const [preview, setPreview] = useState<string[]>([])
-  const [loading, setLoading] = useState(false)
-  const [postInfo, setPostInfo] = useState({ titleInput: "", contentInput: "" })
-  const [showContentInput, setShowContentInput] = useState(false)
+  const [postInfo, setPostInfo] = useState({
+    [CreatePostForm.title_input_name]: "",
+    [CreatePostForm.content_input_name]: ""
+  })
 
-  const clearImage = (index: number) => {
-    setSelectedFile(prevState => {
-      const newSelectedFile = [...prevState]
-      newSelectedFile.splice(index, 1)
-      return newSelectedFile
-    })
-    setPreview(prevState => {
-      const newPreview = [...prevState]
-      newPreview.splice(index, 1)
-      return newPreview
-    })
-  }
-
-  // create a preview as a side effect, whenever selected file is changed
-  useEffect(() => {
-    if (!selectedFile) {
-      setPreview([])
-      return
-    }
-
-  }, [selectedFile])
+  const onPostCreate = () => { setPreview([]), setSelectedFile([]) }
 
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
@@ -60,6 +53,14 @@ export default function CreatePost() {
       reader.readAsDataURL(file)
       setSelectedFile(prevState => [...prevState, file])
     }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    setPostInfo({
+      ...postInfo,
+      [e.target.name]: e.target.value,
+    })
   }
 
   const handleSubmit = async () => {
@@ -86,89 +87,96 @@ export default function CreatePost() {
     }
     handleMessage(message)
 
-    setPostInfo({ titleInput: "", contentInput: "" })
+    setPostInfo({
+      [CreatePostForm.title_input_name]: "",
+      [CreatePostForm.content_input_name]: ""
+    })
+
     onPostCreate()
     setLoading(false)
   }
 
-  const onPostCreate = () => {
-    // Clear the preview and selected file arrays
-    setPreview([])
-    setSelectedFile([])
-
-  }
-
+  // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
-    if (state) {
-      setName(state.user.firstName)
+    if (!selectedFile) {
+      setPreview([])
+      return
     }
-  }, [])
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPostInfo({
-      ...postInfo,
-      [e.target.name]: e.target.value,
+  }, [selectedFile])
+
+  const clearImage = (index: number) => {
+    setSelectedFile(prevState => {
+      const newSelectedFile = [...prevState]
+      newSelectedFile.splice(index, 1)
+      return newSelectedFile
+    })
+    setPreview(prevState => {
+      const newPreview = [...prevState]
+      newPreview.splice(index, 1)
+      return newPreview
     })
   }
 
   return (
-    <Box sx={post__card_create__form_container} component={"form"} id="create-post-form">
-      <Box sx={post__card_create__form}>
-
-        <Stack spacing={2} sx={{ width: "100%", }}>
-          <Box sx={{ ...global_flex, justifyContent: "left" }}>
-            <Avatar
-              src={state.user.avatarUrl}
-              alt={`${state.user.firstName}-${state.user.lastName}-avatar`}
-              sx={{ ...user__avatar, cursor: "initial" }}
-            >
-              {state.user.firstName.charAt(0)}
-            </Avatar>
-
-            <InputBase
-              name="titleInput"
-              placeholder="Today is happy day"
-              disabled={loading}
-              value={postInfo.titleInput}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)}
-              fullWidth
-              autoComplete="off"
-              onClick={() => setShowContentInput(true)}
-              sx={input}
-            />
-          </Box>
-
-          <InputBase
-            name="contentInput"
-            placeholder={`What's on your mind, ${name}?`}
-            fullWidth
-            autoComplete="off"
-            multiline
-            rows={4}
-            disabled={loading}
-            value={postInfo.contentInput}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)}
-            sx={{ display: showContentInput ? "block" : "none", ...input, }}
-          />
-
-          <PriviewImage imagesUrls={preview || []} clearImage={clearImage} />
-        </Stack>
-      </Box>
+    <>
+      <InputBase
+        id={CreatePostForm.title_input_id}
+        role={CreatePostForm.title_input_role}
+        name={CreatePostForm.title_input_name}
+        type={CreatePostForm.title_input_type}
+        value={postInfo[CreatePostForm.title_input_name]}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)}
+        autoComplete={CreatePostForm.autocomplete}
+        placeholder={CreatePostForm.title_input_placeholder}
+        fullWidth
+        sx={input}
+        onClick={() => setShowContentInput(true)}
+        startAdornment={
+          <Avatar
+            src={state.user.avatarUrl}
+            alt={`${state.fullName}-avatar`}
+            sx={{ ...user__avatar, cursor: "initial" }}
+          >
+            {state.user.firstName.charAt(0)}
+          </Avatar>
+        }
+      />
 
       {
         showContentInput && (
           <>
-            <Divider sx={{ mt: 2, mb: 2 }} />
+            <InputBase
+              id={CreatePostForm.content_input_id}
+              role={CreatePostForm.content_input_role}
+              name={CreatePostForm.content_input_name}
+              type={CreatePostForm.content_input_type}
+              value={postInfo[CreatePostForm.content_input_name]}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)}
+              autoComplete={CreatePostForm.autocomplete}
+              placeholder={CreatePostForm.content_input_placeholder.replace("%user_firsname", state.user.firstName)}
+              fullWidth
+              multiline
+              rows={4}
+              disabled={loading}
+              sx={input}
+            />
+
+            {
+              preview && (
+                <PriviewImage imagesUrls={preview || []} clearImage={clearImage} />
+              )
+            }
 
             <Stack spacing={2} direction="row" justifyContent={"space-between"} alignItems="center">
-              <label htmlFor="contained-button-file">
+              <label htmlFor={CreatePostForm.post_images_input_file_id}>
                 <input
                   accept="image/*"
-                  id="contained-button-file"
-                  type="file"
+                  id={CreatePostForm.post_images_input_file_id}
+                  type={CreatePostForm.post_images_input_file_type}
                   style={{ display: "none" }}
                   onChange={onSelectFile}
-                  name="post_images"
+                  name={CreatePostForm.post_images_input_file_name}
                   disabled={loading}
                   multiple
                 />
@@ -192,12 +200,12 @@ export default function CreatePost() {
                 onClick={handleSubmit}
                 disabled={loading}
               >
-                Post
+                Post now
               </Button>
             </Stack>
           </>
         )
       }
-    </Box>
+    </>
   )
 }
