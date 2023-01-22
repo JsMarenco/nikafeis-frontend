@@ -49,7 +49,7 @@ export default function AboutUser() {
         <Box>
           <Typography sx={{ mb: 1 }} variant="h6" color="text.primary">About</Typography>
 
-          <Typography variant="body1" sx={{ fontWeight: "300" }} color="text.primary">{state.user.description}</Typography>
+          <Typography variant="body1" sx={{ fontWeight: "300" }} color="text.primary">{userInfo.description}</Typography>
         </Box>
 
         <Divider sx={{ my: 2 }} />

@@ -10,6 +10,10 @@ import getUserFriendsService from "../../services/api/getUserFriends"
 import FriendRequestSkeleton from "../Skeletons/FriendRequestSkeleton"
 import { button_medium } from "../../styles/buttons"
 import Grid from "@mui/material/Unstable_Grid2"
+import NoContent from "../NoContent"
+import { NO_FRIENDS_MESSAGE } from "../../constants/messages"
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const BgImage = require("../../assets/bg-5.png")
 
 export default function FriendsSection() {
   const state = useSelector((state: RootState) => state.user)
@@ -60,7 +64,11 @@ export default function FriendsSection() {
               }
             </Grid>
 
-            {/* <LoadMore /> */}
+            {
+              !loading && friendsInfo.length === 0 && (
+                <NoContent imgSrc={BgImage} text={NO_FRIENDS_MESSAGE} />
+              )
+            }
           </>
         )
       }

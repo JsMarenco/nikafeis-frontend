@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { RootState } from "../../../../app/store"
+import { NO_FRIEND_REQUEST_MESSAGE } from "../../../../constants/messages"
 import { NEW_CONNECTIONS_ROUTE } from "../../../../constants/routes"
 import { BasicUserInterface } from "../../../../interface/user"
 import getUerConnectionsService from "../../../../services/api/getUerConnectionsService"
@@ -10,7 +11,10 @@ import { global_flex } from "../../../../styles"
 import { button_small } from "../../../../styles/buttons"
 import FriendRequestCard from "../../../Cards/FriendRequestCard"
 import SendFriendRequestButton from "../../../FunctionsButtons/SendFriendRequestButton"
+import NoContent from "../../../NoContent"
 import FriendRequestSkeleton from "../../../Skeletons/FriendRequestSkeleton"
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const notFriends = require("../../../../assets/woman_using_phone.png")
 
 export default function ConnectionsListSmall() {
   const navigate = useNavigate()
@@ -70,6 +74,12 @@ export default function ConnectionsListSmall() {
             ))
           }
         </Stack>
+
+        {
+          friendConnections.length === 0 && (
+            <NoContent text={NO_FRIEND_REQUEST_MESSAGE} imgSrc={notFriends} />
+          )
+        }
       </Box>
     </>
   )

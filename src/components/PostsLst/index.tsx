@@ -9,6 +9,9 @@ import PostCard from "../Cards/PostCard"
 import { HOME_ROUTE, USER_USERNAME_APP_ROUTE } from "../../constants/routes"
 import getRecentPostsService from "../../services/api/getRecentPostsService"
 import { useSelector } from "react-redux"
+import NoContent from "../NoContent"
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const BgImage = require("../../assets/bg-3.png")
 
 export default function PostsLst() {
   const state = useSelector((state: RootState) => state.user)
@@ -91,17 +94,7 @@ export default function PostsLst() {
               }
             </>
           ) : (
-            <>
-              <Typography
-                variant="h6"
-                color="text.primary"
-                align="center"
-                mt={4}
-                mb={8}
-              >
-                There are no posts yet, be the first to create one!
-              </Typography>
-            </>
+            <NoContent imgSrc={BgImage} text="There are no posts yet, be the first to create one!" />
           )
         }
       </Stack>
