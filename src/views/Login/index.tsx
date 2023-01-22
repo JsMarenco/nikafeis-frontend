@@ -13,6 +13,7 @@ import { LoginForm, LoginFormTexts } from "../../constants/enums/login"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined"
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
+import { FORGOT_PASSWORD_BUTTON, LOGIN_BUTTON, REGISTER_BUTTON } from "../../constants/buttons"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const loginImage = require("../../assets/login-bg.jpg")
 
@@ -55,7 +56,7 @@ export default function Login() {
               onClick={() => navigate(REGISTER_ROUTE)}
               size={LoginForm.button_size}
             >
-              {LoginFormTexts.register_button}
+              {REGISTER_BUTTON}
             </Button>
           </Stack>
         </Box>
@@ -141,7 +142,7 @@ const Form = () => {
           onClick={() => navigate(RESET_PASSWORD)}
           size={LoginForm.button_size}
         >
-          {LoginFormTexts.forgot_password_button}
+          {FORGOT_PASSWORD_BUTTON}
         </Button>
       </Stack>
 
@@ -153,7 +154,7 @@ const Form = () => {
         disabled={loading}
         size={LoginForm.button_size}
       >
-        {LoginFormTexts.login_button}
+        {LOGIN_BUTTON}
       </Button>
     </>
   )

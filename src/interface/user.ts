@@ -1,3 +1,5 @@
+import { ReactNode } from "react"
+
 export default interface UserInterface {
   avatarUrl: string;
   coverImageUrl: string;
@@ -81,5 +83,6 @@ export interface FriendRequestCardInterface {
   timeAgo?: string | "",
   avatarUrl: string,
   username: string,
-  friendRequestId?: string | ""
+  friendRequestId?: string | "",
+  children: ReactNode,
 }

@@ -77,3 +77,4 @@ export const profile_button_size = "large"
 export const profile_about_icon = {
   mr: 1.5
 }
+

@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext } from "react"
+import React, { useContext } from "react"
 import { SETTINGS_ROUTE, FRIENDS_SECTION_ROUTE, HOME_ROUTE, INBOX_ROUTE, LOGOUT_ROUTE, MAIN_USER_PROFILE_ROUTE, NEW_CONNECTIONS_ROUTE, VIDEOS_SECTION_ROUTE } from "../../../../constants/routes"
 import SettingsIcon from "@mui/icons-material/Settings"
 import PersonIcon from "@mui/icons-material/Person"
@@ -9,8 +9,8 @@ import DarkModeIcon from "@mui/icons-material/DarkMode"
 import LightModeIcon from "@mui/icons-material/LightMode"
 import { menu_link } from "../../../../styles/menu"
 import HomeIcon from "@mui/icons-material/Home"
-// import GroupIcon from "@mui/icons-material/Group"
-// import OndemandVideoIcon from "@mui/icons-material/OndemandVideo"
+import GroupIcon from "@mui/icons-material/Group"
+import OndemandVideoIcon from "@mui/icons-material/OndemandVideo"
 import MessageIcon from "@mui/icons-material/Message"
 import GroupAddIcon from "@mui/icons-material/GroupAdd"
 import { MenuLinkInterface } from "../../../../interface/menu"
@@ -28,16 +28,16 @@ const MenuLinks: MenuLinkInterface[] = [
     label: "Profile",
     link: MAIN_USER_PROFILE_ROUTE
   },
-  {
-    icon: <MessageIcon  fontSize={icon_size} />,
-    label: "Inbox",
-    link: INBOX_ROUTE
-  },
   // {
-  //   icon: <GroupIcon fontSize={icon_size} />,
-  //   label: "Friends",
-  //   link: FRIENDS_SECTION_ROUTE
+  //   icon: <MessageIcon fontSize={icon_size} />,
+  //   label: "Inbox",
+  //   link: INBOX_ROUTE
   // },
+  {
+    icon: <GroupIcon fontSize={icon_size} />,
+    label: "Friends",
+    link: FRIENDS_SECTION_ROUTE
+  },
   {
     icon: <GroupAddIcon fontSize={icon_size} />,
     label: "Connections",

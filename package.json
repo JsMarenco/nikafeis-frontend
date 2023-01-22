@@ -33,7 +33,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "linter": "eslint --fix src/**/*.{ts,tsx} .storybook/*.js",
+    "linter": "eslint --fix src/**/*.{ts,tsx}",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "deploy": "npm run build && firebase deploy"

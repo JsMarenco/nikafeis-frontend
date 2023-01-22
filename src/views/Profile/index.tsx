@@ -13,6 +13,7 @@ import CreatePost from "../../components/CreatePost"
 import { setVisitedUser } from "../../features/users/visitedUserSlice"
 import AboutUser from "../../components/components/AboutUser"
 import Grid from "@mui/material/Unstable_Grid2"
+import ConnectionsList from "../../components/ConnectionsList"
 
 export default function Profile() {
   const state = useSelector((state: RootState) => state.user)
@@ -66,12 +67,26 @@ export default function Profile() {
             </Grid>
 
             <Grid xs={12} md={4}>
-              <AboutUser />
+              <Stack spacing={2}>
+                <AboutUser />
+
+                {
+                  the_username === USER_USERNAME_APP_ROUTE && (
+                    <>
+                      <ConnectionsList variant="small" />
+                    </>
+                  )
+                }
+              </Stack>
             </Grid>
 
             <Grid xs={12} md={8}>
               <Stack spacing={2}>
-                <CreatePost />
+                {
+                  the_username === USER_USERNAME_APP_ROUTE && (
+                    <CreatePost />
+                  )
+                }
 
                 <PostsLst />
               </Stack>

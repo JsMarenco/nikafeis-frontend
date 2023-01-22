@@ -3,6 +3,8 @@ import { Stack } from "@mui/material"
 import CreatePost from "../../CreatePost"
 import PostsLst from "../../PostsLst"
 import Grid from "@mui/material/Unstable_Grid2"
+import FriendRequestReceive from "../../FriendRequestReceive"
+import ConnectionsList from "../../ConnectionsList"
 
 export default function HomeSection() {
   return (
@@ -18,7 +20,9 @@ export default function HomeSection() {
 
         <Grid xs={12} md={4}>
           <Stack spacing={2}>
+            <FriendRequestReceive variant="small" />
 
+            <ConnectionsList variant="small" />
           </Stack>
         </Grid>
       </Grid>

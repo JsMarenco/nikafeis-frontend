@@ -130,6 +130,7 @@ const Form = () => {
         autoComplete={CreatePostForm.autocomplete}
         placeholder={CreatePostForm.title_input_placeholder}
         fullWidth
+        disabled={loading}
         sx={input}
         onClick={() => setShowContentInput(true)}
         startAdornment={

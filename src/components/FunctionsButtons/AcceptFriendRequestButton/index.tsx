@@ -8,9 +8,10 @@ import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1"
 import { Button, IconButton, Tooltip } from "@mui/material"
 import { FunctionsButtonsBaseInterface } from "../../../interface/functionsButtons"
 import { profile_button_size, profile_option__button_v2 } from "../../../styles/profile"
+import { ACCEPT_FRIEND_REQUEST } from "../../../constants/buttons"
 
 export default function AcceptFriendRequestButton(props: FunctionsButtonsBaseInterface) {
-  const { friendRequestId, customStyles, v2 = false } = props
+  const { friendRequestId, customStyles, v2 = false, size = "large" } = props
   const state = useSelector((state: RootState) => state.user)
   const dispatch = useDispatch()
   const { handleMessage } = useContext(messageContext)
@@ -31,16 +32,17 @@ export default function AcceptFriendRequestButton(props: FunctionsButtonsBaseInt
             variant="contained"
             color="primary"
             onClick={handleAcceptFriendRequest}
-            sx={profile_option__button_v2}
+            sx={customStyles}
+            size={size}
           >
-            Sent reqeust
+            {ACCEPT_FRIEND_REQUEST}
           </Button>
         ) : (
-          <Tooltip title="Accept friend request" arrow>
+          <Tooltip title={ACCEPT_FRIEND_REQUEST} arrow>
             <IconButton
               onClick={handleAcceptFriendRequest}
               sx={customStyles}
-              size={profile_button_size}
+              size={size}
             >
               <PersonAddAlt1Icon />
             </IconButton>

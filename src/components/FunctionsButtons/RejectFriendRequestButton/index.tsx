@@ -7,10 +7,11 @@ import { RootState } from "../../../app/store"
 import { messageContext } from "../../../context/MessageContext"
 import { setMainUserFriendRequests } from "../../../features/users/userSlice"
 import { FunctionsButtonsBaseInterface } from "../../../interface/functionsButtons"
-import { profile_button_size, profile_option__button_v2 } from "../../../styles/profile"
+import { profile_button_size } from "../../../styles/profile"
+import { REJECT_FRIEND_REQUEST } from "../../../constants/buttons"
 
 export default function RejectFriendRequestButton(props: FunctionsButtonsBaseInterface) {
-  const { friendRequestId, customStyles, v2 = false } = props
+  const { friendRequestId, customStyles, v2 = false, size = "large" } = props
   const state = useSelector((state: RootState) => state.user)
   const { handleMessage } = useContext(messageContext)
   const dispatch = useDispatch()
@@ -31,17 +32,17 @@ export default function RejectFriendRequestButton(props: FunctionsButtonsBaseInt
             variant="contained"
             color="primary"
             onClick={handleRejectFriendRequest}
-            sx={profile_option__button_v2}
-            size={profile_button_size}
+            sx={customStyles}
+            size={size}
           >
-            Delete request
+            {REJECT_FRIEND_REQUEST}
           </Button>
         ) : (
-          <Tooltip title="Reject friend request" arrow>
+          <Tooltip title={REJECT_FRIEND_REQUEST} arrow>
             <IconButton
               onClick={handleRejectFriendRequest}
               sx={customStyles}
-              size={profile_button_size}
+              size={size}
             >
               <PersonRemoveIcon />
             </IconButton>

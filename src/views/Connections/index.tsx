@@ -1,5 +1,4 @@
 import React from "react"
-import { Box, Divider, } from "@mui/material"
 import FriendRequestReceive from "../../components/FriendRequestReceive"
 import ConnectionsList from "../../components/ConnectionsList"
 import Grid from "@mui/material/Unstable_Grid2"
@@ -9,11 +8,11 @@ export default function Connections() {
     <>
       <Grid container spacing={2}>
         <Grid xs={12}>
-          <FriendRequestReceive />
+          <FriendRequestReceive variant="large" />
         </Grid>
 
         <Grid xs={12}>
-          <ConnectionsList />
+          <ConnectionsList variant="large" />
         </Grid>
       </Grid>
     </>

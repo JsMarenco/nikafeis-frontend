@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react"
-import { Box, Divider, Paper, } from "@mui/material"
+import { Box, Divider, } from "@mui/material"
 import { copyToClipboard, generateShareLink } from "../../../utils/basic"
 import HeaderPost from "../../components/HeaderPost"
 import ContentPost from "../../components/ContentPost"

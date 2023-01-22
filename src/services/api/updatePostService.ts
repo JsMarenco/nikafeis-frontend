@@ -1,14 +1,15 @@
 import { api, UPDATE_POST_ROUTE } from "../../constants/api"
+import { UpdatePostForm } from "../../constants/enums/updatePost"
 import GlobalApiResponse from "../../interface/globalApiResponse"
 
 const updatePostService = async (userId: string, postId: string, token: string) => {
   try {
-    const form = document.getElementById("post-updated-form") as HTMLFormElement
+    const form = document.getElementById(UpdatePostForm.id) as HTMLFormElement
 
     const formData = new FormData(form)
 
-    const title = formData.get("titleInput")
-    const content = formData.get("contentInput")
+    const title = formData.get(UpdatePostForm.title_updated_input_name)
+    const content = formData.get(UpdatePostForm.content_updated_input_name)
 
     const postInfoUpdated = {
       title,

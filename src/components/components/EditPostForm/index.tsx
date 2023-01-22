@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react"
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Stack } from "@mui/material"
-import CustomTextfield from "../../CustomTextfield"
+import React, { useContext, useEffect, useState } from "react"
+import { Button, Dialog, DialogContent, DialogActions, Stack, InputBase, Avatar } from "@mui/material"
 import { EditPostFormInterface } from "../../../interface/post"
 import { messageContext } from "../../../context/MessageContext"
 import { POST_EDIT_CANCELLED_MESSAGE } from "../../../constants/messages"
@@ -8,18 +7,25 @@ import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../../app/store"
 import updatePostService from "../../../services/api/updatePostService"
 import { setMainUserPosts } from "../../../features/users/userSlice"
+import { UpdatePostForm } from "../../../constants/enums/updatePost"
+import { input } from "../../../styles/inputs"
+import { user__avatar } from "../../../styles"
+import getPostByIdService from "../../../services/api/getPostByIdService"
 
 export default function EditPostForm(props: EditPostFormInterface) {
   const { open, handleCloseEditForm, postId } = props
   const { handleMessage } = useContext(messageContext)
   const state = useSelector((state: RootState) => state.user)
-  const [newPostInfo, setNewPostInfo] = useState({ titleInput: "", contentInput: "" })
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
+  const [postInfoUpdated, setPostInfoUpdated] = useState({
+    [UpdatePostForm.title_updated_input_name]: "",
+    [UpdatePostForm.content_updated_input_name]: ""
+  })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewPostInfo({
-      ...newPostInfo,
+    setPostInfoUpdated({
+      ...postInfoUpdated,
       [e.target.name]: e.target.value,
     })
   }
@@ -33,44 +39,91 @@ export default function EditPostForm(props: EditPostFormInterface) {
     }
 
     handleMessage(message)
-    setNewPostInfo({ titleInput: "", contentInput: "" })
+    setPostInfoUpdated({
+      [UpdatePostForm.title_updated_input_name]: "",
+      [UpdatePostForm.content_updated_input_name]: ""
+    })
+
     handleCloseEditForm()
     setLoading(false)
   }
 
   const handleClose = () => {
     handleCloseEditForm()
-    setNewPostInfo({ titleInput: "", contentInput: "" })
+    setPostInfoUpdated({
+      [UpdatePostForm.title_updated_input_name]: "",
+      [UpdatePostForm.content_updated_input_name]: ""
+    })
+
     setLoading(false)
-    handleMessage(POST_EDIT_CANCELLED_MESSAGE)
   }
+
+  const getPostInfo = async () => {
+    setLoading(true)
+    const { data, success } = await getPostByIdService(props.postId)
+
+    if (success) {
+      setPostInfoUpdated({
+        [UpdatePostForm.title_updated_input_name]: data.title,
+        [UpdatePostForm.content_updated_input_name]: data.content
+      })
+    }
+
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    getPostInfo()
+  }, [])
 
   return (
     <>
       <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-        <DialogTitle>Edit post</DialogTitle>
-
-        <DialogContent>
-          <Stack spacing={2.5} id="post-updated-form" component="form">
-            <CustomTextfield
-              name="titleInput"
-              placeholder="Your title updated"
-              value={newPostInfo.titleInput}
-              onFieldChange={(e) => handleChange(e)}
+        <DialogContent sx={{ bgcolor: "background.paper", }}>
+          <Stack spacing={2.5} id={UpdatePostForm.id} component="form">
+            <InputBase
+              id={UpdatePostForm.title_updated_input_id}
+              role={UpdatePostForm.title_updated_input_role}
+              name={UpdatePostForm.title_updated_input_name}
+              type={UpdatePostForm.title_updated_input_type}
+              value={postInfoUpdated[UpdatePostForm.title_updated_input_name]}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)}
+              autoComplete={UpdatePostForm.autocomplete}
+              placeholder={UpdatePostForm.title_updated_input_placeholder}
+              fullWidth
+              sx={input}
               disabled={loading}
+              startAdornment={
+                <Avatar
+                  src={state.user.avatarUrl}
+                  alt={`${state.fullName}-avatar`}
+                  sx={{ ...user__avatar, cursor: "initial" }}
+                >
+                  {state.user.firstName.charAt(0)}
+                </Avatar>
+              }
             />
 
-            <CustomTextfield
-              name="contentInput"
-              placeholder="Your content updated"
-              value={newPostInfo.contentInput}
-              onFieldChange={(e) => handleChange(e)}
+            <InputBase
+              id={UpdatePostForm.content_updated_input_id}
+              role={UpdatePostForm.content_updated_input_role}
+              name={UpdatePostForm.content_updated_input_name}
+              type={UpdatePostForm.content_updated_input_type}
+              value={postInfoUpdated[UpdatePostForm.content_updated_input_name]}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)}
+              autoComplete={UpdatePostForm.autocomplete}
+              placeholder={UpdatePostForm.content_updated_input_placeholder.replace("%user_firsname", state.user.firstName)}
+              fullWidth
+              multiline
+              rows={4}
               disabled={loading}
+              sx={input}
             />
           </Stack>
         </DialogContent>
 
-        <DialogActions>
+        <DialogActions
+          sx={{ bgcolor: "background.paper", }}>
           <Button variant="outlined" disabled={loading} onClick={handleSubmit}>
             Update
           </Button>

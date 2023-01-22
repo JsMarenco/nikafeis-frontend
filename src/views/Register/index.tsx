@@ -12,7 +12,7 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined"
 import { register_form, register_form_title, register_image_container } from "../../styles/login-register"
-import { LoginFormTexts } from "../../constants/enums/login"
+import { LOGIN_BUTTON, REGISTER_BUTTON } from "../../constants/buttons"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const registerImage = require("../../assets/login-bg-2.jpg")
 
@@ -56,7 +56,7 @@ export default function Register() {
                 onClick={() => navigate(LOGIN_ROUTE)}
                 size={RegisterForm.button_size}
               >
-                {RegisterFormTexts.login_button}
+                {LOGIN_BUTTON}
               </Button>
             </Stack>
           </Stack>
@@ -202,7 +202,7 @@ const Form = () => {
         onClick={handleSubmit}
         disabled={loading}
       >
-        {LoginFormTexts.register_button}
+        {REGISTER_BUTTON}
       </Button>
     </>
   )

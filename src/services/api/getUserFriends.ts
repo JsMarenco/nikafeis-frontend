@@ -1,16 +1,16 @@
-import { api, GET_USER_FRIEND_REQUESTS_ROUTE } from "../../constants/api"
+import { api, GET_USER_FRIENDS } from "../../constants/api"
 import GlobalApiResponse from "../../interface/globalApiResponse"
 
-const getUserFriendRequestsService = async (offset: number, limit: number, userId: string, token: string) => {
+const getUserFriendsService = async (userId: string, token: string, offset: number, limit: number) => {
   try {
     const config = {
       headers: {
-        "Content-Type": "multipart/form-data",
-        "Authorization": `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+        contentType: "application/json",
+      },
     }
 
-    const url = GET_USER_FRIEND_REQUESTS_ROUTE.replace("%s", userId).replace("%offset", String(offset)).replace("%limit", String(limit))
+    const url = GET_USER_FRIENDS.replace("%userId", userId).replace("%offset", String(offset)).replace("%limit", String(limit))
 
     const { data, status } = await api.get(url, config)
 
@@ -36,5 +36,4 @@ const getUserFriendRequestsService = async (offset: number, limit: number, userI
     return newResponse
   }
 }
-
-export default getUserFriendRequestsService
+export default getUserFriendsService

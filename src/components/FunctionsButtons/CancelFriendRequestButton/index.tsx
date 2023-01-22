@@ -8,6 +8,7 @@ import { setMainUserFriendRequestsSent } from "../../../features/users/userSlice
 import sendFriendRequestService from "../../../services/api/sendFriendRequestService"
 import { CancelFriendRequestInterface } from "../../../interface/functionsButtons"
 import { profile_button_size } from "../../../styles/profile"
+import { CANCEL_FRIEND_REQUEST } from "../../../constants/buttons"
 
 export default function CancelFriendRequestButton(props: CancelFriendRequestInterface) {
   const { username, customStyles, } = props
@@ -25,7 +26,7 @@ export default function CancelFriendRequestButton(props: CancelFriendRequestInte
   }
 
   return (
-    <Tooltip title="Cancel friend request" arrow>
+    <Tooltip title={CANCEL_FRIEND_REQUEST} arrow>
       <IconButton
         onClick={handleCancelFriendRequest}
         sx={customStyles}

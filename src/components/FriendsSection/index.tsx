@@ -1,48 +1,59 @@
 import React, { useEffect, useState } from "react"
 // import LoadMore from "../LoadMore"
-import { Grid } from "@mui/material"
+import { Typography } from "@mui/material"
 import FriendRequestCard from "../Cards/FriendRequestCard"
-import CustomLoader from "../CustomLoader"
 import { useSelector } from "react-redux"
 import { RootState } from "../../app/store"
-import getUserFriendRequestsService from "../../services/api/getUserFriendRequestsService"
-import { friendRequestsInterface } from "../../interface/user"
-import SendFriendRequestButton from "../FunctionsButtons/SendFriendRequestButton"
+import { BasicUserInterface } from "../../interface/user"
+import RemoveFriendButton from "../FunctionsButtons/RemoveFriendButton"
+import getUserFriendsService from "../../services/api/getUserFriends"
+import FriendRequestSkeleton from "../Skeletons/FriendRequestSkeleton"
+import { button_medium } from "../../styles/buttons"
+import Grid from "@mui/material/Unstable_Grid2"
 
 export default function FriendsSection() {
   const state = useSelector((state: RootState) => state.user)
-  const [friendsInfo, setFriendsInfo] = useState<friendRequestsInterface[]>([])
+  const [friendsInfo, setFriendsInfo] = useState<BasicUserInterface[]>([])
   const [loading, setLoading] = useState(true)
+  const [offset, setOffset] = useState(0)
+  const limit = 8
 
-  useEffect(() => {
-    fetchFriends()
-    setLoading(false)
-  }, [])
+  useEffect(() => { fetchFriends() }, [state.friends])
 
   const fetchFriends = async () => {
-    const { data } = await getUserFriendRequestsService(state.user.id, state.token)
+    setLoading(true)
 
-    setFriendsInfo(data)
+    const { data, statusCode, success } = await getUserFriendsService(state.user.id, state.token, offset, limit)
+
+    if (statusCode === 200 && success) {
+      setFriendsInfo(data.friends)
+    }
+
+    setLoading(false)
   }
 
   return (
     <>
-      {loading && <CustomLoader />}
+      {loading && <FriendRequestSkeleton variant="large" />}
 
       {
         !loading && (
           <>
             <Grid container spacing={2}>
+              <Grid xs={12}>
+                <Typography variant="h6" color="text.primary">My friends</Typography>
+              </Grid>
 
               {
-                friendsInfo.map((req) => (
-                  <Grid item xs={12} sm={6} md={3} key={req.id}>
+                friendsInfo.map((friend) => (
+                  <Grid xs={12} sm={6} md={3} key={friend.id}>
                     <FriendRequestCard
-                      avatarUrl={req.from.avatarUrl}
-                      username={req.from.username}
-                      fullName={`${req.from.firstName} ${req.from.lastName}`}
+                      avatarUrl={friend.avatarUrl}
+                      username={friend.username}
+                      fullName={`${friend.firstName} ${friend.lastName}`}
+                      variant="large"
                     >
-
+                      <RemoveFriendButton friendId={friend.id} v2 customStyles={button_medium} />
                     </FriendRequestCard>
                   </Grid>
                 ))

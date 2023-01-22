@@ -1,6 +1,8 @@
 export const button_medium = {
-  width: "50%",
-  mx: "auto",
-  display: "block",
   borderRadius: "15px",
+}
+
+export const button_small = {
+  borderRadius: "15px",
+  minWidth: "100px"
 }

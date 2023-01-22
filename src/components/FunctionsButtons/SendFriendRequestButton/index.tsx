@@ -7,18 +7,21 @@ import { RootState } from "../../../app/store"
 import { messageContext } from "../../../context/MessageContext"
 import { setMainUserFriendRequestsSent } from "../../../features/users/userSlice"
 import { SendFriendRequestInterface } from "../../../interface/functionsButtons"
-import { profile_button_size, profile_option__button_v2 } from "../../../styles/profile"
+import { SEND_FRIEND_REQUEST } from "../../../constants/buttons"
 
 export default function SendFriendRequestButton(props: SendFriendRequestInterface) {
-  const { username, customStyles, v2 = false } = props
+  const { username, customStyles, v2 = false, size = "large" } = props
   const state = useSelector((state: RootState) => state.user)
   const { handleMessage } = useContext(messageContext)
   const dispatch = useDispatch()
 
   const handleSendFriendRequest = async () => {
-    const { data, message, success } = await sendFriendRequestService(username, state.user.id, state.token)
+    const { data, message, success, statusCode } = await sendFriendRequestService(username, state.user.id, state.token)
+    console.log("🚀 ~ file: index.tsx:21 ~ handleSendFriendRequest ~ message", message)
 
-    success && dispatch(setMainUserFriendRequestsSent(data.friendRequestsSent))
+    if (statusCode === 201 && success) {
+      success && dispatch(setMainUserFriendRequestsSent(data.friendRequestsSent))
+    }
 
     handleMessage(message)
   }
@@ -31,16 +34,17 @@ export default function SendFriendRequestButton(props: SendFriendRequestInterfac
             variant="contained"
             color="primary"
             onClick={handleSendFriendRequest}
-            sx={profile_option__button_v2}
+            sx={customStyles}
+            size={size}
           >
-            Add friend
+            {SEND_FRIEND_REQUEST}
           </Button>
         ) : (
-          <Tooltip title="Add friend" arrow>
+          <Tooltip title={SEND_FRIEND_REQUEST} arrow>
             <IconButton
               onClick={handleSendFriendRequest}
               sx={customStyles}
-              size={profile_button_size}
+              size={size}
             >
               <PersonAddAlt1Icon />
             </IconButton>
