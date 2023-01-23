@@ -4,7 +4,7 @@ import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { RootState } from "../../../../app/store"
 import { NO_CONNECTIONS_MESSAGE } from "../../../../constants/messages"
-import { NEW_CONNECTIONS_ROUTE } from "../../../../constants/routes"
+import { FRIEND_REQUEST_ROUTE } from "../../../../constants/routes"
 import { friendRequestsInterface } from "../../../../interface/user"
 import getUserFriendRequestsService from "../../../../services/api/getUserFriendRequestsService"
 import { global_flex } from "../../../../styles"
@@ -51,7 +51,7 @@ export default function FriendRequestReceiveSmall() {
             variant="body1"
             color="text.primary"
             sx={{ cursor: "pointer", "&:hover": { color: "text.secondary" } }}
-            onClick={() => navigate(NEW_CONNECTIONS_ROUTE)}
+            onClick={() => navigate(FRIEND_REQUEST_ROUTE)}
           >
             See all
           </Typography>

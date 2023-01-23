@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Typography, Grid } from "@mui/material"
 import { useSelector } from "react-redux"
 import { BasicUserInterface } from "../../../../interface/user"
@@ -10,6 +10,7 @@ import FriendRequestCard from "../../../Cards/FriendRequestCard"
 import SendFriendRequestButton from "../../../FunctionsButtons/SendFriendRequestButton"
 import NoContent from "../../../NoContent"
 import FriendRequestSkeleton from "../../../Skeletons/FriendRequestSkeleton"
+import LoadMore from "../../../LoadMore"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const notFriends = require("../../../../assets/woman_using_phone.png")
 
@@ -19,6 +20,8 @@ export default function ConnectionsListLarge() {
   const [friendConnections, setFriendConnections] = useState<BasicUserInterface[]>([])
   const [offset, setOffset] = useState(0)
   const limit = 8
+  const observer = useRef<IntersectionObserver | null>(null)
+  const lastItemRef = useRef(null)
 
   useEffect(() => { fetchUserConnections() }, [state.friendRequestsSent])
 
@@ -27,7 +30,7 @@ export default function ConnectionsListLarge() {
     const { data, statusCode, success } = await getUerConnectionsService(state.user.id, offset, limit)
 
     if (success && statusCode === 200) {
-      setFriendConnections(data)
+      setFriendConnections([...friendConnections, ...data])
 
       if (friendConnections.length === offset) {
         setOffset(offset + limit)
@@ -36,6 +39,27 @@ export default function ConnectionsListLarge() {
 
     setLoading(false)
   }
+
+  useEffect(() => {
+    observer.current = new IntersectionObserver((entries) => {
+      const lastItem = entries[0]
+      if (lastItem.isIntersecting) {
+        if (friendConnections.length !== 0) {
+          fetchUserConnections()
+        }
+      }
+    })
+
+    if (lastItemRef.current) {
+      observer.current.observe(lastItemRef.current)
+    }
+    return () => {
+      if (observer.current) {
+        observer.current.disconnect()
+      }
+    }
+  }, [friendConnections])
+
 
   return (
     <>
@@ -66,7 +90,11 @@ export default function ConnectionsListLarge() {
               }
             </Grid>
 
-            {/* <LoadMore /> */}
+            {
+              !loading && friendConnections.length !== 0 && friendConnections.length <= offset && (
+                <div ref={lastItemRef}><LoadMore /></div>
+              )
+            }
 
             {
               friendConnections.length === 0 && (

@@ -35,7 +35,7 @@ export default function PostCard(props: PostInterface) {
   const handleShare = () => {
     const link = generateShareLink(`/posts/${id}`)
 
-    copyToClipboard(`Hey, check out this post ${link}`)
+    copyToClipboard(link)
 
     handleMessage(COPY_CLIPBOARD_MESSAGE)
   }

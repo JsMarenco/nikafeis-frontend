@@ -3,7 +3,7 @@ import { Box, Divider, Paper, Skeleton } from "@mui/material"
 import { skeleton__animation, user__avatar } from "../../../styles"
 import { post__card_container, post__card_header, post__card_interfact__section } from "../../../styles/post"
 
-export default function PostSkeleton() {
+export const PostSkeleton = () => {
   return (
     <Paper sx={post__card_container}>
       <Box sx={post__card_header}>
@@ -56,5 +56,19 @@ export default function PostSkeleton() {
       {/* comment section */}
       <Skeleton animation={skeleton__animation} variant="text" sx={{ width: "100%" }} height={20} />
     </Paper>
+  )
+}
+
+
+export default function PostSkeletonList() {
+  return (
+    <>
+      <PostSkeleton />
+      <PostSkeleton />
+      <PostSkeleton />
+      <PostSkeleton />
+      <PostSkeleton />
+      <PostSkeleton />
+    </>
   )
 }

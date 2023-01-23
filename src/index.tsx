@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom"
 
 // Imports from the current project
 import "./styles/index.css"
-import { SETTINGS_ROUTE, FRIENDS_SECTION_ROUTE, HOME_ROUTE, INBOX_ROUTE, LOGIN_ROUTE, LOGOUT_ROUTE, NEW_CONNECTIONS_ROUTE, PROFILE_ROUTE, REGISTER_ROUTE, RESET_PASSWORD, USER_NOT_FOUND_ROUTE, ACCOUNT_SETTINGS_ROUTE, PROFILE_SETTINGS_ROUTE } from "./constants/routes"
+import { SETTINGS_ROUTE, FRIENDS_SECTION_ROUTE, HOME_ROUTE, INBOX_ROUTE, LOGIN_ROUTE, LOGOUT_ROUTE, NEW_CONNECTIONS_ROUTE, PROFILE_ROUTE, REGISTER_ROUTE, RESET_PASSWORD, USER_NOT_FOUND_ROUTE, ACCOUNT_SETTINGS_ROUTE, PROFILE_SETTINGS_ROUTE, FRIEND_REQUEST_ROUTE } from "./constants/routes"
 import { MessageProvider } from "./context/MessageContext"
 import Login from "./views/Login"
 import Register from "./views/Register"
@@ -22,6 +22,7 @@ import ResetPassword from "./views/ResetPassword"
 import Inbox from "./views/Inbox"
 import AccountSettings from "./components/SettingsSections/AccountSettings"
 import ProfileSettings from "./components/SettingsSections/ProfileSettings"
+import FriendRequestReceive from "./components/FriendRequestReceive"
 
 const container = document.getElementById("root") as HTMLElement
 const root = createRoot(container)
@@ -37,7 +38,9 @@ root.render(
         <Route path={HOME_ROUTE} element={<Home />} >
           <Route path={""} element={<HomeSection />} />
           <Route path={`${PROFILE_ROUTE}/:the_username`} element={<Profile />} />
-          <Route path={FRIENDS_SECTION_ROUTE} element={<FriendsSection />} />
+          <Route path={FRIENDS_SECTION_ROUTE} element={<FriendsSection />}>
+            <Route path={FRIEND_REQUEST_ROUTE} element={<FriendRequestReceive variant="large" />} />
+          </Route>
           <Route path={NEW_CONNECTIONS_ROUTE} element={<Connections />} />
           <Route path={SETTINGS_ROUTE} element={<Settings />} >
             <Route path={ACCOUNT_SETTINGS_ROUTE} element={<AccountSettings />} />

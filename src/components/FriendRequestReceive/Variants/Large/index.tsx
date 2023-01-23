@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react"
-import { Grid, Typography } from "@mui/material"
+import React, { useEffect, useRef, useState } from "react"
+import { Box, Grid, Typography } from "@mui/material"
 import getUserFriendRequestsService from "../../../../services/api/getUserFriendRequestsService"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../../app/store"
-import { NO_CONNECTIONS_MESSAGE } from "../../../../constants/messages"
+import { NO_CONNECTIONS_MESSAGE, NO_MORE_POSTS, NO_REQUESTS_MESSAGE } from "../../../../constants/messages"
 import { friendRequestsInterface } from "../../../../interface/user"
 import { button_medium } from "../../../../styles/buttons"
 import FriendRequestCard from "../../../Cards/FriendRequestCard"
@@ -11,15 +11,28 @@ import AcceptFriendRequestButton from "../../../FunctionsButtons/AcceptFriendReq
 import RejectFriendRequestButton from "../../../FunctionsButtons/RejectFriendRequestButton"
 import NoContent from "../../../NoContent"
 import FriendRequestSkeleton from "../../../Skeletons/FriendRequestSkeleton"
+import { useLocation, useNavigate } from "react-router-dom"
+import { global_flex } from "../../../../styles"
+import { FRIEND_REQUEST_ROUTE } from "../../../../constants/routes"
+import LoadMore from "../../../LoadMore"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const noConnections = require("../../../../assets/new_connections.png")
 
-export default function FriendRequestReceiveLarge() {
+interface Props {
+  loadData?: boolean
+}
+
+export default function FriendRequestReceiveLarge(props: Props) {
+  const { loadData = true } = props
+  const navigate = useNavigate()
+  const location = useLocation()
   const state = useSelector((state: RootState) => state.user)
   const [friendsInfo, setFriendsInfo] = useState<friendRequestsInterface[]>([])
   const [loading, setLoading] = useState(true)
   const [offset, setOffset] = useState(0)
   const limit = 8
+  const observer = useRef<IntersectionObserver | null>(null)
+  const lastItemRef = useRef(null)
 
   useEffect(() => { fetchFriendsRequests() }, [state.friendRequests, state.friends, state.friendRequestsSent])
 
@@ -27,9 +40,9 @@ export default function FriendRequestReceiveLarge() {
     const { data, success } = await getUserFriendRequestsService(offset, limit, state.user.id, state.token)
 
     if (success) {
-      setFriendsInfo(data)
+      setFriendsInfo([...friendsInfo, ...data])
 
-      if ([...friendsInfo, ...data].length === offset) {
+      if (friendsInfo.length === offset) {
         setOffset(offset + limit)
       }
 
@@ -37,27 +50,62 @@ export default function FriendRequestReceiveLarge() {
     }
   }
 
+  useEffect(() => {
+    observer.current = new IntersectionObserver((entries) => {
+      const lastItem = entries[0]
+      if (lastItem.isIntersecting) {
+        if (friendsInfo.length !== 0) {
+          fetchFriendsRequests()
+        }
+      }
+    })
+
+    if (lastItemRef.current) {
+      observer.current.observe(lastItemRef.current)
+    }
+
+    return () => {
+      if (observer.current) {
+        observer.current.disconnect()
+      }
+    }
+  }, [friendsInfo])
+
   return (
     <>
-      {loading && <FriendRequestSkeleton variant="large"  />}
+      {loading && <FriendRequestSkeleton variant="large" />}
 
       {
         !loading && (
           <>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Typography variant="h6" color="text.primary">Friend requests</Typography>
+                <Box sx={{ ...global_flex, justifyContent: "space-between", mb: 2 }}>
+                  <Typography variant="body1" color="text.primary">Friend requests</Typography>
+
+                  {
+                    location.pathname != FRIEND_REQUEST_ROUTE && (
+                      <Typography
+                        variant="body1"
+                        color="text.primary"
+                        sx={{ cursor: "pointer", "&:hover": { color: "text.secondary" } }}
+                        onClick={() => navigate(FRIEND_REQUEST_ROUTE)}
+                      >
+                        See all
+                      </Typography>
+                    )
+                  }
+                </Box>
               </Grid>
 
               {
-                friendsInfo.map((req, index) => (
+                friendsInfo.map((req) => (
                   <Grid
                     key={req.id}
                     item
                     xs={12}
                     sm={6}
                     md={3}
-                    className={index === friendsInfo.length - 1 ? "last-product" : ""}
                   >
                     <FriendRequestCard
                       avatarUrl={req.from.avatarUrl}
@@ -74,7 +122,21 @@ export default function FriendRequestReceiveLarge() {
             </Grid>
 
             {
-              friendsInfo.length === 0 && (
+              loadData && (
+                <>
+                  {
+                    !loading && friendsInfo.length !== 0 && friendsInfo.length === offset ? (
+                      <div ref={lastItemRef}><LoadMore /></div>
+                    ) : (
+                      <NoContent text={NO_REQUESTS_MESSAGE} imgSrc={noConnections} />
+                    )
+                  }
+                </>
+              )
+            }
+
+            {
+              !loading && friendsInfo.length === 0 && (
                 <NoContent text={NO_CONNECTIONS_MESSAGE} imgSrc={noConnections} />
               )
             }

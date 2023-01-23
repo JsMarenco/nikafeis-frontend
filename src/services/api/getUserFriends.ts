@@ -11,11 +11,12 @@ const getUserFriendsService = async (userId: string, token: string, offset: numb
     }
 
     const url = GET_USER_FRIENDS.replace("%userId", userId).replace("%offset", String(offset)).replace("%limit", String(limit))
+    console.log("🚀 ~ file: getUserFriends.ts:14 ~ getUserFriendsService ~ url", url)
 
     const { data, status } = await api.get(url, config)
 
     const newResponse: GlobalApiResponse = {
-      message: data.message,
+      message: data?.message,
       statusCode: status,
       success: true,
       data
@@ -25,6 +26,7 @@ const getUserFriendsService = async (userId: string, token: string, offset: numb
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   catch (error: any) {
+    console.log("🚀 ~ file: getUserFriends.ts:28 ~ getUserFriendsService ~ error", error)
     const { response } = error
 
     const newResponse: GlobalApiResponse = {

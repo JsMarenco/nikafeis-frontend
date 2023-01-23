@@ -1,77 +1,34 @@
-import React, { useEffect, useState } from "react"
-// import LoadMore from "../LoadMore"
-import { Typography } from "@mui/material"
-import FriendRequestCard from "../Cards/FriendRequestCard"
-import { useSelector } from "react-redux"
-import { RootState } from "../../app/store"
-import { BasicUserInterface } from "../../interface/user"
-import RemoveFriendButton from "../FunctionsButtons/RemoveFriendButton"
-import getUserFriendsService from "../../services/api/getUserFriends"
-import FriendRequestSkeleton from "../Skeletons/FriendRequestSkeleton"
-import { button_medium } from "../../styles/buttons"
+import React from "react"
 import Grid from "@mui/material/Unstable_Grid2"
-import NoContent from "../NoContent"
-import { NO_FRIENDS_MESSAGE } from "../../constants/messages"
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const BgImage = require("../../assets/bg-5.png")
+import { Outlet, useLocation } from "react-router-dom"
+import FriendRequestReceive from "../FriendRequestReceive"
+import Friends from "../Friends"
+import { FRIENDS_SECTION_ROUTE } from "../../constants/routes"
 
 export default function FriendsSection() {
-  const state = useSelector((state: RootState) => state.user)
-  const [friendsInfo, setFriendsInfo] = useState<BasicUserInterface[]>([])
-  const [loading, setLoading] = useState(true)
-  const [offset, setOffset] = useState(0)
-  const limit = 8
-
-  useEffect(() => { fetchFriends() }, [state.friends])
-
-  const fetchFriends = async () => {
-    setLoading(true)
-
-    const { data, statusCode, success } = await getUserFriendsService(state.user.id, state.token, offset, limit)
-
-    if (statusCode === 200 && success) {
-      setFriendsInfo(data.friends)
-    }
-
-    setLoading(false)
-  }
+  const location = useLocation()
 
   return (
     <>
-      {loading && <FriendRequestSkeleton variant="large" />}
-
-      {
-        !loading && (
-          <>
-            <Grid container spacing={2}>
+      <Grid container spacing={2}>
+        {
+          location.pathname === FRIENDS_SECTION_ROUTE && (
+            <>
               <Grid xs={12}>
-                <Typography variant="h6" color="text.primary">My friends</Typography>
+                <FriendRequestReceive variant="large" loadData={false} />
               </Grid>
 
-              {
-                friendsInfo.map((friend) => (
-                  <Grid xs={12} sm={6} md={3} key={friend.id}>
-                    <FriendRequestCard
-                      avatarUrl={friend.avatarUrl}
-                      username={friend.username}
-                      fullName={`${friend.firstName} ${friend.lastName}`}
-                      variant="large"
-                    >
-                      <RemoveFriendButton friendId={friend.id} v2 customStyles={button_medium} />
-                    </FriendRequestCard>
-                  </Grid>
-                ))
-              }
-            </Grid>
+              <Grid xs={12}>
+                <Friends />
+              </Grid>
+            </>
+          )
+        }
 
-            {
-              !loading && friendsInfo.length === 0 && (
-                <NoContent imgSrc={BgImage} text={NO_FRIENDS_MESSAGE} />
-              )
-            }
-          </>
-        )
-      }
+        <Grid xs={12}>
+          <Outlet />
+        </Grid>
+      </Grid>
     </>
   )
 }
