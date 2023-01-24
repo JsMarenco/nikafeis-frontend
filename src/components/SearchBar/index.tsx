@@ -1,65 +1,103 @@
-import { Box, Icon, InputBase } from "@mui/material"
-import React, { useState } from "react"
+import { Box, Icon, InputBase, } from "@mui/material"
+import React, { useEffect, useState } from "react"
 import SearchIcon from "@mui/icons-material/Search"
-import UserCard from "../Cards/BaseUserCard"
-import { BasicUserInterface } from "../../interface/user"
 import { input } from "../../styles/inputs"
+import { SearchBarForm } from "../../constants/enums/searchBar"
+import { useSelector } from "react-redux"
+import { RootState } from "../../app/store"
+import searchBarService from "../../services/api/searchBarService"
+import { BasicUserInterface } from "../../interface/user"
+import UserCard from "../Cards/BaseUserCard"
+import CloseIcon from "@mui/icons-material/Close"
+import { useLocation } from "react-router-dom"
 
 export default function SearchBar() {
-  const [loading, setLoading] = useState(false)
-  const [users, setUsers] = useState<BasicUserInterface[]>([])
-  const [searchValue, setSearchValue] = useState("")
+  const state = useSelector((state: RootState) => state.user)
+  const [userFounds, setUsersFounds] = useState<BasicUserInterface[]>([])
+  const [searchValue, setSearchValue] = useState({ [SearchBarForm.search_bar_input_name]: "" })
+  const location = useLocation()
 
-  const handleSubmit = () => {
-    setLoading(true)
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setSearchValue({ ...searchValue, [e.target.name]: e.target.value, })
 
-    // setUsers([{
-    //   id: "ljd",
-    //   firstName: "pablo",
-    //   lastName: "MMm",
-    //   avatarUrl: "",
-    //   username: "jksdnhjd"
-    // }])
+    const { data } = await searchBarService(e.target.value, state.user.id, state.token)
 
-    setSearchValue("")
-    setLoading(false)
+    setUsersFounds(data)
   }
 
-  const handleChange = async (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    setSearchValue(e.target.value)
-  }
+  useEffect(() => {
+    setSearchValue({ [SearchBarForm.search_bar_input_name]: "" })
+    setUsersFounds([])
+
+  }, [location])
+
 
   return (
     <>
-      <Box sx={{ maxWidth: "250px" }}>
+      <Box sx={{ maxWidth: "250px", width: "100%" }} component="form" id={SearchBarForm.id}>
         <InputBase
-          startAdornment={
-            <Icon sx={{ mr: 2, cursor: "pointer" }} onClick={handleSubmit}>
-              <SearchIcon />
-            </Icon>
-          }
-          size="medium"
-          placeholder="Search in Nikafeis"
-          sx={{ ...input, py: 1, px: 3, }}
-          value={searchValue}
+          id={SearchBarForm.search_bar_input_id}
+          role={SearchBarForm.search_bar_input_role}
+          name={SearchBarForm.search_bar_input_name}
+          type={SearchBarForm.search_bar_input_type}
+          value={searchValue[SearchBarForm.search_bar_input_name]}
+          placeholder={SearchBarForm.search_bar_input_placeholder}
+          autoComplete={SearchBarForm.autocomplete_inputs}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleChange(e)}
-          disabled={loading}
+          size={SearchBarForm.input_size}
+          sx={{ ...input, py: 1, px: 3, }}
+          startAdornment={<Icon sx={{ mr: 2 }}><SearchIcon /></Icon>}
+          endAdornment={
+            searchValue[SearchBarForm.search_bar_input_name] && (
+              <Icon
+                sx={{ cursor: "pointer" }}
+                onClick={() => {
+                  setSearchValue({ [SearchBarForm.search_bar_input_name]: "" })
+                  setUsersFounds([])
+                }}
+              >
+                <CloseIcon />
+              </Icon>
+            )
+          }
         />
-      </Box>
 
-      {
-        users.map((user) => (
-          <Box key={user.id}>
-            <UserCard
-              firstName={user.firstName}
-              lastName={user.lastName}
-              avatarUrl={user.avatarUrl}
-              id={user.id}
-              username={user.username}
-            />
-          </Box>
-        ))
-      }
+        {
+          userFounds.length !== 0 && (
+            <Box
+              sx={{
+                bgcolor: "background.default",
+                borderRadius: "15px",
+                p: 1,
+                position: "absolute",
+                top: 65,
+                zIndex: 10,
+                width: "100%",
+                maxWidth: "450px",
+                left: { xs: 0, sm: "auto" },
+                boxShadow: 7,
+                maxHeight: "250px",
+                overflowY: "auto"
+              }}
+            >
+              {
+                userFounds.map((user) => (
+                  <Box key={user.id} sx={{ my: 0.5 }} >
+                    <UserCard
+                      id={user.id}
+                      avatarUrl={user.avatarUrl}
+                      firstName={user.firstName}
+                      lastName={user.lastName}
+                      username={user.username}
+                    />
+                  </Box>
+                ))
+              }
+            </Box>
+
+          )
+        }
+      </Box>
     </>
   )
 }

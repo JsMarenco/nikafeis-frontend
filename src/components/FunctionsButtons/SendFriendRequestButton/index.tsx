@@ -17,7 +17,6 @@ export default function SendFriendRequestButton(props: SendFriendRequestInterfac
 
   const handleSendFriendRequest = async () => {
     const { data, message, success, statusCode } = await sendFriendRequestService(username, state.user.id, state.token)
-    console.log("🚀 ~ file: index.tsx:21 ~ handleSendFriendRequest ~ message", message)
 
     if (statusCode === 201 && success) {
       success && dispatch(setMainUserFriendRequestsSent(data.friendRequestsSent))

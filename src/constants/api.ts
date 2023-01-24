@@ -12,6 +12,7 @@ export const LOGIN_API_ROUTE = "/users/login"
 export const REGISTER_USER_ROUTE = "/users"
 export const FORGOT_PASSWORD_ROUTE = "/users/forgot-password"
 export const RESET_PASSWORD_ROUTE = "/%userId/reset-password"
+export const SEARCH_BAR_ROUTE = "/users/%userId/search?name=%user_name"
 
 // <============= Data Management =============>
 export const UPDATE_USER_INFO = "/users/%userId"

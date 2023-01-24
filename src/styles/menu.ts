@@ -11,6 +11,7 @@ export const menu__container_paper__props = {
       ml: -0.5,
       mr: 1,
     },
+    bgcolor: "background.default",
     "&:before": {
       content: "\"\"",
       display: "block",
@@ -19,7 +20,7 @@ export const menu__container_paper__props = {
       right: 20,
       width: 10,
       height: 10,
-      bgcolor: "background.paper",
+      bgcolor: "background.default",
       transform: "translateY(-50%) rotate(45deg)",
       zIndex: 0,
     },

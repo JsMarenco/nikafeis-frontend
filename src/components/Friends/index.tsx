@@ -11,7 +11,7 @@ import FriendRequestSkeleton from "../Skeletons/FriendRequestSkeleton"
 import { button_medium } from "../../styles/buttons"
 import Grid from "@mui/material/Unstable_Grid2"
 import NoContent from "../NoContent"
-import { NO_FRIENDS_MESSAGE, NO_MORE_FRIENDS } from "../../constants/messages"
+import { NO_FRIENDS_MESSAGE, } from "../../constants/messages"
 import LoadMore from "../LoadMore"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const BgImage = require("../../assets/bg-5.png")
@@ -96,34 +96,16 @@ export default function Friends() {
       }
 
       {
-        !loading && friendsInfo.length !== 0 && friendsInfo.length === offset ? (
+        !loading && friendsInfo.length !== 0 && friendsInfo.length === offset && (
           <div ref={lastItemRef}><LoadMore /></div>
-        ) : (
-          <>
-            {
-              friendsInfo.length === 0 && friendsInfo.length === offset ? (
-                <NoContent imgSrc={BgImage} text={NO_FRIENDS_MESSAGE} />
-              ) : (
-                <NoContent text={NO_MORE_FRIENDS} imgSrc={BgImage} />
-              )
-            }
-          </>
-        )
-      }
-
-      {/* {
-        !loading && friendsInfo.length === 0 && friendsInfo.length === offset && (
-          <NoContent imgSrc={BgImage} text={NO_FRIENDS_MESSAGE} />
         )
       }
 
       {
-        !loading && friendsInfo.length !== 0 && friendsInfo.length === offset ? (
-          <div ref={lastItemRef}><LoadMore /></div>
-        ) : (
-          <NoContent text={NO_MORE_FRIENDS} imgSrc={BgImage} />
+        friendsInfo.length === 0 && (
+          <NoContent imgSrc={BgImage} text={NO_FRIENDS_MESSAGE} />
         )
-      } */}
+      }
     </>
   )
 }

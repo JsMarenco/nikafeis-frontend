@@ -14,7 +14,7 @@ import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined"
 import { register_form, register_form_title, register_image_container } from "../../styles/login-register"
 import { LOGIN_BUTTON, REGISTER_BUTTON } from "../../constants/buttons"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const registerImage = require("../../assets/login-bg-2.jpg")
+const register_image = require("../../assets/bg_register.png")
 
 export default function Register() {
   const [imageContainerHeight, setImageContainerHeight] = useState(window.innerHeight)
@@ -24,10 +24,10 @@ export default function Register() {
   useEffect(() => { setImageContainerHeight(window.innerHeight) }, [window.innerHeight])
 
   return (
-    <Grid container spacing={2} justifyContent="center" alignItems="center">
+    <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ height: imageContainerHeight }}>
       <Grid item display={{ xs: "none", sm: "flex" }} sm={6}>
-        <Box sx={{ ...register_image_container, height: imageContainerHeight }}>,
-          <img src={registerImage} alt="Register image" style={{ width: "100%" }} />
+        <Box sx={{ ...register_image_container, }}>,
+          <img src={register_image} alt="Register image" style={{ width: "100%" }} />
         </Box>
       </Grid>
 

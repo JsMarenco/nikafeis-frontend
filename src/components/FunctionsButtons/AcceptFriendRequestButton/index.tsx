@@ -7,7 +7,6 @@ import acceptFriendRequestService from "../../../services/api/acceptFriendReques
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1"
 import { Button, IconButton, Tooltip } from "@mui/material"
 import { FunctionsButtonsBaseInterface } from "../../../interface/functionsButtons"
-import { profile_button_size, profile_option__button_v2 } from "../../../styles/profile"
 import { ACCEPT_FRIEND_REQUEST } from "../../../constants/buttons"
 
 export default function AcceptFriendRequestButton(props: FunctionsButtonsBaseInterface) {

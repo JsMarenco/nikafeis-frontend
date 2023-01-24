@@ -5,7 +5,7 @@ import { changeTitle } from "../../utils/basic"
 import { HOME_ROUTE, } from "../../constants/routes"
 import { PAGE_NOT_FOUND } from "../../constants/titles"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const notFoundImage = require("../../assets/404.png")
+const image_404 = require("../../assets/404.png")
 
 export default function ErrorPage() {
   const navigate = useNavigate()
@@ -24,7 +24,7 @@ export default function ErrorPage() {
       >
         <Box sx={{ height: "350px", overflow: "hidden" }}>
           <img
-            src={notFoundImage}
+            src={image_404}
             alt="Man thinking"
             style={{ height: "100%" }}
           />

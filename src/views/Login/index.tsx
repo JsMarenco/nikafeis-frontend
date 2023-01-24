@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { Box, Button, Divider, Stack, Typography, Grid, TextField, Icon } from "@mui/material"
+import { Box, Button, Divider, Stack, Typography, TextField, Icon } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { changeTitle } from "../../utils/basic"
 import { messageContext } from "../../context/MessageContext"
@@ -15,24 +15,29 @@ import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined"
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
 import { FORGOT_PASSWORD_BUTTON, LOGIN_BUTTON, REGISTER_BUTTON } from "../../constants/buttons"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const loginImage = require("../../assets/login-bg.jpg")
+const login_image = require("../../assets/bg_login.png")
+import Grid from "@mui/material/Unstable_Grid2"
 
 export default function Login() {
   const navigate = useNavigate()
-  const [imageContainerHeight, setImageContainerHeight] = useState(window.innerHeight)
 
   useEffect(() => { changeTitle(LOGIN) }, [])
-  useEffect(() => { setImageContainerHeight(window.innerHeight) }, [window.innerHeight])
 
   return (
-    <Grid container spacing={2} justifyContent="center" alignItems="center">
-      <Grid item display={{ xs: "none", sm: "flex" }} sm={6}>
-        <Box sx={{ ...login_image_container, height: imageContainerHeight }}>,
-          <img src={loginImage} alt="Login image" style={{ width: "100%" }} />
+    <Grid
+      container
+      spacing={2}
+      justifyContent="center"
+      alignItems="center"
+      disableEqualOverflow
+    >
+      <Grid display={{ xs: "none", sm: "flex" }} sm={6} sx={{ height: window.innerHeight }} >
+        <Box sx={{ ...login_image_container, }}>,
+          <img src={login_image} alt="Login image" style={{ width: "100%", height: "100%" }} />
         </Box>
       </Grid>
 
-      <Grid item xs={12} sm={6}>
+      <Grid xs={12} sm={6}>
         <Box sx={login_form}>
           <Typography
             variant="h2"
@@ -133,7 +138,7 @@ const Form = () => {
 
       <Divider flexItem />
 
-      <Stack  spacing={2} direction="row" alignItems="center" justifyContent="space-between">
+      <Stack spacing={2} direction="row" alignItems="center" justifyContent="space-between">
         <Typography variant="body2" color="text.primary">{LoginFormTexts.forgot_password}</Typography>
 
         <Button

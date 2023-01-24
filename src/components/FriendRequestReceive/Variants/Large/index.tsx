@@ -3,7 +3,7 @@ import { Box, Grid, Typography } from "@mui/material"
 import getUserFriendRequestsService from "../../../../services/api/getUserFriendRequestsService"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../../app/store"
-import { NO_CONNECTIONS_MESSAGE, NO_MORE_POSTS, NO_REQUESTS_MESSAGE } from "../../../../constants/messages"
+import { NO_CONNECTIONS_MESSAGE, } from "../../../../constants/messages"
 import { friendRequestsInterface } from "../../../../interface/user"
 import { button_medium } from "../../../../styles/buttons"
 import FriendRequestCard from "../../../Cards/FriendRequestCard"
@@ -125,10 +125,8 @@ export default function FriendRequestReceiveLarge(props: Props) {
               loadData && (
                 <>
                   {
-                    !loading && friendsInfo.length !== 0 && friendsInfo.length === offset ? (
+                    !loading && friendsInfo.length !== 0 && friendsInfo.length === offset && (
                       <div ref={lastItemRef}><LoadMore /></div>
-                    ) : (
-                      <NoContent text={NO_REQUESTS_MESSAGE} imgSrc={noConnections} />
                     )
                   }
                 </>
@@ -136,7 +134,7 @@ export default function FriendRequestReceiveLarge(props: Props) {
             }
 
             {
-              !loading && friendsInfo.length === 0 && (
+              friendsInfo.length === 0 && (
                 <NoContent text={NO_CONNECTIONS_MESSAGE} imgSrc={noConnections} />
               )
             }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
-import { Container, Typography, Divider, Stack, } from "@mui/material"
+import { Stack, } from "@mui/material"
 import { RootState } from "../../app/store"
 import { useDispatch, useSelector } from "react-redux"
 import { changeTitle } from "../../utils/basic"
@@ -53,7 +53,7 @@ export default function Profile() {
     }
 
     getInfoByUser()
-  }, [location])
+  }, [location, the_username])
 
   return (
     <>

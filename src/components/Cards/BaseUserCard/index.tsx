@@ -1,9 +1,11 @@
-import { Avatar, Box, IconButton, Stack, Tooltip, Typography } from "@mui/material"
 import React from "react"
+import { Avatar, Box, IconButton, Stack, Tooltip, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { PROFILE_ROUTE } from "../../../constants/routes"
 import { BasicUserInterface } from "../../../interface/user"
 import { userCardContainer } from "./styles"
+import MessageIcon from "@mui/icons-material/Message"
+import { user__avatar } from "../../../styles"
 
 export default function UserCard(props: BasicUserInterface) {
   const { firstName = "", lastName = "", username = "", avatarUrl = "", } = props
@@ -19,11 +21,12 @@ export default function UserCard(props: BasicUserInterface) {
       <Avatar
         src={avatarUrl}
         alt={`${firstName} ${lastName}`}
-      />
-
-      <Box
-        flexGrow={1}
+        sx={{ ...user__avatar, mr: 0 }}
       >
+        {firstName.charAt(0)}
+      </Avatar>
+
+      <Box flexGrow={1}>
         <Tooltip title="View profile" arrow>
           <Typography
             variant="subtitle1"
@@ -35,7 +38,7 @@ export default function UserCard(props: BasicUserInterface) {
               display: "inline-block",
             }}
           >
-            {`${name} ${lastName}`}
+            {`${firstName} ${lastName}`}
           </Typography>
         </Tooltip>
       </Box>
@@ -46,7 +49,7 @@ export default function UserCard(props: BasicUserInterface) {
         flexWrap="wrap"
       >
         <IconButton>
-          {/* <MessageIcon /> */}
+          <MessageIcon />
         </IconButton>
       </Stack>
     </Stack>

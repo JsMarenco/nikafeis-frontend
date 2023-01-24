@@ -22,7 +22,7 @@ export default function ProfileHeader() {
     } else {
       setUserInfo(visitedUserState.user as UserInterface)
     }
-  }, [the_username, state.user])
+  }, [the_username, state.user, visitedUserState.user])
 
   return (
     <>

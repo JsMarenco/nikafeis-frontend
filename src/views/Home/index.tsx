@@ -23,7 +23,7 @@ export default function Home() {
 
   return (
     <>
-      <Grid container rowSpacing={2} disableEqualOverflow sx={container_grid}>
+      <Grid container rowSpacing={2} disableEqualOverflow sx={{ ...container_grid, height: window.innerHeight }}>
         <Grid xs={12}>
           <Header />
         </Grid>

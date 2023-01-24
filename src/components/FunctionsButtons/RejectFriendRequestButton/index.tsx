@@ -7,7 +7,6 @@ import { RootState } from "../../../app/store"
 import { messageContext } from "../../../context/MessageContext"
 import { setMainUserFriendRequests } from "../../../features/users/userSlice"
 import { FunctionsButtonsBaseInterface } from "../../../interface/functionsButtons"
-import { profile_button_size } from "../../../styles/profile"
 import { REJECT_FRIEND_REQUEST } from "../../../constants/buttons"
 
 export default function RejectFriendRequestButton(props: FunctionsButtonsBaseInterface) {

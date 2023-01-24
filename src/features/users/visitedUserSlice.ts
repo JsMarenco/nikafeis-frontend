@@ -12,6 +12,11 @@ const initialVisitedUser: VisitedUserStateInterface = {
     lastName: "",
     username: "",
     website: "",
+    facebook_link: "",
+    github_link: "",
+    linkedin_link: "",
+    twitter_link: "",
+    instagram_link: "",
   },
   fullName: "",
   friends: [],
@@ -36,9 +41,13 @@ const visitedUserSlice = createSlice({
       state.friendRequestsSent = action.payload.friendRequestsSent
       state.posts = action.payload.posts
       state.fullName = `${action.payload.firstName} ${action.payload.lastName}`
+    },
+    setVisitedUserReset(state) {
+      // Reset the state to the initial state
+      Object.assign(state, initialVisitedUser)
     }
   }
 })
 
-export const { setVisitedUser } = visitedUserSlice.actions
+export const { setVisitedUser, setVisitedUserReset } = visitedUserSlice.actions
 export default visitedUserSlice.reducer

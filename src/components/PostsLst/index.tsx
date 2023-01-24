@@ -11,7 +11,6 @@ import { useSelector } from "react-redux"
 import NoContent from "../NoContent"
 import PostSkeletonList from "../Skeletons/PostSkeleton"
 import LoadMore from "../LoadMore"
-import { NO_MORE_POSTS } from "../../constants/messages"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const BgImage = require("../../assets/bg-3.png")
 
@@ -109,10 +108,8 @@ export default function PostsLst() {
         }
 
         {
-          !loading && posts.length !== 0 && posts.length === offset ? (
+          !loading && posts.length !== 0 && posts.length === offset && (
             <div ref={lastItemRef}><LoadMore /></div>
-          ) : (
-            <NoContent imgSrc={BgImage} text={NO_MORE_POSTS} />
           )
         }
 

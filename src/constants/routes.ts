@@ -16,6 +16,6 @@ export const RESET_PASSWORD = "/reset-password"
 export const FRIEND_REQUEST_ROUTE = "/friends/requests"
 
 export const SETTINGS_ROUTE = "/settings"
-export const ACCOUNT_SETTINGS_ROUTE = "account"
+export const ACCOUNT_SETTINGS_ROUTE = `${SETTINGS_ROUTE}/account`
 export const SOCIAL_ACCOUNTS_SETTINGS_ROUTE = `${ACCOUNT_SETTINGS_ROUTE}/social`
 export const PROFILE_SETTINGS_ROUTE = `${ACCOUNT_SETTINGS_ROUTE}/profile`

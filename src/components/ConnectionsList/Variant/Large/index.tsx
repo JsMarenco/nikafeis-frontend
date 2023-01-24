@@ -3,7 +3,7 @@ import { Typography, Grid } from "@mui/material"
 import { useSelector } from "react-redux"
 import { BasicUserInterface } from "../../../../interface/user"
 import { RootState } from "../../../../app/store"
-import { NO_FRIEND_REQUEST_MESSAGE } from "../../../../constants/messages"
+import {  NO_PEOPLE_HERE } from "../../../../constants/messages"
 import getUerConnectionsService from "../../../../services/api/getUerConnectionsService"
 import { button_medium } from "../../../../styles/buttons"
 import FriendRequestCard from "../../../Cards/FriendRequestCard"
@@ -91,14 +91,14 @@ export default function ConnectionsListLarge() {
             </Grid>
 
             {
-              !loading && friendConnections.length !== 0 && friendConnections.length <= offset && (
+              !loading && (friendConnections.length !== 0 && friendConnections.length === offset) && (
                 <div ref={lastItemRef}><LoadMore /></div>
               )
             }
 
             {
               friendConnections.length === 0 && (
-                <NoContent text={NO_FRIEND_REQUEST_MESSAGE} imgSrc={notFriends} />
+                <NoContent text={NO_PEOPLE_HERE} imgSrc={notFriends} />
               )
             }
           </>

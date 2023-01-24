@@ -11,7 +11,12 @@ export default interface UserInterface {
   lastName: string;
   token: string;
   username: string;
-  website: "",
+  website: string,
+  facebook_link: string,
+  github_link: string,
+  linkedin_link: string,
+  twitter_link: string,
+  instagram_link: string,
 }
 
 export interface UserPayloadInterface extends UserInterface {
@@ -19,7 +24,7 @@ export interface UserPayloadInterface extends UserInterface {
   friendRequests: string[],
   friendRequestsSent: string[],
   followers: string[]
-  posts: string[]
+  posts: string[],
 }
 
 export interface BasicUserInterface {
@@ -39,7 +44,7 @@ export interface UserStateInterface {
   friendRequestsSent: string[],
   friendRequests: string[],
   posts: string[],
-  appTheme: string
+  appTheme: string,
 }
 
 export interface ProfileHeaderInterface {
