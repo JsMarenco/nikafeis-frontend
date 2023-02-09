@@ -1,11 +1,15 @@
-import { Avatar, Box, Stack, Typography } from "@mui/material"
 import React from "react"
+
+// Third-party dependencies
+import { Avatar, Box, Stack, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
-import { PROFILE_ROUTE } from "../../../../../constants/routes"
+
+// Current project dependencies
 import { FRBaseProps } from "../../../../../interface/friends"
-import { global_flex, user__avatar, user__fullName_link } from "../../../../../styles"
-import { friend_request__card_container } from "../../../../../styles/friendRequest"
 import { convertDate } from "../../../../../utils/basic"
+import cardStyles from "../../../../../styles/components/cards"
+import stylesVars from "../../../../../styles/globals/vars"
+import AppRoutes from "../../../../../constants/app/routes"
 
 export default function FriendRequestCardSmall(props: FRBaseProps) {
   const navigate = useNavigate()
@@ -13,17 +17,17 @@ export default function FriendRequestCardSmall(props: FRBaseProps) {
 
   return (
     <Stack
-      sx={{ ...friend_request__card_container, p: 1, bgcolor: "background.default" }}
+      sx={cardStyles.container}
       direction="row"
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
     >
-      <Box sx={{ ...global_flex, justifyContent: "initial", width: "100%", mb: 2 }}>
+      <Box sx={{ ...stylesVars.centeredElements, justifyContent: "initial", width: "100%", mb: 2 }}>
         <Avatar
           src={avatarUrl}
           alt={`${fullName}'s avatar`}
-          sx={user__avatar}
+          sx={cardStyles.userAvatar}
         >
           {fullName.charAt(0)}
         </Avatar>
@@ -33,10 +37,8 @@ export default function FriendRequestCardSmall(props: FRBaseProps) {
             variant="body1"
             color="text.primary"
             align="left"
-            onClick={() => navigate(`${PROFILE_ROUTE}/${username}`)}
-            sx={{
-              ...user__fullName_link,
-            }}
+            onClick={() => navigate(AppRoutes.visitUserProfile.replace("%username", username))}
+            sx={cardStyles.profileLink}
           >
             {fullName}
           </Typography>

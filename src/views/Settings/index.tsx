@@ -1,14 +1,19 @@
 import React, { useEffect, useState, } from "react"
-import { Box, IconButton, Typography, } from "@mui/material"
+
+// Third-party dependencies
+import { Box, IconButton, Stack, Typography, } from "@mui/material"
+import { Outlet, useLocation, useNavigate } from "react-router-dom"
+import ArrowBackIcon from "@mui/icons-material/ArrowBack"
+import Grid from "@mui/material/Unstable_Grid2"
+
+// Current project dependencies
 import { changeTitle } from "../../utils/basic"
 import { ACCOUNT_SETTINGS } from "../../constants/titles"
 import SettingsMenu from "../../components/Menus/SettingsMenu"
-import { Outlet, useLocation, useNavigate } from "react-router-dom"
 import { SETTINGS_ROUTE } from "../../constants/routes"
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import { global_flex } from "../../styles"
 import { settings_container } from "../../styles/settings"
-import Grid from "@mui/material/Unstable_Grid2"
+import stylesVars from "../../styles/globals/vars"
+import settingsStyles from "styles/pages/settings"
 
 export default function Settings() {
   const navigate = useNavigate()
@@ -25,9 +30,9 @@ export default function Settings() {
   }, [location])
 
   return (
-    <Grid container rowSpacing={2} disableEqualOverflow>
+    <Grid container spacing={2} disableEqualOverflow>
       <Grid xs={12}>
-        <Box sx={{ ...global_flex, justifyContent: "initial", ...settings_container }}>
+        <Box sx={{ ...stylesVars.centeredElements, justifyContent: "initial", ...settings_container }}>
           <IconButton
             size="large"
             sx={{ mr: 1.5 }}
@@ -40,9 +45,9 @@ export default function Settings() {
       </Grid>
 
       <Grid xs={12} sx={{ display: (!hideMenu ? "block" : "none") }}>
-        <Box sx={settings_container}>
+        <Stack spacing={1} sx={settingsStyles.container}>
           {!hideMenu && (<SettingsMenu />)}
-        </Box>
+        </Stack>
       </Grid>
 
       <Outlet />

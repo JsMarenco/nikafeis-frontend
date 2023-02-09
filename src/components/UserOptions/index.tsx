@@ -1,9 +1,13 @@
 import React from "react"
+
+// Third-party dependencies
 import { useNavigate } from "react-router-dom"
 import { Button } from "@mui/material"
 import EditIcon from "@mui/icons-material/Edit"
-import { SETTINGS_ROUTE } from "../../constants/routes"
-import { profile_option__button } from "../../styles/profile"
+
+// Current project dependencies
+import AppRoutes from "constants/app/routes"
+import profileStyles from "styles/pages/profile"
 
 export default function UserOptions() {
   const navigate = useNavigate()
@@ -13,8 +17,8 @@ export default function UserOptions() {
       <Button
         variant="text"
         startIcon={<EditIcon />}
-        onClick={() => navigate(SETTINGS_ROUTE)}
-        sx={profile_option__button}
+        onClick={() => navigate(AppRoutes.settings)}
+        sx={profileStyles.optionButton}
       >
         Edit profile
       </Button>

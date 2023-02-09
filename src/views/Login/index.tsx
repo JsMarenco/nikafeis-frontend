@@ -1,22 +1,27 @@
 import React, { useContext, useEffect, useState } from "react"
+
+// Third-party dependencies
 import { Box, Button, Divider, Stack, Typography, TextField, Icon } from "@mui/material"
 import { useNavigate } from "react-router-dom"
-import { changeTitle } from "../../utils/basic"
-import { messageContext } from "../../context/MessageContext"
-import loginUserService from "../../services/api/loginUserService"
-import { useDispatch } from "react-redux"
-import { setMainUser } from "../../features/users/userSlice"
-import { HOME_ROUTE, REGISTER_ROUTE, RESET_PASSWORD } from "../../constants/routes"
-import { LOGIN } from "../../constants/titles"
-import { login_form, Login_form_title, login_image_container } from "../../styles/login-register"
-import { LoginForm, LoginFormTexts } from "../../constants/enums/login"
+import Grid from "@mui/material/Unstable_Grid2"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined"
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
+import { useDispatch } from "react-redux"
+
+// Current project dependencies
+import { changeTitle } from "../../utils/basic"
+import { messageContext } from "../../context/MessageContext"
+import loginUserService from "../../services/api/loginUserService"
+import { setMainUser } from "../../features/users/userSlice"
+import { RESET_PASSWORD } from "../../constants/routes"
+import { LOGIN } from "../../constants/titles"
+import { login_form, Login_form_title, login_image_container } from "../../styles/login-register"
+import { LoginForm, LoginFormTexts } from "../../constants/enums/login"
 import { FORGOT_PASSWORD_BUTTON, LOGIN_BUTTON, REGISTER_BUTTON } from "../../constants/buttons"
+import AppRoutes from "constants/app/routes"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const login_image = require("../../assets/bg_login.png")
-import Grid from "@mui/material/Unstable_Grid2"
 
 export default function Login() {
   const navigate = useNavigate()
@@ -58,7 +63,7 @@ export default function Login() {
             <Button
               variant="text"
               color="primary"
-              onClick={() => navigate(REGISTER_ROUTE)}
+              onClick={() => navigate(AppRoutes.register)}
               size={LoginForm.button_size}
             >
               {REGISTER_BUTTON}
@@ -96,7 +101,7 @@ const Form = () => {
       dispatch(setMainUser(data))
       setLoginInfo({ [LoginForm.email_input_name]: "", [LoginForm.password_input_name]: "" })
 
-      setTimeout(() => { navigate(HOME_ROUTE) }, 1000)
+      setTimeout(() => { navigate(AppRoutes.home) }, 1000)
     }
   }
 
@@ -150,7 +155,6 @@ const Form = () => {
           {FORGOT_PASSWORD_BUTTON}
         </Button>
       </Stack>
-
 
       <Button
         variant="contained"

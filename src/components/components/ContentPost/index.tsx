@@ -1,14 +1,21 @@
 import React from "react"
+
+// Third-party dependencies
 import { Stack, Typography, Box, IconButton, Tooltip, } from "@mui/material"
+import Download from "@mui/icons-material/Download"
+
+// Current project dependencies
 import { ContentPostInterface } from "../../../interface/post"
 import { downloadAndSaveImage } from "../../../utils/basic"
-import Download from "@mui/icons-material/Download"
+import cardStyles from "../../../styles/components/cards"
+import postCardText from "../../../lang/en/components/postCard"
 
 export default function ContentPost(props: ContentPostInterface) {
   const {
     title = "",
     content = "",
     postImages = [],
+    username = ""
   } = props
 
   return (
@@ -16,6 +23,7 @@ export default function ContentPost(props: ContentPostInterface) {
       <Typography
         variant="subtitle1"
         color="text.primary"
+        sx={cardStyles.title}
       >
         {title}
       </Typography>
@@ -23,6 +31,7 @@ export default function ContentPost(props: ContentPostInterface) {
       <Typography
         variant="caption"
         color="text.primary"
+        sx={cardStyles.text}
       >
         {content}
       </Typography>
@@ -39,15 +48,10 @@ export default function ContentPost(props: ContentPostInterface) {
             >
               <img
                 src={postImage}
-                alt={"This is a post in nikafeis"}
-                style={{
-                  width: "100%",
-                  height: "auto",
-                  borderRadius: "15px"
-                }}
+                alt={postCardText.postAltImage.replace("%username", username)}
               />
 
-              <Tooltip title="Download the image" arrow>
+              <Tooltip title={postCardText.downloadImageTooltip} arrow>
                 <IconButton
                   color="info"
                   sx={{ position: "absolute", botton: 0, right: 0, }}

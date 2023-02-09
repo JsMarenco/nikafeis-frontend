@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react"
+
+// Third-party dependencies
 import { useLocation, useNavigate, useParams } from "react-router-dom"
-import { Stack, } from "@mui/material"
-import { RootState } from "../../app/store"
 import { useDispatch, useSelector } from "react-redux"
+import { Stack } from "@mui/material"
+import Grid from "@mui/material/Unstable_Grid2"
+
+// Current project dependencies
+import { RootState } from "../../app/store"
 import { changeTitle } from "../../utils/basic"
-import { LOGIN_ROUTE, MAIN_USER_PROFILE_ROUTE, USER_NOT_FOUND_ROUTE, USER_USERNAME_APP_ROUTE } from "../../constants/routes"
 import CustomLoader from "../../components/CustomLoader"
 import getUserByUsernameService from "../../services/api/getUserByUsernameService"
 import ProfileHeader from "../../components/components/ProfileHeader"
@@ -12,8 +16,8 @@ import PostsLst from "../../components/PostsLst"
 import CreatePost from "../../components/CreatePost"
 import { setVisitedUser } from "../../features/users/visitedUserSlice"
 import AboutUser from "../../components/components/AboutUser"
-import Grid from "@mui/material/Unstable_Grid2"
 import ConnectionsList from "../../components/ConnectionsList"
+import AppRoutes from "../../constants/app/routes"
 
 export default function Profile() {
   const state = useSelector((state: RootState) => state.user)
@@ -27,28 +31,28 @@ export default function Profile() {
     const getInfoByUser = async () => {
       let usernameToFind = ""
 
-      !state.user.username && navigate(LOGIN_ROUTE)
-      the_username === state.user.username && navigate(MAIN_USER_PROFILE_ROUTE)
+      !state.user.username && navigate(AppRoutes.login)
+      the_username === state.user.username && navigate(AppRoutes.mainUserProfile)
 
-      if (the_username === USER_USERNAME_APP_ROUTE) {
+      if (the_username === AppRoutes.userUsernameApp) {
         usernameToFind = state.user.username
       }
 
-      if (the_username !== USER_USERNAME_APP_ROUTE) {
+      if (the_username !== AppRoutes.userUsernameApp) {
         usernameToFind = the_username as string
       }
 
       const { data, statusCode, success } = await getUserByUsernameService(usernameToFind || "")
 
       if (success) {
-        the_username !== USER_USERNAME_APP_ROUTE && dispatch(setVisitedUser(data))
+        the_username !== AppRoutes.userUsernameApp && dispatch(setVisitedUser(data))
         changeTitle(`${data.firstName} ${data.lastName}`)
 
         setLoading(false)
       }
 
       if (statusCode === 404) {
-        navigate(USER_NOT_FOUND_ROUTE)
+        navigate(AppRoutes.userNotFound)
       }
     }
 
@@ -71,7 +75,7 @@ export default function Profile() {
                 <AboutUser />
 
                 {
-                  the_username === USER_USERNAME_APP_ROUTE && (
+                  the_username === AppRoutes.userUsernameApp && (
                     <>
                       <ConnectionsList variant="small" />
                     </>
@@ -83,7 +87,7 @@ export default function Profile() {
             <Grid xs={12} md={8}>
               <Stack spacing={2}>
                 {
-                  the_username === USER_USERNAME_APP_ROUTE && (
+                  the_username === AppRoutes.userUsernameApp && (
                     <CreatePost />
                   )
                 }

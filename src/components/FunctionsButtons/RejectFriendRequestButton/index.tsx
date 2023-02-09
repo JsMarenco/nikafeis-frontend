@@ -1,8 +1,12 @@
 import React, { useContext } from "react"
+
+// Third-party dependencies
 import { Button, IconButton, Tooltip } from "@mui/material"
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove"
-import rejectFriendRequestService from "../../../services/api/rejectFriendRequestService"
 import { useSelector, useDispatch } from "react-redux"
+
+// Current project dependencies
+import rejectFriendRequestService from "../../../services/api/rejectFriendRequestService"
 import { RootState } from "../../../app/store"
 import { messageContext } from "../../../context/MessageContext"
 import { setMainUserFriendRequests } from "../../../features/users/userSlice"

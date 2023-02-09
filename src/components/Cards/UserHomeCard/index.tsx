@@ -1,21 +1,25 @@
 import React from "react"
-import { user__card_container } from "../../../styles/userCard"
+
+// Third-party dependencies
 import { Avatar, Box, Stack, Typography } from "@mui/material"
 import { useSelector } from "react-redux"
+
+// Current project dependencies
 import { RootState } from "../../../app/store"
-import { global_flex, user__avatar } from "../../../styles"
+import cardStyles from "../../../styles/components/cards"
+import stylesVars from "../../../styles/globals/vars"
 
 export default function UserHomeCard() {
   const state = useSelector((state: RootState) => state.user)
 
   return (
     <>
-      <Stack direction="column" sx={user__card_container}>
-        <Box sx={{ ...global_flex, justifyItems: "initial" }} >
+      <Stack direction="column" sx={cardStyles.container}>
+        <Box sx={{ ...stylesVars.centeredElements, justifyItems: "initial" }} >
           <Avatar
             src={state.user.avatarUrl}
             alt={`${state.user.firstName} ${state.user.lastName} avatar's`}
-            sx={user__avatar}
+            sx={cardStyles.userAvatar}
           >
             {state.user.firstName.charAt(0)}
           </Avatar>
@@ -23,7 +27,7 @@ export default function UserHomeCard() {
           <Box>
             <Typography
               variant="subtitle1"
-              color="text.primary"
+              sx={cardStyles.title}
             >
               {`${state.user.firstName} ${state.user.lastName}`}
             </Typography>
@@ -37,16 +41,6 @@ export default function UserHomeCard() {
             </Typography>
           </Box>
         </Box>
-
-        {/* <Box>
-          <Typography
-            variant="subtitle1"
-            color="text.primary"
-            sx={{ fontSize: 12, }}
-          >
-            {`Friends ${state.friends.length}`}
-          </Typography>
-        </Box> */}
       </Stack>
     </>
   )

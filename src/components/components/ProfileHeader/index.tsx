@@ -1,58 +1,62 @@
 import React, { useEffect, useState } from "react"
+
+// Third-party dependencies
 import { Avatar, Box, Typography, Stack, Grid } from "@mui/material"
-import UserInterface from "../../../interface/user"
 import { useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
+
+// Current project dependencies
 import { RootState } from "../../../app/store"
 import { USER_USERNAME_APP_ROUTE } from "../../../constants/routes"
-import { profile_about, profile_about_container, profile_about_titles, profile_avatar, profile_avatar_container, profile_cover, profile_cover_container } from "../../../styles/profile"
 import { default_cover } from "../../../constants"
 import UserOptions from "../../UserOptions"
 import VisitorOption from "../../VisitorOptions"
+import IUser from "../../../interface/users"
+import profileStyles from "../../../styles/pages/profile"
 
 export default function ProfileHeader() {
   const state = useSelector((state: RootState) => state.user)
   const visitedUserState = useSelector((state: RootState) => state.visitedUser)
   const { the_username } = useParams()
-  const [userInfo, setUserInfo] = useState<UserInterface>({} as UserInterface)
+  const [userInfo, setUserInfo] = useState<IUser>({} as IUser)
 
   useEffect(() => {
     if (the_username === USER_USERNAME_APP_ROUTE || the_username === state.user.username) {
       setUserInfo(state.user)
     } else {
-      setUserInfo(visitedUserState.user as UserInterface)
+      setUserInfo(visitedUserState.user as IUser)
     }
   }, [the_username, state.user, visitedUserState.user])
 
   return (
     <>
       <Grid item xs={12}>
-        <Box sx={{ ...profile_cover_container, px: 0, }}>
+        <Box sx={profileStyles.coverContainer}>
           <img
             style={{
-              position: "absolute",
               backgroundImage: `url(${userInfo.coverImageUrl ? userInfo.coverImageUrl : default_cover})`,
-              ...profile_cover,
+              ...profileStyles.cover,
+              border: "0px"
             }}
           />
 
-          <Box sx={profile_about_container}>
-            <Box sx={{ ...profile_avatar_container }}>
+          <Box sx={profileStyles.aboutContainer}>
+            <Box sx={profileStyles.avatarContainer}>
               <Avatar
                 src={userInfo.avatarUrl}
                 alt={`${userInfo.firstName} ${userInfo.lastName}`}
                 variant="circular"
                 sizes="large"
-                sx={{ ...profile_avatar, }}
+                sx={profileStyles.avatar}
               />
             </Box>
 
-            <Box flexGrow={1} sx={profile_about}>
+            <Box flexGrow={1} sx={profileStyles.about}>
               <Box>
                 <Typography
                   variant="h6"
                   color="text.primary"
-                  sx={profile_about_titles}
+                  sx={profileStyles.aboutTitles}
                 >
                   {`${userInfo.firstName} ${userInfo.lastName}`}
                 </Typography>
@@ -60,7 +64,7 @@ export default function ProfileHeader() {
                 <Typography
                   variant="body1"
                   color="text.primary"
-                  sx={profile_about_titles}
+                  sx={profileStyles.aboutTitles}
                 >
                   {userInfo.email}
                 </Typography>

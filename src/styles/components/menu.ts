@@ -1,7 +1,7 @@
-export const menu__container_paper__props = {
+const paperProps = {
   elevation: 0,
   sx: {
-    borderRadius: "10px",
+    borderRadius: "15px",
     overflow: "visible",
     filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
     mt: 1.5,
@@ -27,20 +27,16 @@ export const menu__container_paper__props = {
   },
 }
 
-export const menu_link = {
+const link = {
   p: 2,
   borderRadius: "15px",
   color: "text.primary",
   my: 1,
 }
 
-const menu_container_base_styles = {
-  backgroundColor: "background.paper",
+const container = {
+  backgroundColor: "background.default",
   zIndex: 9,
-}
-
-export const menu_container_desktop = {
-  ...menu_container_base_styles,
   position: {
     xs: "fixed",
     sm: "relative",
@@ -56,6 +52,31 @@ export const menu_container_desktop = {
     xs: 6,
     sm: 0
   },
-  pt: { xs: 2, sm: 0 },
   px: 2
 }
+
+const iconSize: "medium" | "small" | "large" = "medium"
+
+const floatButton = {
+  position: "fixed",
+  bottom: 15,
+  right: 15,
+  boxshadow: 7,
+  display: {
+    xs: "flex",
+    sm: "none"
+  }
+}
+
+/**
+ * Styles for menus
+ */
+const menuStyles = {
+  link,
+  container,
+  iconSize,
+  floatButton,
+  paperProps,
+}
+
+export default menuStyles

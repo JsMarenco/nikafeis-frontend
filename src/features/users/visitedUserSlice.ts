@@ -1,22 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { VisitedUserPayloadInterface, VisitedUserStateInterface } from "../../interface/user"
+import { IVisitedUserState } from "../../interface/users"
 
-const initialVisitedUser: VisitedUserStateInterface = {
+const initialVisitedUser: IVisitedUserState = {
   user: {
     avatarUrl: "",
     coverImageUrl: "",
     createdAt: "",
     description: "",
+    email: "",
     firstName: "",
     id: "",
     lastName: "",
     username: "",
     website: "",
-    facebook_link: "",
-    github_link: "",
-    linkedin_link: "",
-    twitter_link: "",
-    instagram_link: "",
+    facebookLink: "",
+    githubLink: "",
+    linkedinLink: "",
+    twitterLink: "",
+    instagramLink: "",
   },
   fullName: "",
   friends: [],
@@ -25,16 +26,11 @@ const initialVisitedUser: VisitedUserStateInterface = {
   posts: []
 }
 
-interface ActionsInterface {
-  type?: string,
-  payload: VisitedUserPayloadInterface
-}
-
 const visitedUserSlice = createSlice({
   name: "visitedUser",
   initialState: initialVisitedUser,
   reducers: {
-    setVisitedUser(state, action: ActionsInterface) {
+    setVisitedUser(state, action) {
       state.user = action.payload
       state.friendRequests = action.payload.friendRequestsSent
       state.friends = action.payload.friends

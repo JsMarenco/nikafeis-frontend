@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from "react"
+
+// Third-party dependencies
 import { Typography, Grid } from "@mui/material"
 import { useSelector } from "react-redux"
-import { BasicUserInterface } from "../../../../interface/user"
 import { RootState } from "../../../../app/store"
-import {  NO_PEOPLE_HERE } from "../../../../constants/messages"
+
+// Current project dependencies
+import { BasicUserInterface } from "../../../../interface/user"
+import { NO_PEOPLE_HERE } from "../../../../constants/messages"
 import getUerConnectionsService from "../../../../services/api/getUerConnectionsService"
-import { button_medium } from "../../../../styles/buttons"
 import FriendRequestCard from "../../../Cards/FriendRequestCard"
 import SendFriendRequestButton from "../../../FunctionsButtons/SendFriendRequestButton"
 import NoContent from "../../../NoContent"
@@ -60,7 +63,6 @@ export default function ConnectionsListLarge() {
     }
   }, [friendConnections])
 
-
   return (
     <>
       {loading && <FriendRequestSkeleton variant="large" />}
@@ -83,7 +85,7 @@ export default function ConnectionsListLarge() {
                       fullName={`${friendConnection.firstName} ${friendConnection.lastName}`}
                       variant="large"
                     >
-                      <SendFriendRequestButton customStyles={button_medium} username={friendConnection.username} v2 />
+                      <SendFriendRequestButton customStyles={{ borderRadius: "15px" }} username={friendConnection.username} v2 />
                     </FriendRequestCard>
                   </Grid>
                 ))

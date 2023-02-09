@@ -34,7 +34,13 @@
     "semi": [
       "error",
       "never"
-    ]
+    ],
+    "no-multiple-empty-lines": [
+			"error",
+			{
+				"max": 1
+			}
+		]
   },
   "settings": {
     "react": {

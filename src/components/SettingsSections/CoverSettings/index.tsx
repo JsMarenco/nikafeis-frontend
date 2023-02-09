@@ -1,20 +1,24 @@
 import React, { useContext, useEffect, useState } from "react"
-import { PhotoCamera } from "@mui/icons-material"
+
+// Third-party dependencies
+import { useNavigate } from "react-router-dom"
 import { IconButton, Stack, Tooltip, Typography } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { PhotoCamera } from "@mui/icons-material"
+import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined"
+import ClearIcon from "@mui/icons-material/Clear"
+
+// Current project dependencies
 import { RootState } from "../../../app/store"
 import { COVER_UPDATED_MESSAGE } from "../../../constants/messages"
 import { MAIN_USER_PROFILE_ROUTE } from "../../../constants/routes"
 import { messageContext } from "../../../context/MessageContext"
 import { setMainUser } from "../../../features/users/userSlice"
 import { UserPayloadInterface } from "../../../interface/user"
-import { account__settings_form__container } from "../../../styles/accountSetting"
-import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined"
-import ClearIcon from "@mui/icons-material/Clear"
 import updateUserCoverService from "../../../services/api/updateUserCoverService"
 import { CoverForm } from "../../../constants/enums/cover"
 import PreviewCover from "../../components/PreviewCover"
+import settingsStyles from "styles/pages/settings"
 
 interface Props { icon_size: "small" | "large" | "medium" }
 
@@ -40,7 +44,6 @@ export default function CoverSettings(props: Props) {
 
   const handleSubmit = async () => {
     const { data, success, message } = await updateUserCoverService(state.user.id, state.token)
-    console.log("🚀 ~ file: index.tsx:43 ~ handleSubmit ~ data", data)
 
     if (success) {
       dispatch(setMainUser(data as UserPayloadInterface))
@@ -69,7 +72,7 @@ export default function CoverSettings(props: Props) {
   return (
     <>
       <Stack
-        sx={account__settings_form__container}
+        sx={settingsStyles.container}
         component="form"
         id={CoverForm.id}
         spacing={1.5}

@@ -1,24 +1,26 @@
 import React, { useState, useContext } from "react"
+
+// Third-party dependencies
 import { useNavigate } from "react-router-dom"
-import { Stack, Button, TextField, Divider } from "@mui/material"
+import { Stack, Button, TextField, Divider, Container } from "@mui/material"
+import { useDispatch, useSelector } from "react-redux"
+import Grid from "@mui/material/Unstable_Grid2"
+
+// Current project dependencies
 import { RootState } from "../../../app/store"
 import { messageContext } from "../../../context/MessageContext"
-import { useDispatch, useSelector } from "react-redux"
 import updateAccountInfoService from "../../../services/api/updateAccountInfoService"
 import { setMainUser } from "../../../features/users/userSlice"
 import { PROFILE_UPDATE_MESSAGE } from "../../../constants/messages"
 import { MAIN_USER_PROFILE_ROUTE } from "../../../constants/routes"
-import { account__settings_container, account__settings_form__container, account__settings_password__button } from "../../../styles/accountSetting"
 import { AccountSettingForm } from "../../../constants/enums/accountSettings"
-import Grid from "@mui/material/Unstable_Grid2"
+import settingsStyles from "styles/pages/settings"
 
 export default function AccountSettings() {
   return (
     <Grid xs={12}>
-      <Stack spacing={2} sx={account__settings_container}>
-        <Stack spacing={2} component={"form"} sx={{ ...account__settings_form__container, }} id={AccountSettingForm.id}>
-          <Form />
-        </Stack>
+      <Stack spacing={2} component={"form"} id={AccountSettingForm.id} sx={settingsStyles.container}>
+        <Form />
       </Stack>
     </Grid>
   )
@@ -56,42 +58,39 @@ const Form = () => {
     }
   }
 
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setAccountSettingInfo({ ...AccountSettingInfo, [e.target.name]: e.target.value, })
   }
 
   return (
     <>
-      <Stack direction={{ sm: "row", xs: "column" }} spacing={2}>
-        <TextField
-          disabled={loading}
-          id={AccountSettingForm.firstName_input_id}
-          role={AccountSettingForm.firstName_input_role}
-          name={AccountSettingForm.firstName_input_name}
-          type={AccountSettingForm.firstName_input_type}
-          value={AccountSettingInfo[AccountSettingForm.firstName_input_name]}
-          onChange={(e) => handleChange(e)}
-          autoComplete={AccountSettingForm.autocomplete_inputs}
-          placeholder={AccountSettingForm.firstName_input_placeholder}
-          size={AccountSettingForm.input_size}
-          fullWidth
-        />
+      <TextField
+        disabled={loading}
+        id={AccountSettingForm.firstName_input_id}
+        role={AccountSettingForm.firstName_input_role}
+        name={AccountSettingForm.firstName_input_name}
+        type={AccountSettingForm.firstName_input_type}
+        value={AccountSettingInfo[AccountSettingForm.firstName_input_name]}
+        onChange={(e) => handleChange(e)}
+        autoComplete={AccountSettingForm.autocomplete_inputs}
+        placeholder={AccountSettingForm.firstName_input_placeholder}
+        size={AccountSettingForm.input_size}
+        fullWidth
+      />
 
-        <TextField
-          disabled={loading}
-          id={AccountSettingForm.lastName_input_id}
-          role={AccountSettingForm.lastName_input_role}
-          name={AccountSettingForm.lastName_input_name}
-          type={AccountSettingForm.lastName_input_type}
-          value={AccountSettingInfo[AccountSettingForm.lastName_input_name]}
-          onChange={(e) => handleChange(e)}
-          autoComplete={AccountSettingForm.autocomplete_inputs}
-          placeholder={AccountSettingForm.lastName_input_placeholder}
-          size={AccountSettingForm.input_size}
-          fullWidth
-        />
-      </Stack>
+      <TextField
+        disabled={loading}
+        id={AccountSettingForm.lastName_input_id}
+        role={AccountSettingForm.lastName_input_role}
+        name={AccountSettingForm.lastName_input_name}
+        type={AccountSettingForm.lastName_input_type}
+        value={AccountSettingInfo[AccountSettingForm.lastName_input_name]}
+        onChange={(e) => handleChange(e)}
+        autoComplete={AccountSettingForm.autocomplete_inputs}
+        placeholder={AccountSettingForm.lastName_input_placeholder}
+        size={AccountSettingForm.input_size}
+        fullWidth
+      />
 
       <TextField
         disabled={loading}
@@ -160,6 +159,7 @@ const Form = () => {
         autoComplete={AccountSettingForm.autocomplete_inputs}
         placeholder={AccountSettingForm.password_input_placeholder}
         size={AccountSettingForm.input_size}
+        fullWidth
       />
 
       <Divider flexItem />
@@ -167,7 +167,7 @@ const Form = () => {
       <Button
         variant="contained"
         color="primary"
-        sx={account__settings_password__button}
+        sx={{ borderRadius: "15px", }}
         onClick={handleSubmit}
         disabled={!AccountSettingInfo[AccountSettingForm.password_input_name] || loading}
       >

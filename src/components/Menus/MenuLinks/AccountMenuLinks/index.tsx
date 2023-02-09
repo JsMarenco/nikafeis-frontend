@@ -1,62 +1,70 @@
 import React, { useContext } from "react"
-import { SETTINGS_ROUTE, FRIENDS_SECTION_ROUTE, HOME_ROUTE, LOGOUT_ROUTE, MAIN_USER_PROFILE_ROUTE, NEW_CONNECTIONS_ROUTE, } from "../../../../constants/routes"
+
+// Third-party dependencies
+import { ListItemIcon, ListItem, ListItemButton, ListItemText } from "@mui/material"
 import SettingsIcon from "@mui/icons-material/Settings"
 import PersonIcon from "@mui/icons-material/Person"
 import LogoutIcon from "@mui/icons-material/Logout"
-import { ListItemIcon, MenuItem } from "@mui/material"
-import { appThemeContext, DARK } from "../../../../context/ThemeContext"
 import DarkModeIcon from "@mui/icons-material/DarkMode"
 import LightModeIcon from "@mui/icons-material/LightMode"
-import { menu_link } from "../../../../styles/menu"
 import HomeIcon from "@mui/icons-material/Home"
 import GroupIcon from "@mui/icons-material/Group"
 // import OndemandVideoIcon from "@mui/icons-material/OndemandVideo"
 // import MessageIcon from "@mui/icons-material/Message"
 import GroupAddIcon from "@mui/icons-material/GroupAdd"
-import { MenuLinkInterface } from "../../../../interface/menu"
+import StorefrontIcon from "@mui/icons-material/Storefront"
 
-const icon_size = "medium"
+// Current project dependencies
+import { appThemeContext, DARK } from "../../../../context/ThemeContext"
+import { MenuLinkInterface } from "../../../../interface/menu"
+import AppRoutes from "../../../../constants/app/routes"
+import menuStyles from "../../../../styles/components/menu"
 
 const MenuLinks: MenuLinkInterface[] = [
   {
-    icon: <HomeIcon fontSize={icon_size} />,
+    icon: <HomeIcon fontSize={menuStyles.iconSize} />,
     label: "Home",
-    link: HOME_ROUTE
+    link: AppRoutes.home
   },
   {
-    icon: <PersonIcon fontSize={icon_size} />,
+    icon: <PersonIcon fontSize={menuStyles.iconSize} />,
     label: "Profile",
-    link: MAIN_USER_PROFILE_ROUTE
+    link: AppRoutes.mainUserProfile
+  },
+  {
+    icon: <StorefrontIcon fontSize={menuStyles.iconSize} />,
+    label: "Marketplace",
+    link: AppRoutes.marketplace
   },
   // {
-  //   icon: <MessageIcon fontSize={icon_size} />,
+  //   icon: <MessageIcon fontSize={menuStyles.iconSize} />,
   //   label: "Inbox",
-  //   link: INBOX_ROUTE
+  //   link: AppRoutes.inbox
   // },
   {
-    icon: <GroupIcon fontSize={icon_size} />,
+    icon: <GroupIcon fontSize={menuStyles.iconSize} />,
     label: "Friends",
-    link: FRIENDS_SECTION_ROUTE
+    link: AppRoutes.friends
   },
   {
-    icon: <GroupAddIcon fontSize={icon_size} />,
+    icon: <GroupAddIcon fontSize={menuStyles.iconSize} />,
     label: "Connections",
-    link: NEW_CONNECTIONS_ROUTE
+    link: AppRoutes.newConnections
   },
   // {
-  //   icon: <OndemandVideoIcon  fontSize={icon_size} />,
+  //   icon: <OndemandVideoIcon fontSize={menuStyles.iconSize} />,
   //   label: "Videos",
-  //   link: VIDEOS_SECTION_ROUTE
+  //   link: AppRoutes.videos
   // },
   {
-    icon: <SettingsIcon fontSize={icon_size} />,
+    icon: <SettingsIcon fontSize={menuStyles.iconSize} />,
     label: "Settings",
-    link: SETTINGS_ROUTE
+    link: AppRoutes.settings
   },
   {
-    icon: <LogoutIcon fontSize={icon_size} />,
+    icon: <LogoutIcon fontSize={menuStyles.iconSize} />,
     label: "Logout",
-    link: LOGOUT_ROUTE
+    link: AppRoutes.logout
   },
 ]
 
@@ -65,30 +73,32 @@ export function ToggleThemeButton() {
 
   return (
     <>
-      <MenuItem
-        onClick={handleChangeThemeApp}
-        sx={menu_link}
-      >
+      <ListItem onClick={handleChangeThemeApp} disablePadding>
         {
           currentThemeName == DARK ? (
-            <>
+            <ListItemButton sx={menuStyles.link}>
               <ListItemIcon>
                 <LightModeIcon />
               </ListItemIcon>
 
-              Ligth mode
-            </>
+              <ListItemText>
+                Ligth mode
+              </ListItemText>
+            </ListItemButton>
           ) : (
-            <>
+            <ListItemButton sx={menuStyles.link}>
               <ListItemIcon>
                 <DarkModeIcon />
               </ListItemIcon>
 
-              Dark mode
-            </>
+              <ListItemText>
+
+                Dark mode
+              </ListItemText>
+            </ListItemButton>
           )
         }
-      </MenuItem>
+      </ListItem>
     </>
   )
 }

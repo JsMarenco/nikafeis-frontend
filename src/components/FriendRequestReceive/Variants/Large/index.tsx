@@ -1,20 +1,24 @@
 import React, { useEffect, useRef, useState } from "react"
+
+// Third-party dependencies
 import { Box, Grid, Typography } from "@mui/material"
-import getUserFriendRequestsService from "../../../../services/api/getUserFriendRequestsService"
 import { useSelector } from "react-redux"
+import { useLocation, useNavigate } from "react-router-dom"
+
+// Current project dependencies
+import getUserFriendRequestsService from "../../../../services/api/getUserFriendRequestsService"
 import { RootState } from "../../../../app/store"
 import { NO_CONNECTIONS_MESSAGE, } from "../../../../constants/messages"
 import { friendRequestsInterface } from "../../../../interface/user"
-import { button_medium } from "../../../../styles/buttons"
 import FriendRequestCard from "../../../Cards/FriendRequestCard"
 import AcceptFriendRequestButton from "../../../FunctionsButtons/AcceptFriendRequestButton"
 import RejectFriendRequestButton from "../../../FunctionsButtons/RejectFriendRequestButton"
 import NoContent from "../../../NoContent"
 import FriendRequestSkeleton from "../../../Skeletons/FriendRequestSkeleton"
-import { useLocation, useNavigate } from "react-router-dom"
-import { global_flex } from "../../../../styles"
-import { FRIEND_REQUEST_ROUTE } from "../../../../constants/routes"
 import LoadMore from "../../../LoadMore"
+import cardStyles from "../../../../styles/components/cards"
+import AppRoutes from "../../../../constants/app/routes"
+import stylesVars from "../../../../styles/globals/vars"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const noConnections = require("../../../../assets/new_connections.png")
 
@@ -80,16 +84,16 @@ export default function FriendRequestReceiveLarge(props: Props) {
           <>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Box sx={{ ...global_flex, justifyContent: "space-between", mb: 2 }}>
+                <Box sx={{ ...stylesVars.centeredElements, justifyContent: "space-between", mb: 2 }}>
                   <Typography variant="body1" color="text.primary">Friend requests</Typography>
 
                   {
-                    location.pathname != FRIEND_REQUEST_ROUTE && (
+                    location.pathname != AppRoutes.friendsRequests && (
                       <Typography
                         variant="body1"
                         color="text.primary"
-                        sx={{ cursor: "pointer", "&:hover": { color: "text.secondary" } }}
-                        onClick={() => navigate(FRIEND_REQUEST_ROUTE)}
+                        sx={cardStyles.link}
+                        onClick={() => navigate(AppRoutes.friendsRequests)}
                       >
                         See all
                       </Typography>
@@ -113,8 +117,8 @@ export default function FriendRequestReceiveLarge(props: Props) {
                       fullName={`${req.from.firstName} ${req.from.lastName}`}
                       variant="large"
                     >
-                      <AcceptFriendRequestButton customStyles={button_medium} friendRequestId={req.id} v2 />
-                      <RejectFriendRequestButton customStyles={button_medium} friendRequestId={req.id} v2 />
+                      <AcceptFriendRequestButton customStyles={{ borderRadius: "15px" }} friendRequestId={req.id} v2 />
+                      <RejectFriendRequestButton customStyles={{ borderRadius: "15px" }} friendRequestId={req.id} v2 />
                     </FriendRequestCard>
                   </Grid>
                 ))

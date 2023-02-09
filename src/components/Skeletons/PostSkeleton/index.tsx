@@ -1,51 +1,55 @@
 import React from "react"
+
+// Third-party dependencies
 import { Box, Divider, Skeleton } from "@mui/material"
-import { skeleton__animation, user__avatar } from "../../../styles"
-import { post__card_container, post__card_header, post__card_interfact__section } from "../../../styles/post"
+// Current project dependencies
+
+import cardStyles from "styles/components/cards"
+import stylesVars from "styles/globals/vars"
 
 export const PostSkeleton = () => {
   return (
-    <Box sx={post__card_container}>
-      <Box sx={post__card_header}>
+    <Box sx={cardStyles.container}>
+      <Box sx={cardStyles.headerContainer}>
         {/* avatar */}
-        <Skeleton animation={skeleton__animation} variant="circular" sx={user__avatar} />
+        <Skeleton animation={stylesVars.skeletonAnimation} variant="circular" sx={cardStyles.userAvatar} />
 
         <Box sx={{ width: "100%" }}>
           {/* author fullname */}
-          <Skeleton animation={skeleton__animation} variant="text" sx={{ width: "100%" }} height={25} />
+          <Skeleton animation={stylesVars.skeletonAnimation} variant="text" sx={{ width: "100%" }} height={25} />
           {/* post date */}
-          <Skeleton animation={skeleton__animation} variant="text" sx={{ width: "100%" }} height={20} />
+          <Skeleton animation={stylesVars.skeletonAnimation} variant="text" sx={{ width: "100%" }} height={20} />
         </Box>
       </Box>
 
       {/* post title */}
-      <Skeleton animation={skeleton__animation} variant="text" sx={{ width: "100%" }} height={20} />
+      <Skeleton animation={stylesVars.skeletonAnimation} variant="text" sx={{ width: "100%" }} height={20} />
       {/* post content */}
-      <Skeleton animation={skeleton__animation} variant="text" sx={{ width: "100%", mb: 2 }} height={20} />
+      <Skeleton animation={stylesVars.skeletonAnimation} variant="text" sx={{ width: "100%", mb: 2 }} height={20} />
 
       {/* post image */}
-      <Skeleton animation={skeleton__animation} variant="rectangular" sx={{ width: "100%" }} height={150} />
+      <Skeleton animation={stylesVars.skeletonAnimation} variant="rectangular" sx={{ width: "100%" }} height={150} />
 
       <Divider sx={{ mb: 2, mt: 2 }} />
 
-      <Box sx={post__card_interfact__section}>
+      <Box sx={cardStyles.interactContainer}>
         {/* like button */}
         <Skeleton
-          animation={skeleton__animation}
+          animation={stylesVars.skeletonAnimation}
           variant="text"
           sx={{ width: "80px", height: 20 }}
         />
 
         {/* comments button */}
         <Skeleton
-          animation={skeleton__animation}
+          animation={stylesVars.skeletonAnimation}
           variant="text"
           sx={{ width: "80px", height: 20 }}
         />
 
         {/* share button */}
         <Skeleton
-          animation={skeleton__animation}
+          animation={stylesVars.skeletonAnimation}
           variant="text"
           sx={{ width: "80px", height: 20 }}
         />
@@ -54,11 +58,10 @@ export const PostSkeleton = () => {
       <Divider sx={{ my: 2 }} />
 
       {/* comment section */}
-      <Skeleton animation={skeleton__animation} variant="text" sx={{ width: "100%" }} height={20} />
+      <Skeleton animation={stylesVars.skeletonAnimation} variant="text" sx={{ width: "100%" }} height={20} />
     </Box>
   )
 }
-
 
 export default function PostSkeletonList() {
   return (

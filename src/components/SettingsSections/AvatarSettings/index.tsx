@@ -1,8 +1,14 @@
-import { PhotoCamera } from "@mui/icons-material"
-import { IconButton, Stack, Tooltip, Typography } from "@mui/material"
 import React, { useContext, useEffect, useState } from "react"
+
+// Third-party dependencies
+import { PhotoCamera } from "@mui/icons-material"
 import { useDispatch, useSelector } from "react-redux"
+import { IconButton, Stack, Tooltip, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
+import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined"
+import ClearIcon from "@mui/icons-material/Clear"
+
+// Current project dependencies
 import { RootState } from "../../../app/store"
 import { AvatarForm } from "../../../constants/enums/avatar"
 import { AVATAR_UPDATED_MESSAGE } from "../../../constants/messages"
@@ -11,10 +17,8 @@ import { messageContext } from "../../../context/MessageContext"
 import { setMainUser } from "../../../features/users/userSlice"
 import { UserPayloadInterface } from "../../../interface/user"
 import updateUserAvatarService from "../../../services/api/updateUserAvatarService"
-import { account__settings_form__container } from "../../../styles/accountSetting"
 import PreviewAvatar from "../../components/PreviewAvatar"
-import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined"
-import ClearIcon from "@mui/icons-material/Clear"
+import settingsStyles from "styles/pages/settings"
 
 interface Props {
   icon_size: "small" | "large" | "medium"
@@ -68,7 +72,7 @@ export default function AvatarSettings(props: Props) {
   }, [selectedFile])
 
   return (
-    <Stack sx={account__settings_form__container} component="form" id={AvatarForm.id} spacing={1.5}>
+    <Stack sx={settingsStyles.container} component="form" id={AvatarForm.id} spacing={1.5}>
       <Typography variant="h6" color="text.primary" align="center">
         Update avatar
       </Typography>

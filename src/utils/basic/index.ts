@@ -11,6 +11,11 @@ const deleteSpaces = (string: string) => {
   return string.replace(/\s/g, "")
 }
 
+/**
+ * Covert the date object to a normal date
+ * @param date Is the raw date object
+ * @returns A normal date
+ */
 export const convertDate = (date: string) => {
   const dateObject = new Date(date)
   const now = new Date()
@@ -54,6 +59,11 @@ export const deleteSpacesAndReplaceWithUnderscore = (string: string) => {
   return string.replace(/\s/g, "-")
 }
 
+/**
+ *
+ * @param key The name that will be saved
+ * @param obj An object or anothers types
+ */
 export const saveInLocalStorage = (key: string, obj: unknown) => {
   localStorage.setItem(key, JSON.stringify(obj))
 }
@@ -68,6 +78,10 @@ export const getFromLocalStorage = (key: string) => {
   return null
 }
 
+/**
+ * CHnage the page title
+ * @param title The new title of the page
+ */
 export const changeTitle = (title: string) => {
   document.title = title
 }
@@ -109,4 +123,20 @@ export const generateShareLink = (url: string) => {
 
 export const downloadAndSaveImage = async (imageUrl: string) => {
   saveAs(imageUrl, uuid())
+}
+
+export const truncateEthAddress = (address: string) => {
+  return `${address.slice(0, 6)}...${address.slice(-4)}`
+}
+
+/**
+ * @param username Some text
+ * @returns The text but with 15 characters of length
+ */
+export const shortenText = (theText: string) => {
+  if (theText.length > 17) {
+    return `${theText.slice(0, 14)}...`
+  }
+
+  return theText
 }

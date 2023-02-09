@@ -1,13 +1,17 @@
 import React from "react"
+
+// Third-party dependencies
 import { Grid, Skeleton, Stack, } from "@mui/material"
-import { friend_request__card_avatar, friend_request__card_container } from "../../../../../styles/friendRequest"
-import { skeleton__animation } from "../../../../../styles"
-import { profile_option__button_v2 } from "../../../../../styles/profile"
+
+// Current project dependencies
+import cardStyles from "styles/components/cards"
+import stylesVars from "styles/globals/vars"
+import profileStyles from "styles/pages/profile"
 
 export default function FriendRequestSkeletonLarge() {
   return (
     <Stack
-      sx={friend_request__card_container}
+      sx={cardStyles.container}
       direction="row"
       justifyContent="center"
       alignItems="center"
@@ -15,29 +19,29 @@ export default function FriendRequestSkeletonLarge() {
     >
       {/* user avatar */}
       <Skeleton
-        animation={skeleton__animation}
+        animation={stylesVars.skeletonAnimation}
         variant="circular"
-        sx={{ ...friend_request__card_avatar, mb: 2 }}
+        sx={{ ...cardStyles.userAvatarCenter, mb: 2 }}
       />
 
       {/* user fullname */}
-      <Skeleton animation={skeleton__animation} variant="text" width="90%" height={25} />
+      <Skeleton animation={stylesVars.skeletonAnimation} variant="text" width="90%" height={25} />
 
       {/* user username */}
-      <Skeleton animation={skeleton__animation} variant="text" width="65%" height={20} />
+      <Skeleton animation={stylesVars.skeletonAnimation} variant="text" width="65%" height={20} />
 
       {/* accept button */}
       <Skeleton
-        animation={skeleton__animation}
+        animation={stylesVars.skeletonAnimation}
         variant="rectangular"
-        sx={{ ...profile_option__button_v2, height: 35, mb: .5, }}
+        sx={{ ...profileStyles.optionButton , height: 35, mb: .5, }}
       />
 
       {/* reject button */}
       <Skeleton
-        animation={skeleton__animation}
+        animation={stylesVars.skeletonAnimation}
         variant="rectangular"
-        sx={{ ...profile_option__button_v2, height: 35, mb: .5 }}
+        sx={{ ...profileStyles.optionButton, height: 35, mb: .5 }}
       />
     </Stack>
   )
@@ -48,7 +52,7 @@ export const FriendRequestSkeletonLargeList = () => {
     <>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Skeleton animation={skeleton__animation} variant="rectangular" sx={{ width: "70%", height: 30 }} />
+          <Skeleton animation={stylesVars.skeletonAnimation} variant="rectangular" sx={{ width: "70%", height: 30 }} />
         </Grid>
 
         <Grid item xs={12} sm={6} md={3}><FriendRequestSkeletonLarge /></Grid>

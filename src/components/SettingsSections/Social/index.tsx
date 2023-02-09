@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react"
+
+// Third-party dependencies
 import Grid from "@mui/material/Unstable_Grid2"
-import { Icon, InputBase, Stack, Typography, Button } from "@mui/material"
-import { settings_container } from "../../../styles/settings"
-import { SocialSettingsForm } from "../../../constants/enums/socialSettings"
+import { Icon, InputBase, Stack, Typography, Button, Box } from "@mui/material"
 import FacebookIcon from "@mui/icons-material/Facebook"
 import GitHubIcon from "@mui/icons-material/GitHub"
 import LinkedInIcon from "@mui/icons-material/LinkedIn"
@@ -10,16 +10,20 @@ import InstagramIcon from "@mui/icons-material/Instagram"
 import TwitterIcon from "@mui/icons-material/Twitter"
 import LockIcon from "@mui/icons-material/Lock"
 import LockOpenIcon from "@mui/icons-material/LockOpen"
-import { button_medium } from "../../../styles/buttons"
-import updateSocialInfoService from "../../../services/api/updateSocialInfoService"
 import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+
+// Current project dependencies
+import { settings_container } from "../../../styles/settings"
+import { SocialSettingsForm } from "../../../constants/enums/socialSettings"
+import updateSocialInfoService from "../../../services/api/updateSocialInfoService"
 import { RootState } from "../../../app/store"
 import { PROFILE_UPDATE_MESSAGE } from "../../../constants/messages"
 import { MAIN_USER_PROFILE_ROUTE } from "../../../constants/routes"
-import { useNavigate } from "react-router-dom"
 import { messageContext } from "../../../context/MessageContext"
 import { setMainUser } from "../../../features/users/userSlice"
 import { input } from "../../../styles/inputs"
+import settingsStyles from "styles/pages/settings"
 
 export default function SocialSettings() {
   const state = useSelector((state: RootState) => state.user)
@@ -58,15 +62,9 @@ export default function SocialSettings() {
   }
 
   return (
-    <Grid container rowSpacing={2} disableEqualOverflow sx={{ width: "100%" }} component="form" id={SocialSettingsForm.id} >
-      <Grid xs={12}>
-        <Stack
-          sx={settings_container}
-          spacing={2}
-          direction={{ xs: "column", sm: "row" }}
-          alignItems="center"
-          justifyContent="flex-start"
-        >
+    <Grid xs={12} component="form" id={SocialSettingsForm.id}>
+      <Stack spacing={2}>
+        <Stack sx={settingsStyles.socialInputContainer} spacing={2} direction={{ xs: "column", sm: "row" }}>
           <InputBase
             disabled={loading}
             id={SocialSettingsForm.facebook_input_id}
@@ -91,16 +89,8 @@ export default function SocialSettings() {
             {`${SocialSettingsForm.facebook_url}${socialInfo[SocialSettingsForm.facebook_input_name]}`}
           </Typography>
         </Stack>
-      </Grid>
 
-      <Grid xs={12}>
-        <Stack
-          sx={settings_container}
-          spacing={2}
-          direction={{ xs: "column", sm: "row" }}
-          alignItems="center"
-          justifyContent="flex-start"
-        >
+        <Stack sx={settingsStyles.socialInputContainer} spacing={2} direction={{ xs: "column", sm: "row" }}>
           <InputBase
             disabled={loading}
             id={SocialSettingsForm.github_input_id}
@@ -125,16 +115,8 @@ export default function SocialSettings() {
             {`${SocialSettingsForm.github_url}${socialInfo[SocialSettingsForm.github_input_name]}`}
           </Typography>
         </Stack>
-      </Grid>
 
-      <Grid xs={12}>
-        <Stack
-          sx={settings_container}
-          spacing={2}
-          direction={{ xs: "column", sm: "row" }}
-          alignItems="center"
-          justifyContent="flex-start"
-        >
+        <Stack sx={settingsStyles.socialInputContainer} spacing={2} direction={{ xs: "column", sm: "row" }}>
           <InputBase
             disabled={loading}
             id={SocialSettingsForm.linkedin_input_id}
@@ -159,16 +141,8 @@ export default function SocialSettings() {
             {`${SocialSettingsForm.linkedin_url}${socialInfo[SocialSettingsForm.linkedin_input_name]}`}
           </Typography>
         </Stack>
-      </Grid>
 
-      <Grid xs={12}>
-        <Stack
-          sx={settings_container}
-          spacing={2}
-          direction={{ xs: "column", sm: "row" }}
-          alignItems="center"
-          justifyContent="flex-start"
-        >
+        <Stack sx={settingsStyles.socialInputContainer} spacing={2} direction={{ xs: "column", sm: "row" }}>
           <InputBase
             disabled={loading}
             id={SocialSettingsForm.instagram_input_id}
@@ -193,16 +167,8 @@ export default function SocialSettings() {
             {`${SocialSettingsForm.instagram_url}${socialInfo[SocialSettingsForm.linkedin_input_name]}`}
           </Typography>
         </Stack>
-      </Grid>
 
-      <Grid xs={12}>
-        <Stack
-          sx={settings_container}
-          spacing={2}
-          direction={{ xs: "column", sm: "row" }}
-          alignItems="center"
-          justifyContent="flex-start"
-        >
+        <Stack sx={settingsStyles.socialInputContainer} spacing={2} direction={{ xs: "column", sm: "row" }}>
           <InputBase
             disabled={loading}
             id={SocialSettingsForm.twitter_input_id}
@@ -227,16 +193,8 @@ export default function SocialSettings() {
             {`${SocialSettingsForm.twitter_url}${socialInfo[SocialSettingsForm.twitter_input_name]}`}
           </Typography>
         </Stack>
-      </Grid>
 
-      <Grid xs={12}>
-        <Stack
-          sx={settings_container}
-          spacing={2}
-          direction={{ xs: "column", sm: "row" }}
-          alignItems="center"
-          justifyContent="flex-start"
-        >
+        <Stack sx={settingsStyles.socialInputContainer} spacing={2} direction={{ xs: "column", sm: "row" }}>
           <InputBase
             disabled={loading}
             id={SocialSettingsForm.password_input_id}
@@ -264,11 +222,11 @@ export default function SocialSettings() {
             }
           />
 
-          <Button variant="contained" color="primary" sx={button_medium} onClick={handleSubmit} >
+          <Button size="large" variant="contained" color="primary" sx={{ borderRadius: "15px" }} onClick={handleSubmit} >
             Save
           </Button>
         </Stack>
-      </Grid>
+      </Stack>
     </Grid>
   )
 }

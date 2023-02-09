@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useState } from "react"
-// import LoadMore from "../LoadMore"
-import { Typography } from "@mui/material"
-import FriendRequestCard from "../Cards/FriendRequestCard"
+
+// Third-party dependencies
+import { Typography, Container } from "@mui/material"
+import Grid from "@mui/material/Unstable_Grid2"
 import { useSelector } from "react-redux"
+
+// Current project dependencies
+import FriendRequestCard from "../Cards/FriendRequestCard"
 import { RootState } from "../../app/store"
 import { BasicUserInterface } from "../../interface/user"
 import RemoveFriendButton from "../FunctionsButtons/RemoveFriendButton"
 import getUserFriendsService from "../../services/api/getUserFriends"
 import FriendRequestSkeleton from "../Skeletons/FriendRequestSkeleton"
-import { button_medium } from "../../styles/buttons"
-import Grid from "@mui/material/Unstable_Grid2"
 import NoContent from "../NoContent"
 import { NO_FRIENDS_MESSAGE, } from "../../constants/messages"
 import LoadMore from "../LoadMore"
@@ -65,7 +67,7 @@ export default function Friends() {
   }, [friendsInfo])
 
   return (
-    <>
+    <Container maxWidth="xl">
       {loading && <FriendRequestSkeleton variant="large" />}
 
       {
@@ -85,7 +87,7 @@ export default function Friends() {
                       fullName={`${friend.firstName} ${friend.lastName}`}
                       variant="large"
                     >
-                      <RemoveFriendButton friendId={friend.id} v2 customStyles={button_medium} />
+                      <RemoveFriendButton friendId={friend.id} v2 customStyles={{ borderRadius: "15px" }} />
                     </FriendRequestCard>
                   </Grid>
                 ))
@@ -106,6 +108,6 @@ export default function Friends() {
           <NoContent imgSrc={BgImage} text={NO_FRIENDS_MESSAGE} />
         )
       }
-    </>
+    </Container>
   )
 }

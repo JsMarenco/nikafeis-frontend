@@ -1,9 +1,13 @@
 import React, { useEffect } from "react"
+
+// Third-party dependencies
 import { useNavigate } from "react-router-dom"
 import { Box, Button, Stack, Typography } from "@mui/material"
+
+// Current project dependencies
 import { changeTitle } from "../../utils/basic"
-import { HOME_ROUTE, } from "../../constants/routes"
 import { PAGE_NOT_FOUND } from "../../constants/titles"
+import AppRoutes from "constants/app/routes"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const image_404 = require("../../assets/404.png")
 
@@ -41,7 +45,7 @@ export default function ErrorPage() {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => navigate(HOME_ROUTE)}
+          onClick={() => navigate(AppRoutes.home)}
         >
           Home page
         </Button>

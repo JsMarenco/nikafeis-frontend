@@ -1,7 +1,12 @@
 import React from "react"
+
+// Third-party dependencies
 import { Paper, Box, Skeleton } from "@mui/material"
-import { global_flex, skeleton__animation, user__avatar } from "../../../styles"
+
+// Current project dependencies
 import { comment__card_container } from "../../../styles/comment"
+import stylesVars from "../../../styles/globals/vars"
+import cardStyles from "../../../styles/components/cards"
 
 export default function CommenSkeleton() {
   return (
@@ -9,27 +14,27 @@ export default function CommenSkeleton() {
       elevation={3}
       sx={{
         ...comment__card_container,
-        ...global_flex,
+        ...stylesVars.centeredElements,
         justifyContent: "space-between",
         p: 2,
         borderRadius: "15px"
       }}
     >
-      <Box sx={{ ...global_flex, justifyContent: "left", flexGrow: 1 }}>
+      <Box sx={{ ...stylesVars.centeredElements, justifyContent: "left", flexGrow: 1 }}>
         {/* user avatar */}
-        <Skeleton animation={skeleton__animation} variant="circular" sx={user__avatar} />
+        <Skeleton animation={stylesVars.skeletonAnimation} variant="circular" sx={cardStyles.userAvatar} />
 
         <Box>
           {/* user fullname */}
-          <Skeleton animation={skeleton__animation} variant="text" sx={{ width: "120px" }} height={25} />
+          <Skeleton animation={stylesVars.skeletonAnimation} variant="text" sx={{ width: "120px" }} height={25} />
           {/* friend request time */}
-          <Skeleton animation={skeleton__animation} variant="text" sx={{ width: "120px" }} height={25} />
+          <Skeleton animation={stylesVars.skeletonAnimation} variant="text" sx={{ width: "120px" }} height={25} />
         </Box>
 
       </Box>
 
       {/* show content */}
-      <Skeleton animation={skeleton__animation} variant="circular" sx={{ ...user__avatar, width: 30, height: 30 }} />
+      <Skeleton animation={stylesVars.skeletonAnimation} variant="circular" sx={{ ...cardStyles.userAvatar, width: 30, height: 30 }} />
     </Paper>
   )
 }

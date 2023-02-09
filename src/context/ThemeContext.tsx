@@ -1,9 +1,12 @@
-import { ThemeProvider } from "@mui/material"
 import React, { createContext, ReactNode, useEffect, useState } from "react"
+
+// Third-party dependencies
+import { ThemeProvider } from "@mui/material"
+
+// Current project dependencies
 import dark from "../theme/dark"
 import light from "../theme/light"
-import { useDispatch, } from "react-redux"
-import { setMainUserAppTheme } from "../features/users/userSlice"
+import { saveInLocalStorage } from "../utils/basic"
 
 interface Props {
   children: ReactNode
@@ -22,18 +25,21 @@ export const appThemeContext = createContext<AppThemeContextInterface>({} as App
 export const ThemeContextProvider = (props: Props) => {
   const [currentThemeName, setCurrentThemeName] = useState(DARK)
   const [currentTheme, setCurrentTheme] = useState(dark)
-  const dispatch = useDispatch()
 
+  /**
+   * Change the app theme
+   * @default Dark theme
+   */
   const handleChangeThemeApp = () => {
     setCurrentThemeName(currentThemeName === DARK ? LIGHT : DARK)
     setCurrentTheme(currentThemeName === DARK ? light : dark)
-    dispatch(setMainUserAppTheme(currentThemeName === DARK ? LIGHT : DARK))
+
+    saveInLocalStorage("theme", currentThemeName === DARK ? LIGHT : DARK)
   }
 
   useEffect(() => {
     document.body.style.backgroundColor = currentTheme.palette.background.default
   }, [currentTheme])
-
 
   return (
     <appThemeContext.Provider

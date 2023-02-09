@@ -1,19 +1,23 @@
-import { Box, Typography, Stack } from "@mui/material"
 import React, { useEffect, useState } from "react"
+
+// Third-party dependencies
+import { Box, Typography, Stack } from "@mui/material"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+
+// Current project dependencies
 import { RootState } from "../../../../app/store"
 import { NO_CONNECTIONS_MESSAGE } from "../../../../constants/messages"
-import { FRIEND_REQUEST_ROUTE } from "../../../../constants/routes"
 import { friendRequestsInterface } from "../../../../interface/user"
 import getUserFriendRequestsService from "../../../../services/api/getUserFriendRequestsService"
-import { global_flex } from "../../../../styles"
-import { button_small } from "../../../../styles/buttons"
 import FriendRequestCard from "../../../Cards/FriendRequestCard"
 import AcceptFriendRequestButton from "../../../FunctionsButtons/AcceptFriendRequestButton"
 import RejectFriendRequestButton from "../../../FunctionsButtons/RejectFriendRequestButton"
 import NoContent from "../../../NoContent"
 import FriendRequestSkeleton from "../../../Skeletons/FriendRequestSkeleton"
+import stylesVars from "../../../../styles/globals/vars"
+import AppRoutes from "../../../../constants/app/routes"
+import cardStyles from "../../../../styles/components/cards"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const noConnections = require("../../../../assets/new_connections.png")
 
@@ -44,14 +48,14 @@ export default function FriendRequestReceiveSmall() {
   return (
     <>
       <Box sx={{ bgcolor: "background.paper", p: 2, borderRadius: "15px" }}>
-        <Box sx={{ ...global_flex, justifyContent: "space-between", mb: 2 }}>
+        <Box sx={{ ...stylesVars.centeredElements, justifyContent: "space-between", mb: 2 }}>
           <Typography variant="body1" color="text.primary">Friend requests</Typography>
 
           <Typography
             variant="body1"
             color="text.primary"
-            sx={{ cursor: "pointer", "&:hover": { color: "text.secondary" } }}
-            onClick={() => navigate(FRIEND_REQUEST_ROUTE)}
+            sx={cardStyles.link}
+            onClick={() => navigate(AppRoutes.friendsRequests)}
           >
             See all
           </Typography>
@@ -71,8 +75,8 @@ export default function FriendRequestReceiveSmall() {
                 friendRequestId={req.id}
                 variant="small"
               >
-                <AcceptFriendRequestButton customStyles={button_small} friendRequestId={req.id} v2 size="small" />
-                <RejectFriendRequestButton customStyles={button_small} friendRequestId={req.id} v2 size="small" />
+                <AcceptFriendRequestButton customStyles={{ borderRadius: "15px" }} friendRequestId={req.id} v2 size="small" />
+                <RejectFriendRequestButton customStyles={{ borderRadius: "15px" }} friendRequestId={req.id} v2 size="small" />
               </FriendRequestCard>
             ))
           }

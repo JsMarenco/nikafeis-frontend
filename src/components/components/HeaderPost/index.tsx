@@ -1,50 +1,60 @@
 import React from "react"
+
+// Third-party dependencies
 import { useNavigate } from "react-router-dom"
 import { Avatar, Box, Tooltip, Typography, } from "@mui/material"
+
+// Current project dependencies
 import { convertDate } from "../../../utils/basic"
-import { global_flex, user__avatar, user__fullName_link } from "../../../styles"
 import { HeaderPostInterface } from "../../../interface/post"
-import { post__card_header } from "../../../styles/post"
 import PostHeaderMenu from "../../Menus/PostHeaderMenu"
+import cardStyles from "../../../styles/components/cards"
+import stylesVars from "../../../styles/globals/vars"
+import postCardText from "../../../lang/en/components/postCard"
+import AppRoutes from "../../../constants/app/routes"
 
 export default function HeaderPost(props: HeaderPostInterface) {
   const navigate = useNavigate()
   const {
-    firstName = "", lastName = "", avatarUrl = "",
-    username = "", createdAt = "", updatedAt = "",
-    postId = "", authorPostId = ""
+    firstName = "",
+    lastName = "",
+    avatarUrl = "",
+    username = "",
+    createdAt = "",
+    updatedAt = "",
+    postId = "",
+    authorPostId = "",
   } = props
 
   return (
-    <Box sx={post__card_header}>
-      <Box sx={global_flex}>
-        <Tooltip title="View profile" arrow>
+    <Box sx={cardStyles.headerContainer}>
+      <Box sx={stylesVars.centeredElements}>
+        <Tooltip title={postCardText.profileTooltip} arrow>
           <Avatar
             src={avatarUrl}
-            alt={firstName}
-            sx={user__avatar}
-            onClick={() => navigate(`/profile/${username}`)}
+            alt={postCardText.altImage.replace("%fullname", `${firstName} ${lastName}`)}
+            sx={cardStyles.userAvatar}
+            onClick={() => navigate(AppRoutes.visitUserProfile.replace("%username", username))}
           />
         </Tooltip>
 
         <Box>
-          <Tooltip title="View profile" arrow>
+          <Tooltip title={postCardText.profileTooltip} arrow>
             <Typography
               variant="subtitle1"
-              color="text.primary"
-              onClick={() => navigate(`/profile/${username}`)}
-              sx={user__fullName_link}
+              onClick={() => navigate(AppRoutes.visitUserProfile.replace("%username", username))}
+              sx={cardStyles.profileLink}
             >
               {`${firstName} ${lastName}`}
             </Typography>
           </Tooltip>
 
-          <Typography variant="subtitle2" color="text.primary">
+          <Typography variant="subtitle2" color="text.primary" fontWeight={300}>
             {
               updatedAt === createdAt ? (
                 convertDate(createdAt)
               ) : (
-                `${convertDate(createdAt)} - edited ${convertDate(updatedAt)}`
+                `${convertDate(createdAt)} - edited`
               )
             }
           </Typography>

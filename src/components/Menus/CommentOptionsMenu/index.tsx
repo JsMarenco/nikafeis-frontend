@@ -1,14 +1,18 @@
 import React, { useState } from "react"
-import { CommentOptionMenuInterface } from "../../../interface/commet"
-import OptionButton from "../../components/OptionButton"
+
+// Third-party dependencies
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
 import { ListItemIcon, Menu, MenuItem } from "@mui/material"
-import { menu__container_paper__props } from "../../../styles/menu"
 import { Flag } from "@mui/icons-material"
 import { useSelector } from "react-redux"
-import { RootState } from "../../../app/store"
 import EditIcon from "@mui/icons-material/Edit"
+
+// Current project dependencies
+import { CommentOptionMenuInterface } from "../../../interface/commet"
+import OptionButton from "../../components/OptionButton"
+import { RootState } from "../../../app/store"
+import menuStyles from "../../../styles/components/menu"
 
 export default function CommentOptionsMenu(props: CommentOptionMenuInterface) {
   const { authorCommentId } = props
@@ -35,7 +39,7 @@ export default function CommentOptionsMenu(props: CommentOptionMenuInterface) {
       />
 
       <Menu
-        PaperProps={menu__container_paper__props}
+        PaperProps={menuStyles.paperProps}
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}

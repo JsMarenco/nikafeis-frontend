@@ -1,16 +1,20 @@
 import React from "react"
+
+// Third-party dependencies
 import { useNavigate } from "react-router-dom"
 import { Avatar, Stack, Typography, Tooltip, Box, Divider } from "@mui/material"
 import FavoriteIcon from "@mui/icons-material/Favorite"
-import ReplyIcon from "@mui/icons-material/Reply"
+// import ReplyIcon from "@mui/icons-material/Reply"
+
+// Current project dependencies
 import { CommentInterface } from "../../../interface/commet"
 import { convertDate } from "../../../utils/basic"
-import { PROFILE_ROUTE } from "../../../constants/routes"
-import { comment__card_container } from "../../../styles/comment"
-import { user__avatar, user__fullName_link } from "../../../styles"
 import DownloadImageButton from "../../components/DownloadImageButton"
 import OptionButton from "../../components/OptionButton"
 import CommentOptionsMenu from "../../Menus/CommentOptionsMenu"
+import cardStyles from "../../../styles/components/cards"
+import AppRoutes from "../../../constants/app/routes"
+import globalsTexts from "../../../lang/en/globals"
 
 export default function CommentCard(props: CommentInterface) {
   const navigate = useNavigate()
@@ -22,7 +26,7 @@ export default function CommentCard(props: CommentInterface) {
     commentImageUrl = "",
 
     likes = [],
-    replies = [],
+    // replies = [],
 
     updatedAt = "",
     createdAt = "",
@@ -36,8 +40,7 @@ export default function CommentCard(props: CommentInterface) {
     id = ""
   } = props.author
 
-
-  const [commentLikes, setCommentLikes] = React.useState(likes)
+  const [commentLikes] = React.useState(likes)
 
   const handleLike = async () => {
     // likeComment(user, id)
@@ -52,15 +55,20 @@ export default function CommentCard(props: CommentInterface) {
     console.log("like commet")
   }
 
-  const handleReply = () => {
-    console.log("reply")
-  }
+  // const handleReply = () => {
+  //   console.log("reply")
+  // }
 
   return (
-    <Box sx={comment__card_container} >
+    <Box sx={cardStyles.container} >
       <Stack spacing={1} direction="row">
         <Stack direction={"column"} spacing={.5}>
-          <Avatar src={avatarUrl} sizes="small" alt={`${firstName}-${lastName}`} sx={{ ...user__avatar, mx: "auto" }}>
+          <Avatar
+            src={avatarUrl}
+            sizes="small"
+            alt={globalsTexts.viewProfile}
+            sx={{ ...cardStyles.userAvatar, mx: "auto" }}
+          >
             {firstName.charAt(0)}
           </Avatar>
         </Stack>
@@ -71,8 +79,8 @@ export default function CommentCard(props: CommentInterface) {
               <Typography
                 variant="subtitle1"
                 color="text.primary"
-                sx={user__fullName_link}
-                onClick={() => navigate(`${PROFILE_ROUTE}/${username}`)}
+                sx={cardStyles.profileLink}
+                onClick={() => navigate(AppRoutes.visitUserProfile.replace("%username", username))}
               >
                 {`${firstName} ${lastName}`}
               </Typography>
@@ -83,7 +91,7 @@ export default function CommentCard(props: CommentInterface) {
                 updatedAt === createdAt ? (
                   convertDate(createdAt)
                 ) : (
-                  `${convertDate(createdAt)} update at ${convertDate(updatedAt)}`
+                  `${convertDate(createdAt)} edited`
                 )
               }
             </Typography>
@@ -96,11 +104,8 @@ export default function CommentCard(props: CommentInterface) {
               <Box sx={{ width: "100%", position: "relative" }}>
                 <img
                   src={commentImageUrl}
-                  alt={`comment of ${firstName} ${lastName}`}
+                  alt={globalsTexts.altImage.replace("%username", username)}
                   style={{
-                    width: "100%",
-                    height: "auto",
-                    maxWidth: "100%",
                     borderRadius: "15px"
                   }}
                 />
@@ -122,12 +127,12 @@ export default function CommentCard(props: CommentInterface) {
           icon={<FavoriteIcon />}
         />
 
-        <OptionButton
+        {/* <OptionButton
           toolTipLabel={`Reply to ${firstName} ${lastName}`}
           customFunction={handleReply}
           textContent={String(replies.length)}
           icon={<ReplyIcon />}
-        />
+        /> */}
 
         <CommentOptionsMenu
           commentId={commentId}

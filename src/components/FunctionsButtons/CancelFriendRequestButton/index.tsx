@@ -1,14 +1,18 @@
 import React, { useContext } from "react"
+
+// Third-party dependencies
 import { IconButton, Tooltip } from "@mui/material"
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove"
 import { useSelector, useDispatch } from "react-redux"
-import { RootState } from "../../../app/store"
-import { messageContext } from "../../../context/MessageContext"
-import { setMainUserFriendRequestsSent } from "../../../features/users/userSlice"
-import sendFriendRequestService from "../../../services/api/sendFriendRequestService"
-import { CancelFriendRequestInterface } from "../../../interface/functionsButtons"
-import { profile_button_size } from "../../../styles/profile"
-import { CANCEL_FRIEND_REQUEST } from "../../../constants/buttons"
+
+// Current project dependencies
+import { RootState } from "app/store"
+import { messageContext } from "context/MessageContext"
+import { setMainUserFriendRequestsSent } from "features/users/userSlice"
+import sendFriendRequestService from "services/api/sendFriendRequestService"
+import { CancelFriendRequestInterface } from "interface/functionsButtons"
+import { CANCEL_FRIEND_REQUEST } from "constants/buttons"
+import profileStyles from "styles/pages/profile"
 
 export default function CancelFriendRequestButton(props: CancelFriendRequestInterface) {
   const { username, customStyles, } = props
@@ -30,7 +34,7 @@ export default function CancelFriendRequestButton(props: CancelFriendRequestInte
       <IconButton
         onClick={handleCancelFriendRequest}
         sx={customStyles}
-        size={profile_button_size}
+        size={profileStyles.buttonSize}
       >
         <PersonRemoveIcon />
       </IconButton>

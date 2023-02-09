@@ -1,24 +1,34 @@
 import React, { useContext, useState } from "react"
+
+// Third-party dependencies
 import { Box, Divider, } from "@mui/material"
+import { useSelector } from "react-redux"
+
+// Current project dependencies
 import { copyToClipboard, generateShareLink } from "../../../utils/basic"
 import HeaderPost from "../../components/HeaderPost"
 import ContentPost from "../../components/ContentPost"
 import InteractPost from "../../components/InteractPost"
 import PostInterface from "../../../interface/post"
-import { useSelector } from "react-redux"
 import { RootState } from "../../../app/store"
 import likePostService from "../../../services/api/likePostService"
 import { messageContext } from "../../../context/MessageContext"
 import CommentSection from "../../CommentSection"
-import { post__card_container } from "../../../styles/post"
 import getCommentsByIdServices from "../../../services/api/getCommentsByIdServices"
 import { CommentInterface } from "../../../interface/commet"
-import { COPY_CLIPBOARD_MESSAGE } from "../../../constants/messages"
+import AppMessages from "../../../constants/app/messages"
+import cardStyles from "../../../styles/components/cards"
 
 export default function PostCard(props: PostInterface) {
   const {
-    id = "", title = "", content = "", postImages = [],
-    likes = [], shares = [], updatedAt = "", createdAt = "",
+    id = "",
+    title = "",
+    content = "",
+    postImages = [],
+    likes = [],
+    shares = [],
+    updatedAt = "",
+    createdAt = "",
     author
   } = props
 
@@ -37,7 +47,7 @@ export default function PostCard(props: PostInterface) {
 
     copyToClipboard(link)
 
-    handleMessage(COPY_CLIPBOARD_MESSAGE)
+    handleMessage(AppMessages.CopyClipboard)
   }
 
   const handleLike = async () => {
@@ -67,11 +77,11 @@ export default function PostCard(props: PostInterface) {
   }
 
   const handleReport = () => {
-    console.log("report")
+    handleMessage("Post reported")
   }
 
   return (
-    <Box sx={post__card_container}>
+    <Box sx={cardStyles.container}>
       <HeaderPost
         postId={id}
         authorPostId={author.id}
@@ -89,6 +99,7 @@ export default function PostCard(props: PostInterface) {
         title={title}
         content={content}
         postImages={postImages}
+        username={author.username}
       />
 
       <Divider sx={{ mt: 2, mb: 2 }} />

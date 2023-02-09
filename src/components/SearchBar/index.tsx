@@ -1,15 +1,20 @@
-import { Box, Icon, InputBase, } from "@mui/material"
 import React, { useEffect, useState } from "react"
+
+// Third-party dependencies
+import { useLocation } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { Box, Icon, InputBase } from "@mui/material"
+import CloseIcon from "@mui/icons-material/Close"
 import SearchIcon from "@mui/icons-material/Search"
+
+// Current project dependencies
 import { input } from "../../styles/inputs"
 import { SearchBarForm } from "../../constants/enums/searchBar"
-import { useSelector } from "react-redux"
 import { RootState } from "../../app/store"
 import searchBarService from "../../services/api/searchBarService"
 import { BasicUserInterface } from "../../interface/user"
 import UserCard from "../Cards/BaseUserCard"
-import CloseIcon from "@mui/icons-material/Close"
-import { useLocation } from "react-router-dom"
+import inputStyles from "../../styles/components/input"
 
 export default function SearchBar() {
   const state = useSelector((state: RootState) => state.user)
@@ -31,7 +36,6 @@ export default function SearchBar() {
 
   }, [location])
 
-
   return (
     <>
       <Box sx={{ maxWidth: "250px", width: "100%" }} component="form" id={SearchBarForm.id}>
@@ -45,7 +49,7 @@ export default function SearchBar() {
           autoComplete={SearchBarForm.autocomplete_inputs}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleChange(e)}
           size={SearchBarForm.input_size}
-          sx={{ ...input, py: 1, px: 3, }}
+          sx={{ ...inputStyles.input, py: 1, px: 3, }}
           startAdornment={<Icon sx={{ mr: 2 }}><SearchIcon /></Icon>}
           endAdornment={
             searchValue[SearchBarForm.search_bar_input_name] && (

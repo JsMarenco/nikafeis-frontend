@@ -1,15 +1,19 @@
 import React, { useEffect, useState, useContext } from "react"
-// import { getCommentData } from "../../../services/comments"
+
+// Third-party dependencies
 import { Avatar, Stack, IconButton, Box, Button, InputBase, } from "@mui/material"
 import SendIcon from "@mui/icons-material/Send"
 import PhotoCamera from "@mui/icons-material/PhotoCamera"
-import { CreateCommentInterface } from "../../interface/commet"
 import { useSelector } from "react-redux"
+
+// Current project dependencies
+import { CreateCommentInterface } from "../../interface/commet"
 import { RootState } from "../../app/store"
 import createNewCommentService from "../../services/api/createNewCommentService"
 import { messageContext } from "../../context/MessageContext"
-import { global_flex, user__avatar } from "../../styles"
 import { input } from "../../styles/inputs"
+import stylesVars from "../../styles/globals/vars"
+import cardStyles from "../../styles/components/cards"
 
 export default function CreateComment(props: CreateCommentInterface) {
   const { postId = "", fetchCommentsUpdated } = props
@@ -62,7 +66,7 @@ export default function CreateComment(props: CreateCommentInterface) {
   return (
     <Box
       sx={{
-        ...global_flex,
+        ...stylesVars.centeredElements,
         width: "100%",
         flexDirection: "column",
         margin: "0 auto",
@@ -101,7 +105,7 @@ export default function CreateComment(props: CreateCommentInterface) {
           sizes="small"
           src={state.user.avatarUrl}
           alt={`${state.user.firstName}-${state.user.lastName}`}
-          sx={user__avatar}
+          sx={cardStyles.userAvatar}
         >
           {state.user.firstName.charAt(0)}
         </Avatar>

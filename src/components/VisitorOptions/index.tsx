@@ -1,18 +1,22 @@
 import React, { ReactNode, useEffect, useState } from "react"
+
+// Third-party dependencies
 import { IconButton, Tooltip } from "@mui/material"
 import ChatIcon from "@mui/icons-material/Chat"
 import { useSelector } from "react-redux"
-import { RootState } from "../../app/store"
 import { useNavigate, useParams } from "react-router-dom"
-import { profile_button_size, profile_option__button } from "../../styles/profile"
-import ButtonProfileSkeleton from "../Skeletons/ButtonProfileSkeleton"
-import { NEW_CHAT_ROUTE } from "../../constants/routes"
-import getFriendRequestInfoService from "../../services/api/getFriendRequestInfoService"
-import AcceptFriendRequestButton from "../FunctionsButtons/AcceptFriendRequestButton"
-import RejectFriendRequestButton from "../FunctionsButtons/RejectFriendRequestButton"
-import CancelFriendRequestButton from "../FunctionsButtons/CancelFriendRequestButton"
-import RemoveFriendButton from "../FunctionsButtons/RemoveFriendButton"
-import SendFriendRequestButton from "../FunctionsButtons/SendFriendRequestButton"
+
+// Current project dependencies
+import { RootState } from "app/store"
+import ButtonProfileSkeleton from "components/Skeletons/ButtonProfileSkeleton"
+import getFriendRequestInfoService from "services/api/getFriendRequestInfoService"
+import AcceptFriendRequestButton from "components/FunctionsButtons/AcceptFriendRequestButton"
+import RejectFriendRequestButton from "components/FunctionsButtons/RejectFriendRequestButton"
+import CancelFriendRequestButton from "components/FunctionsButtons/CancelFriendRequestButton"
+import RemoveFriendButton from "components/FunctionsButtons/RemoveFriendButton"
+import SendFriendRequestButton from "components/FunctionsButtons/SendFriendRequestButton"
+import AppRoutes from "constants/app/routes"
+import profileStyles from "styles/pages/profile"
 
 export default function VisitorOption() {
   const state = useSelector((state: RootState) => state.user)
@@ -23,7 +27,7 @@ export default function VisitorOption() {
   const navigate = useNavigate()
 
   const handleNewChat = async () => {
-    const url = NEW_CHAT_ROUTE.replace("%chatId", "chat-id")
+    const url = AppRoutes.newChat.replace("%chatId", "chat-id")
     navigate(url)
   }
 
@@ -37,7 +41,7 @@ export default function VisitorOption() {
 
     if (isFriend) {
       setDynamicButton(
-        <RemoveFriendButton friendId={visitedUserState.user.id} customStyles={profile_option__button} />
+        <RemoveFriendButton friendId={visitedUserState.user.id} customStyles={profileStyles.optionButton} />
       )
     }
 
@@ -52,7 +56,7 @@ export default function VisitorOption() {
 
       if (isSender) {
         setDynamicButton(
-          <CancelFriendRequestButton username={the_username || ""} customStyles={profile_option__button} />
+          <CancelFriendRequestButton username={the_username || ""} customStyles={profileStyles.optionButton} />
         )
       }
 
@@ -62,9 +66,9 @@ export default function VisitorOption() {
       if (isReceiver) {
         setDynamicButton(
           <>
-            <AcceptFriendRequestButton friendRequestId={data.id} customStyles={profile_option__button} />
+            <AcceptFriendRequestButton friendRequestId={data.id} customStyles={profileStyles.optionButton} />
 
-            <RejectFriendRequestButton friendRequestId={data.id} customStyles={profile_option__button} />
+            <RejectFriendRequestButton friendRequestId={data.id} customStyles={profileStyles.optionButton} />
           </>
         )
       }
@@ -73,7 +77,7 @@ export default function VisitorOption() {
         setDynamicButton(
           <SendFriendRequestButton
             username={the_username || ""}
-            customStyles={profile_option__button}
+            customStyles={profileStyles.optionButton}
           />
         )
       }
@@ -101,9 +105,9 @@ export default function VisitorOption() {
 
             <Tooltip title="Send message" arrow>
               <IconButton
-                sx={profile_option__button}
+                sx={profileStyles.optionButton}
                 onClick={handleNewChat}
-                size={profile_button_size}
+                size={profileStyles.buttonSize}
               >
                 <ChatIcon />
               </IconButton>

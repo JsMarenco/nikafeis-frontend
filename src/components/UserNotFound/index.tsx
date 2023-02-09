@@ -1,12 +1,17 @@
 import React, { useEffect } from "react"
+
+// Third-party dependencies
 import { useNavigate } from "react-router-dom"
-import Header from "../Header"
-import {  Box, Button, Container, Stack, Typography} from "@mui/material"
+import { Box, Button, Container, Stack, Typography } from "@mui/material"
 import HomeIcon from "@mui/icons-material/Home"
 import ErrorIcon from "@mui/icons-material/Error"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
+
+// Current project dependencies
+import Header from "../Header"
 import { changeTitle } from "../../utils/basic"
-import { HOME_ROUTE, MAIN_USER_PROFILE_ROUTE } from "../../constants/routes"
+import { MAIN_USER_PROFILE_ROUTE } from "../../constants/routes"
+import AppRoutes from "constants/app/routes"
 
 export default function UserNotFound() {
   const navigate = useNavigate()
@@ -63,7 +68,7 @@ export default function UserNotFound() {
         <Button
           variant="outlined"
           color="primary"
-          onClick={() => navigate(HOME_ROUTE)}
+          onClick={() => navigate(AppRoutes.home)}
           startIcon={<HomeIcon />}
         >
           Home Page

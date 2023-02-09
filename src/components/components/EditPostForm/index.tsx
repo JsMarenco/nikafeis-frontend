@@ -1,15 +1,19 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { FormEvent, useContext, useEffect, useState } from "react"
+
+// Third-party dependencies
 import { Button, Dialog, DialogContent, DialogActions, Stack, InputBase, Avatar } from "@mui/material"
+import { useDispatch, useSelector } from "react-redux"
+
+// Current project dependencies
 import { EditPostFormInterface } from "../../../interface/post"
 import { messageContext } from "../../../context/MessageContext"
-import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../../app/store"
 import updatePostService from "../../../services/api/updatePostService"
 import { setMainUserPosts } from "../../../features/users/userSlice"
 import { UpdatePostForm } from "../../../constants/enums/updatePost"
 import { input } from "../../../styles/inputs"
-import { user__avatar } from "../../../styles"
 import getPostByIdService from "../../../services/api/getPostByIdService"
+import cardStyles from "../../../styles/components/cards"
 
 export default function EditPostForm(props: EditPostFormInterface) {
   const { open, handleCloseEditForm, postId } = props
@@ -29,8 +33,10 @@ export default function EditPostForm(props: EditPostFormInterface) {
     })
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     setLoading(true)
+    e.preventDefault()
+
     const { success, message } = await updatePostService(state.user.id, postId, state.token)
 
     if (success) {
@@ -79,7 +85,7 @@ export default function EditPostForm(props: EditPostFormInterface) {
     <>
       <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
         <DialogContent sx={{ bgcolor: "background.paper", }}>
-          <Stack spacing={2.5} id={UpdatePostForm.id} component="form">
+          <Stack spacing={2.5} id={UpdatePostForm.id} component="form" onSubmit={handleSubmit}>
             <InputBase
               id={UpdatePostForm.title_updated_input_id}
               role={UpdatePostForm.title_updated_input_role}
@@ -96,7 +102,7 @@ export default function EditPostForm(props: EditPostFormInterface) {
                 <Avatar
                   src={state.user.avatarUrl}
                   alt={`${state.fullName}-avatar`}
-                  sx={{ ...user__avatar, cursor: "initial" }}
+                  sx={{ ...cardStyles.userAvatar, cursor: "initial" }}
                 >
                   {state.user.firstName.charAt(0)}
                 </Avatar>
@@ -123,7 +129,7 @@ export default function EditPostForm(props: EditPostFormInterface) {
 
         <DialogActions
           sx={{ bgcolor: "background.paper", }}>
-          <Button variant="outlined" disabled={loading} onClick={handleSubmit}>
+          <Button variant="outlined" disabled={loading} type="submit">
             Update
           </Button>
           <Button variant="outlined" onClick={handleClose} disabled={loading}>

@@ -1,18 +1,22 @@
-import { Box, Typography, Button, Divider, Stack, TextField, Icon, Grid } from "@mui/material"
 import React, { useContext, useEffect, useState } from "react"
+
+// Third-party dependencies
+import { Box, Typography, Button, Divider, Stack, TextField, Icon, Grid } from "@mui/material"
 import { useNavigate } from "react-router-dom"
-import { LOGIN_ROUTE } from "../../constants/routes"
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
+import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined"
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
+import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined"
+
+// Current project dependencies
 import { changeTitle } from "../../utils/basic"
 import { messageContext } from "../../context/MessageContext"
 import registerNewUserService from "../../services/api/registerNewUserService"
 import { REGISTER } from "../../constants/titles"
 import { RegisterForm, RegisterFormTexts } from "../../constants/enums/register"
-import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined"
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined"
 import { register_form, register_form_title, register_image_container } from "../../styles/login-register"
-import { LOGIN_BUTTON, REGISTER_BUTTON } from "../../constants/buttons"
+import AppRoutes from "constants/app/routes"
+import { LOGIN_BUTTON, REGISTER_BUTTON } from "constants/buttons"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const register_image = require("../../assets/bg_register.png")
 
@@ -53,7 +57,7 @@ export default function Register() {
               <Button
                 variant="text"
                 color="primary"
-                onClick={() => navigate(LOGIN_ROUTE)}
+                onClick={() => navigate(AppRoutes.login)}
                 size={RegisterForm.button_size}
               >
                 {LOGIN_BUTTON}
@@ -102,7 +106,7 @@ const Form = () => {
         [RegisterForm.confirmPassword_input_name]: ""
       })
 
-      setTimeout(() => { navigate(LOGIN_ROUTE) }, 1000)
+      setTimeout(() => { navigate(AppRoutes.login) }, 1000)
     }
 
     setLoading(false)

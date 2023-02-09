@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  user-select: none;
+  /* user-select: none; */
   box-sizing: border-box;
 }
 
@@ -14,7 +14,7 @@ body {
   width: 5px;
   opacity: 0;
   background: transparent;
-  /* display: none; */
+  display: none;
 }
 
 ::-webkit-scrollbar:hover {
@@ -24,4 +24,9 @@ body {
 ::-webkit-scrollbar-thumb {
   background-color: #9b59b6; /*color oscuro*/
   border-radius: 5px;
+}
+
+img {
+  width: 100%;
+  height: 100%;
 }

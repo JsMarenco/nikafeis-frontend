@@ -1,9 +1,14 @@
 import React from "react"
+
+// Third-party dependencies
 import { useNavigate } from "react-router-dom"
-import { Box, ListItemIcon, MenuItem } from "@mui/material"
-import { SettingsLinks } from "../MenuLinks/SettingsLinks"
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos"
-import { global_flex } from "../../../styles"
+import { Box, ListItemIcon, MenuItem } from "@mui/material"
+
+// Current project dependencies
+import { SettingsLinks } from "../MenuLinks/SettingsLinks"
+import stylesVars from "../../../styles/globals/vars"
+import settingsStyles from "styles/pages/settings"
 
 export default function SettingsMenu() {
   const navigate = useNavigate()
@@ -15,9 +20,9 @@ export default function SettingsMenu() {
           <MenuItem
             key={index}
             onClick={() => navigate(MenuLink.link)}
-            sx={{ color: "text.primary", borderRadius: "30px", ...global_flex, justifyContent: "space-between" }}
+            sx={settingsStyles.link}
           >
-            <Box sx={global_flex}>
+            <Box sx={stylesVars.centeredElements}>
               <ListItemIcon sx={{ mr: 1.5 }}>{MenuLink.icon}</ListItemIcon>{MenuLink.label}
             </Box>
 

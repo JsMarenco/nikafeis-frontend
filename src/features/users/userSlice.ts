@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { UserStateInterface } from "../../interface/user"
+import { IUserState } from "../../interface/users"
 import { saveInLocalStorage } from "../../utils/basic"
 
-const initialUser: UserStateInterface = {
+const initialUser: IUserState = {
   user: {
     avatarUrl: "",
     coverImageUrl: "",
@@ -15,11 +15,11 @@ const initialUser: UserStateInterface = {
     token: "",
     username: "",
     website: "",
-    facebook_link: "",
-    github_link: "",
-    linkedin_link: "",
-    twitter_link: "",
-    instagram_link: "",
+    facebookLink: "",
+    githubLink: "",
+    linkedinLink: "",
+    twitterLink: "",
+    instagramLink: "",
   },
   token: "",
   isLogin: false,
@@ -28,7 +28,6 @@ const initialUser: UserStateInterface = {
   friendRequests: [],
   friendRequestsSent: [],
   posts: [],
-  appTheme: ""
 }
 
 const userSlice = createSlice({
@@ -37,6 +36,7 @@ const userSlice = createSlice({
   reducers: {
     setMainUser(state, action) {
       state.user = action.payload
+      console.log("🚀 ~ file: userSlice.ts:39 ~ setMainUser ~ action.payload", action.payload)
       state.token = action.payload.token
       state.friendRequests = action.payload.friendRequests
       state.friends = action.payload.friends
@@ -68,9 +68,6 @@ const userSlice = createSlice({
     setMainUserFriendRequests(state, action) {
       state.friendRequests = action.payload
     },
-    setMainUserAppTheme(state, action) {
-      state.appTheme = action.payload
-    },
   }
 })
 
@@ -79,8 +76,8 @@ export const {
   logout,
   setMainUserPosts,
   setMainUserFriends,
-  setMainUserAppTheme,
   setMainUserFriendRequests,
   setMainUserFriendRequestsSent,
 } = userSlice.actions
+
 export default userSlice.reducer

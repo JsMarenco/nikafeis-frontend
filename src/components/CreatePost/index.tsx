@@ -1,29 +1,22 @@
-import React, { useContext, useEffect, useState, } from "react"
-import { Box, Stack, Button, IconButton, Avatar, Tooltip, InputBase } from "@mui/material"
+import React, { ChangeEvent, FormEvent, useContext, useEffect, useState, } from "react"
+
+// Third-party dependencies
+import { Stack, Button, IconButton, Avatar, Tooltip, InputBase } from "@mui/material"
 import { PhotoCamera } from "@mui/icons-material"
 import { useDispatch, useSelector } from "react-redux"
+
+// Current project dependencies
 import { RootState } from "../../app/store"
+import inputStyles from "../../styles/components/input"
+import cardStyles from "../../styles/components/cards"
+import createNewPostService from "../../services/api/createNewPostService"
+import getUserByUsernameService from "../../services/api/getUserByUsernameService"
 import PriviewImage from "../components/PriviewImage"
 import { messageContext } from "../../context/MessageContext"
-import createNewPostService from "../../services/api/createNewPostService"
 import { setMainUser } from "../../features/users/userSlice"
-import getUserByUsernameService from "../../services/api/getUserByUsernameService"
-import { post__card_create__form_container } from "../../styles/post"
-import { user__avatar } from "../../styles"
-import { input } from "../../styles/inputs"
 import { CreatePostForm } from "../../constants/enums/createPost"
 
 export default function CreatePost() {
-  return (
-    <Box sx={post__card_create__form_container} component={"form"} id={CreatePostForm.id}>
-      <Stack spacing={2} sx={{ width: "100%", }}>
-        <Form />
-      </Stack>
-    </Box>
-  )
-}
-
-const Form = () => {
   const state = useSelector((state: RootState) => { return state.user })
   const { handleMessage } = useContext(messageContext)
   const [loading, setLoading] = useState(false)
@@ -38,7 +31,7 @@ const Form = () => {
 
   const onPostCreate = () => { setPreview([]), setSelectedFile([]) }
 
-  const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onSelectFile = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
     if (!files) return
 
@@ -55,16 +48,16 @@ const Form = () => {
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPostInfo({
       ...postInfo,
       [e.target.name]: e.target.value,
     })
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     setLoading(true)
+    e.preventDefault()
 
     const { statusCode, success, message } = await createNewPostService(state.user.id, state.token)
 
@@ -119,7 +112,13 @@ const Form = () => {
   }
 
   return (
-    <>
+    <Stack
+      spacing={2}
+      sx={cardStyles.container}
+      component={"form"}
+      id={CreatePostForm.id}
+      onSubmit={handleSubmit}
+    >
       <InputBase
         id={CreatePostForm.title_input_id}
         role={CreatePostForm.title_input_role}
@@ -131,13 +130,13 @@ const Form = () => {
         placeholder={CreatePostForm.title_input_placeholder}
         fullWidth
         disabled={loading}
-        sx={input}
+        sx={inputStyles.input}
         onClick={() => setShowContentInput(true)}
         startAdornment={
           <Avatar
             src={state.user.avatarUrl}
             alt={`${state.fullName}-avatar`}
-            sx={{ ...user__avatar, cursor: "initial" }}
+            sx={{ ...cardStyles.userAvatar, cursor: "initial" }}
           >
             {state.user.firstName.charAt(0)}
           </Avatar>
@@ -160,7 +159,7 @@ const Form = () => {
               multiline
               rows={4}
               disabled={loading}
-              sx={input}
+              sx={inputStyles.input}
             />
 
             {
@@ -198,7 +197,7 @@ const Form = () => {
                 variant="outlined"
                 color="secondary"
                 sx={{ borderRadius: "50px", }}
-                onClick={handleSubmit}
+                type="submit"
                 disabled={loading}
               >
                 Post now
@@ -207,6 +206,6 @@ const Form = () => {
           </>
         )
       }
-    </>
+    </Stack>
   )
 }

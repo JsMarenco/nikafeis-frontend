@@ -1,10 +1,14 @@
 import React from "react"
+
+// Third-party dependencies
 import { Stack, Avatar, Tooltip, Typography, Box } from "@mui/material"
 import { useNavigate } from "react-router-dom"
-import { PROFILE_ROUTE } from "../../../../../constants/routes"
-import { user__fullName_link } from "../../../../../styles"
-import { friend_request__card_container, friend_request__card_avatar } from "../../../../../styles/friendRequest"
+
+// Current project dependencies
 import { FRBaseProps } from "../../../../../interface/friends"
+import AppRoutes from "../../../../../constants/app/routes"
+import cardStyles from "../../../../../styles/components/cards"
+import globalsTexts from "../../../../../lang/en/globals"
 
 export default function FriendRequestCardLarge(props: FRBaseProps) {
   const { avatarUrl, username, fullName, children } = props
@@ -12,30 +16,30 @@ export default function FriendRequestCardLarge(props: FRBaseProps) {
   const navigate = useNavigate()
 
   return (
-    <Stack spacing={2} sx={friend_request__card_container}>
+    <Stack spacing={2} sx={cardStyles.container}>
       <Avatar
         src={avatarUrl}
         alt={fullName}
-        sx={friend_request__card_avatar}
-        onClick={() => navigate(`${PROFILE_ROUTE}/${username}`)}
+        sx={cardStyles.userAvatarCenter}
+        onClick={() => navigate(AppRoutes.visitUserProfile.replace("%username", username))}
         variant="circular"
       >
         {fullName.charAt(0)}
       </Avatar>
 
       <Box>
-        <Tooltip title="View Profile" arrow>
+        <Tooltip title={globalsTexts.viewProfile} arrow>
           <Typography
-            sx={user__fullName_link}
+            sx={cardStyles.profileLink}
             variant="subtitle1"
             color="text.primary"
-            onClick={() => navigate(`${PROFILE_ROUTE}/${username}`)}
+            fontWeight={400}
           >
             {fullName}
           </Typography>
         </Tooltip>
 
-        <Typography variant="body1" sx={{ fontWeight: "300" }} color="text.primary">{`@${username}`}</Typography>
+        <Typography variant="body1" fontWeight={300} color="text.primary">{`@${username}`}</Typography>
       </Box>
 
       <Stack

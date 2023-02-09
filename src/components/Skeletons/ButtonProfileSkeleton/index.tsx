@@ -1,20 +1,35 @@
 import React from "react"
-import { Skeleton } from "@mui/material"
-import { skeleton__animation } from "../../../styles"
-import { profile_option__button } from "../../../styles/profile"
 
-export default function ButtonProfileSkeleton() {
+// Third-party dependencies
+import { Skeleton } from "@mui/material"
+
+// Current project dependencies
+import stylesVars from "styles/globals/vars"
+import profileStyles from "styles/pages/profile"
+
+const ButtonProfileSkeleton = () => {
   return (
     <Skeleton
-      animation={skeleton__animation}
+      animation={stylesVars.skeletonAnimation}
       variant="rectangular"
       sx={{
-        ...profile_option__button,
+        ...profileStyles.optionButton,
         width: "70%",
         height: 30,
         mb: .5,
         maxWidth: "150px"
       }}
     />
+  )
+}
+
+export default function ButtonProfileSkeletonList() {
+  return (
+    <>
+      <ButtonProfileSkeleton />
+      <ButtonProfileSkeleton />
+      <ButtonProfileSkeleton />
+      <ButtonProfileSkeleton />
+    </>
   )
 }

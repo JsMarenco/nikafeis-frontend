@@ -1,16 +1,20 @@
 import React, { useEffect, useState, useRef } from "react"
+
+// Third-party dependencies
 import { useLocation, useParams } from "react-router-dom"
+import { useSelector } from "react-redux"
 import { Stack, } from "@mui/material"
+
+// Current project dependencies
 import { RootState } from "../../app/store"
 import PostInterface from "../../interface/post"
 import getPostsByUsernameService from "../../services/api/getPostsByUsernameService"
 import PostCard from "../Cards/PostCard"
-import { HOME_ROUTE, USER_USERNAME_APP_ROUTE } from "../../constants/routes"
 import getRecentPostsService from "../../services/api/getRecentPostsService"
-import { useSelector } from "react-redux"
 import NoContent from "../NoContent"
 import PostSkeletonList from "../Skeletons/PostSkeleton"
 import LoadMore from "../LoadMore"
+import AppRoutes from "constants/app/routes"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const BgImage = require("../../assets/bg-3.png")
 
@@ -26,12 +30,12 @@ export default function PostsLst() {
   const lastItemRef = useRef(null)
 
   useEffect(() => { fetchPosts() }, [])
-  useEffect(() => { fetchPosts() }, [state.posts, the_username])
+  useEffect(() => { fetchPosts() }, [state.posts, the_username, location])
 
   const fetchPosts = async () => {
     setLoading(true)
 
-    if (the_username === USER_USERNAME_APP_ROUTE) {
+    if (the_username === AppRoutes.userUsernameApp) {
       const { data, statusCode, success } = await getPostsByUsernameService(state.user.username)
 
       if (success && statusCode === 200) {
@@ -39,13 +43,13 @@ export default function PostsLst() {
       }
     }
 
-    if (the_username !== USER_USERNAME_APP_ROUTE && location.pathname !== HOME_ROUTE) {
+    if (the_username !== AppRoutes.userUsernameApp && location.pathname !== AppRoutes.home) {
       const { data, statusCode, success } = await getPostsByUsernameService(the_username || "")
 
       success && statusCode === 200 ? setPosts(data) : setPosts([])
     }
 
-    if (!postId && !the_username && location.pathname === HOME_ROUTE) {
+    if (!postId && !the_username && location.pathname === AppRoutes.home) {
       const { data, statusCode, success } = await getRecentPostsService(offset, limit)
 
       success && statusCode === 200 ? setPosts([...posts, ...data]) : setPosts([])

@@ -1,9 +1,13 @@
 import React, { ReactNode, useEffect, useState } from "react"
+
+// Third-party dependencies
 import { useDispatch, useSelector } from "react-redux"
 import { useLocation, useNavigate } from "react-router-dom"
+
+// Current project dependencies
+import AppRoutes from "constants/app/routes"
 import { RootState } from "../app/store"
 import CustomLoader from "../components/CustomLoader"
-import { HOME_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, RESET_PASSWORD } from "../constants/routes"
 import { setMainUser } from "../features/users/userSlice"
 import { getFromLocalStorage } from "../utils/basic"
 
@@ -32,18 +36,18 @@ export default function IsAuthenticated(props: AuthInterface) {
     if (existUser && !state.isLogin) {
       dispatch(setMainUser(existUser))
 
-      currentPath === LOGIN_ROUTE && navigate(HOME_ROUTE)
-      currentPath === REGISTER_ROUTE && navigate(HOME_ROUTE)
+      currentPath === AppRoutes.login && navigate(AppRoutes.home)
+      currentPath === AppRoutes.register && navigate(AppRoutes.home)
     }
 
     if (!existUser && !state.isLogin) {
-      // only this routes the user can be visit
-      const isInLoginForm = currentPath !== LOGIN_ROUTE
-      const isInRegisterForm = currentPath !== REGISTER_ROUTE
-      const isInResetPasswordForm = currentPath !== RESET_PASSWORD
+      // only those routes the user can be visit
+      const isInLoginForm = currentPath !== AppRoutes.login
+      const isInRegisterForm = currentPath !== AppRoutes.register
+      const isInResetPasswordForm = currentPath !== AppRoutes.resetPassword
 
       if (isInLoginForm && isInRegisterForm && isInResetPasswordForm) {
-        navigate(LOGIN_ROUTE)
+        navigate(AppRoutes.login)
       }
     }
 
@@ -64,6 +68,3 @@ export default function IsAuthenticated(props: AuthInterface) {
     </>
   )
 }
-
-
-

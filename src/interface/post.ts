@@ -18,6 +18,7 @@ export interface ContentPostInterface {
   title: string,
   content: string,
   postImages: Array<string>,
+  username: string
 }
 
 export interface HeaderPostInterface {

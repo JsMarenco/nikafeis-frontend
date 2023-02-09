@@ -1,6 +1,3 @@
-export const LOGIN_ROUTE = "/login"
-export const REGISTER_ROUTE = "/register"
-export const HOME_ROUTE = "/"
 export const FRIENDS_SECTION_ROUTE = "/friends"
 export const NEW_CONNECTIONS_ROUTE = "/connections"
 export const VIDEOS_SECTION_ROUTE = "/videos"
