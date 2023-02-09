@@ -1,4 +1,3 @@
-import { listClasses } from "@mui/material"
 import stylesVars from "../globals/vars"
 
 const optionButton = {
@@ -14,7 +13,6 @@ const coverContainer = {
   px: { xs: 1, sm: 2 },
   borderRadius: "15px",
   backgroundColor: "background.paper",
-  // px: 0
 }
 
 const cover = {

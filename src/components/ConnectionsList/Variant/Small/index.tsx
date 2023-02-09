@@ -48,7 +48,7 @@ export default function ConnectionsListSmall() {
   return (
     <>
       <Box sx={cardStyles.container}>
-        <Box sx={{ ...stylesVars, justifyContent: "space-between", mb: 2 }}>
+        <Box sx={{ ...stylesVars.centeredElements, justifyContent: "space-between", mb: 2 }}>
           <Typography variant="body1" color="text.primary">People may you know</Typography>
 
           <Typography
@@ -73,7 +73,14 @@ export default function ConnectionsListSmall() {
                 fullName={`${req.firstName} ${req.lastName}`}
                 variant="small"
               >
-                <SendFriendRequestButton username={req.username} v2 size="small" customStyles={{ borderRadius: "15px" }} />
+                <SendFriendRequestButton
+                  username={req.username}
+                  v2
+                  size="small"
+                  customStyles={{
+                    borderRadius: "15px"
+                  }}
+                />
               </FriendRequestCard>
             ))
           }

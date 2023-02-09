@@ -17,7 +17,10 @@ export default function FriendRequestCardSmall(props: FRBaseProps) {
 
   return (
     <Stack
-      sx={cardStyles.container}
+      sx={{
+        ...cardStyles.container,
+        bgcolor: "background.default"
+      }}
       direction="row"
       justifyContent="center"
       alignItems="center"
@@ -63,6 +66,7 @@ export default function FriendRequestCardSmall(props: FRBaseProps) {
         alignItems="center"
         justifyContent="center"
         spacing={1}
+        sx={{ width: "100%" }}
       >
         {children}
       </Stack>

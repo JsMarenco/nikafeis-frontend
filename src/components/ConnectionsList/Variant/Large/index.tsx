@@ -31,6 +31,7 @@ export default function ConnectionsListLarge() {
   const fetchUserConnections = async () => {
     setLoading(true)
     const { data, statusCode, success } = await getUerConnectionsService(state.user.id, offset, limit)
+    console.log("🚀 ~ file: index.tsx:34 ~ fetchUserConnections ~ data", data)
 
     if (success && statusCode === 200) {
       setFriendConnections([...friendConnections, ...data])
@@ -72,7 +73,7 @@ export default function ConnectionsListLarge() {
           <>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Typography variant="h6" color="text.primary">People may you know</Typography>
+                <Typography variant="h5" color="text.primary">People may you know</Typography>
               </Grid>
 
               {

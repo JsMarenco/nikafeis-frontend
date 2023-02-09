@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react"
 
 // Third-party dependencies
 import Grid from "@mui/material/Unstable_Grid2"
-import { Icon, InputBase, Stack, Typography, Button, Box } from "@mui/material"
+import { Icon, InputBase, Stack, Typography, Button } from "@mui/material"
 import FacebookIcon from "@mui/icons-material/Facebook"
 import GitHubIcon from "@mui/icons-material/GitHub"
 import LinkedInIcon from "@mui/icons-material/LinkedIn"
@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
 // Current project dependencies
-import { settings_container } from "../../../styles/settings"
 import { SocialSettingsForm } from "../../../constants/enums/socialSettings"
 import updateSocialInfoService from "../../../services/api/updateSocialInfoService"
 import { RootState } from "../../../app/store"
@@ -164,7 +163,7 @@ export default function SocialSettings() {
           />
 
           <Typography variant="h6" color="text.primary" flexGrow={1}>
-            {`${SocialSettingsForm.instagram_url}${socialInfo[SocialSettingsForm.linkedin_input_name]}`}
+            {`${SocialSettingsForm.instagram_url}${socialInfo[SocialSettingsForm.instagram_input_name]}`}
           </Typography>
         </Stack>
 

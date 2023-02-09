@@ -37,6 +37,7 @@ export default function RejectFriendRequestButton(props: FunctionsButtonsBaseInt
             onClick={handleRejectFriendRequest}
             sx={customStyles}
             size={size}
+            fullWidth
           >
             {REJECT_FRIEND_REQUEST}
           </Button>

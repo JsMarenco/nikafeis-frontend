@@ -34,6 +34,7 @@ export default function RemoveFriendButton(props: RemoveFriendInterface) {
             color="primary"
             onClick={handleRemoveFriend}
             sx={customStyles}
+            fullWidth
           >
             {REMOVE_FRIEND}
           </Button>

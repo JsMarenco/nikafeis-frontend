@@ -34,17 +34,17 @@ export default function FriendRequestCardLarge(props: FRBaseProps) {
             variant="subtitle1"
             color="text.primary"
             fontWeight={400}
+            onClick={() => navigate(AppRoutes.visitUserProfile.replace("%username", username))}
+            align="center"
           >
             {fullName}
           </Typography>
         </Tooltip>
 
-        <Typography variant="body1" fontWeight={300} color="text.primary">{`@${username}`}</Typography>
+        <Typography variant="body1" fontWeight={300} color="text.primary" align="center">{`@${username}`}</Typography>
       </Box>
 
-      <Stack
-        spacing={1}
-      >
+      <Stack spacing={1}>
         {children}
       </Stack>
     </Stack>

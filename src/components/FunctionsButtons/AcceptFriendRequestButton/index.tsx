@@ -37,6 +37,7 @@ export default function AcceptFriendRequestButton(props: FunctionsButtonsBaseInt
             onClick={handleAcceptFriendRequest}
             sx={customStyles}
             size={size}
+            fullWidth
           >
             {ACCEPT_FRIEND_REQUEST}
           </Button>
