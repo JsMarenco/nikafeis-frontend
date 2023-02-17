@@ -11,13 +11,13 @@ import { NO_CONNECTIONS_MESSAGE } from "../../../../constants/messages"
 import { friendRequestsInterface } from "../../../../interface/user"
 import getUserFriendRequestsService from "../../../../services/api/getUserFriendRequestsService"
 import FriendRequestCard from "../../../Cards/FriendRequestCard"
-import AcceptFriendRequestButton from "../../../FunctionsButtons/AcceptFriendRequestButton"
-import RejectFriendRequestButton from "../../../FunctionsButtons/RejectFriendRequestButton"
 import NoContent from "../../../NoContent"
 import FriendRequestSkeleton from "../../../Skeletons/FriendRequestSkeleton"
 import stylesVars from "../../../../styles/globals/vars"
 import AppRoutes from "../../../../constants/app/routes"
 import cardStyles from "../../../../styles/components/cards"
+import AcceptFriendRequestButton from "components/Buttons/AcceptFriendRequestButton"
+import RejectFriendRequestButton from "components/Buttons/RejectFriendRequestButton"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const noConnections = require("../../../../assets/new_connections.png")
 
@@ -75,8 +75,8 @@ export default function FriendRequestReceiveSmall() {
                 friendRequestId={req.id}
                 variant="small"
               >
-                <AcceptFriendRequestButton customStyles={{ borderRadius: "15px" }} friendRequestId={req.id} v2 size="small" />
-                <RejectFriendRequestButton customStyles={{ borderRadius: "15px" }} friendRequestId={req.id} v2 size="small" />
+                <AcceptFriendRequestButton friendRequestId={req.id} version={"large"} />
+                <RejectFriendRequestButton friendRequestId={req.id} version={"large"} />
               </FriendRequestCard>
             ))
           }

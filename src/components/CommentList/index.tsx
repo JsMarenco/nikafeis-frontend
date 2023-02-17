@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material"
+import { Button, Stack, Typography } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { RootState } from "../../app/store"
@@ -39,17 +39,10 @@ export default function CommentList(props: CommentListInterface) {
   }, [])
 
   return (
-    <>
+    <Stack spacing={2}>
       {
         loading ? (
           <>
-            <CommenSkeleton />
-            <CommenSkeleton />
-            <CommenSkeleton />
-            <CommenSkeleton />
-            <CommenSkeleton />
-            <CommenSkeleton />
-            <CommenSkeleton />
             <CommenSkeleton />
             <CommenSkeleton />
             <CommenSkeleton />
@@ -86,7 +79,7 @@ export default function CommentList(props: CommentListInterface) {
               onClick={() => fetchCommentsUpdated()}
               disabled={commentsUpdated.length < limit}
             >
-              show more comments
+              Show more comments
             </Button>
           </>
         )
@@ -104,6 +97,6 @@ export default function CommentList(props: CommentListInterface) {
         postId={postId}
         fetchCommentsUpdated={fetchCommentsUpdated}
       />
-    </>
+    </Stack>
   )
 }

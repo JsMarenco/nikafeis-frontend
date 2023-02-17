@@ -18,11 +18,11 @@ import { SocialSettingsForm } from "../../../constants/enums/socialSettings"
 import updateSocialInfoService from "../../../services/api/updateSocialInfoService"
 import { RootState } from "../../../app/store"
 import { PROFILE_UPDATE_MESSAGE } from "../../../constants/messages"
-import { MAIN_USER_PROFILE_ROUTE } from "../../../constants/routes"
 import { messageContext } from "../../../context/MessageContext"
 import { setMainUser } from "../../../features/users/userSlice"
-import { input } from "../../../styles/inputs"
 import settingsStyles from "styles/pages/settings"
+import AppRoutes from "constants/app/routes"
+import inputStyles from "styles/components/input"
 
 export default function SocialSettings() {
   const state = useSelector((state: RootState) => state.user)
@@ -51,7 +51,7 @@ export default function SocialSettings() {
     if (success && statusCode !== 400) {
       dispath(setMainUser(data))
       handleMessage(PROFILE_UPDATE_MESSAGE)
-      navigate(MAIN_USER_PROFILE_ROUTE)
+      navigate(AppRoutes.mainUserProfile)
     }
 
     if (statusCode === 400) {
@@ -75,7 +75,7 @@ export default function SocialSettings() {
             autoComplete={SocialSettingsForm.autocomplete_inputs}
             placeholder={SocialSettingsForm.facebook_input_placeholder}
             size={SocialSettingsForm.input_size}
-            sx={input}
+            sx={inputStyles.input}
             startAdornment={
               <FacebookIcon
                 sx={{ mr: 1.5, color: "text.primary" }}
@@ -101,7 +101,8 @@ export default function SocialSettings() {
             autoComplete={SocialSettingsForm.autocomplete_inputs}
             placeholder={SocialSettingsForm.github_input_placeholder}
             size={SocialSettingsForm.input_size}
-            sx={input}
+            sx={inputStyles.input}
+
             startAdornment={
               <GitHubIcon
                 sx={{ mr: 1.5, color: "text.primary" }}
@@ -127,7 +128,8 @@ export default function SocialSettings() {
             autoComplete={SocialSettingsForm.autocomplete_inputs}
             placeholder={SocialSettingsForm.linkedin_input_placeholder}
             size={SocialSettingsForm.input_size}
-            sx={input}
+            sx={inputStyles.input}
+
             startAdornment={
               <LinkedInIcon
                 sx={{ mr: 1.5, color: "text.primary" }}
@@ -153,7 +155,8 @@ export default function SocialSettings() {
             autoComplete={SocialSettingsForm.autocomplete_inputs}
             placeholder={SocialSettingsForm.instagram_input_placeholder}
             size={SocialSettingsForm.input_size}
-            sx={input}
+            sx={inputStyles.input}
+
             startAdornment={
               <InstagramIcon
                 sx={{ mr: 1.5, color: "text.primary" }}
@@ -179,7 +182,8 @@ export default function SocialSettings() {
             autoComplete={SocialSettingsForm.autocomplete_inputs}
             placeholder={SocialSettingsForm.twitter_input_placeholder}
             size={SocialSettingsForm.input_size}
-            sx={input}
+            sx={inputStyles.input}
+
             startAdornment={
               <TwitterIcon
                 sx={{ mr: 1.5, color: "text.primary" }}
@@ -205,7 +209,8 @@ export default function SocialSettings() {
             autoComplete={SocialSettingsForm.autocomplete_inputs}
             placeholder={SocialSettingsForm.password_input_placeholder}
             size={SocialSettingsForm.input_size}
-            sx={input}
+            sx={inputStyles.input}
+
             startAdornment={
               <Icon
                 sx={{ mr: 2, cursor: "pointer" }}

@@ -7,7 +7,7 @@ import Grid from "@mui/material/Unstable_Grid2"
 // Current project dependencies
 import AvatarSettings from "../AvatarSettings"
 import CoverSettings from "../CoverSettings"
-import { settings_container } from "../../../styles/settings"
+import cardStyles from "styles/components/cards"
 
 export default function ProfileSettings() {
   const icon_size = "large"
@@ -15,13 +15,13 @@ export default function ProfileSettings() {
   return (
     <>
       <Grid xs={12} md={6}>
-        <Box sx={settings_container}>
+        <Box sx={cardStyles.container}>
           <AvatarSettings icon_size={icon_size} />
         </Box>
       </Grid>
 
       <Grid xs={12} md={6}>
-        <Box sx={settings_container}>
+        <Box sx={cardStyles.container}>
           <CoverSettings icon_size={icon_size} />
         </Box>
       </Grid>

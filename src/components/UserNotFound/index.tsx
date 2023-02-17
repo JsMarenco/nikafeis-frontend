@@ -10,7 +10,6 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 // Current project dependencies
 import Header from "../Header"
 import { changeTitle } from "../../utils/basic"
-import { MAIN_USER_PROFILE_ROUTE } from "../../constants/routes"
 import AppRoutes from "constants/app/routes"
 
 export default function UserNotFound() {
@@ -77,7 +76,7 @@ export default function UserNotFound() {
         <Button
           variant="outlined"
           color="primary"
-          onClick={() => navigate(MAIN_USER_PROFILE_ROUTE)}
+          onClick={() => navigate(AppRoutes.mainUserProfile)}
           startIcon={<AccountCircleIcon />}
         >
           My Profile

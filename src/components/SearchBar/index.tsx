@@ -8,7 +8,6 @@ import CloseIcon from "@mui/icons-material/Close"
 import SearchIcon from "@mui/icons-material/Search"
 
 // Current project dependencies
-import { input } from "../../styles/inputs"
 import { SearchBarForm } from "../../constants/enums/searchBar"
 import { RootState } from "../../app/store"
 import searchBarService from "../../services/api/searchBarService"

@@ -1,5 +1,5 @@
 enum globalsTexts {
-  viewProfile = "Visit profle",
+  viewProfile = "Visit profile",
   altImage = "Image by @username"
 }
 

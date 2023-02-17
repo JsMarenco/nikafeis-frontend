@@ -10,10 +10,10 @@ import Grid from "@mui/material/Unstable_Grid2"
 import { changeTitle } from "../../utils/basic"
 import { ACCOUNT_SETTINGS } from "../../constants/titles"
 import SettingsMenu from "../../components/Menus/SettingsMenu"
-import { SETTINGS_ROUTE } from "../../constants/routes"
-import { settings_container } from "../../styles/settings"
 import stylesVars from "../../styles/globals/vars"
 import settingsStyles from "styles/pages/settings"
+import AppRoutes from "constants/app/routes"
+import cardStyles from "styles/components/cards"
 
 export default function Settings() {
   const navigate = useNavigate()
@@ -25,14 +25,14 @@ export default function Settings() {
   useEffect(() => {
     const currentPath = location.pathname
 
-    currentPath !== SETTINGS_ROUTE && setHideMenu(true)
-    currentPath === SETTINGS_ROUTE && setHideMenu(false)
+    currentPath !== AppRoutes.settings && setHideMenu(true)
+    currentPath === AppRoutes.settings && setHideMenu(false)
   }, [location])
 
   return (
     <Grid container spacing={2} disableEqualOverflow>
       <Grid xs={12}>
-        <Box sx={{ ...stylesVars.centeredElements, justifyContent: "initial", ...settings_container }}>
+        <Box sx={{ ...stylesVars.centeredElements, justifyContent: "initial", ...cardStyles.container }}>
           <IconButton
             size="large"
             sx={{ mr: 1.5 }}

@@ -1,6 +1,37 @@
+import { IC } from "./comment"
 import { BasicUserInterface } from "./user"
 
-export default interface PostInterface {
+export interface InteractPostInterface {
+  handleLike: () => void,
+  handleShare: () => void,
+  handleShowComments: () => boolean,
+
+  likes: number,
+  comments: number,
+  shares: number,
+}
+export interface ContentPostInterface extends InteractPostInterface {
+  title: string,
+  content: string,
+  postImages: Array<string>,
+  username: string
+}
+
+export interface PostHeaderMenuInterface {
+  postId: string,
+  authorPostId: string
+}
+
+export interface EditPostFormInterface {
+  open: boolean,
+  handleCloseEditForm: () => void,
+  postId: string
+}
+
+/**
+ * Post interface
+ */
+export interface IP {
   id: string
   title: string
   content: string
@@ -14,43 +45,33 @@ export default interface PostInterface {
   updatedAt: string
 }
 
-export interface ContentPostInterface {
-  title: string,
-  content: string,
-  postImages: Array<string>,
-  username: string
-}
-
-export interface HeaderPostInterface {
+type headerPost = "createdAt" | "updatedAt"
+/**
+ * Header Post Interface
+ */
+export interface IHP extends Omit<BasicUserInterface, "id">, Pick<IP, headerPost> {
   postId: string,
-  authorPostId: string
-  firstName: string,
-  lastName: string,
-  avatarUrl: string,
-  username: string,
-
-  createdAt: string,
-  updatedAt: string,
   handleReport: () => void,
+  authorPostId: string
 }
 
-export interface InteractPostInterface {
+type contentPost = "title" | "content" | "postImages"
+/**
+ * Content Post Interface
+ */
+export interface ICP extends Pick<BasicUserInterface, "username">, Pick<IP, contentPost> { }
+
+type interactPost = "title" | "content" | "postImages"
+/**
+ * Interact Post Interface
+ */
+export interface IIP extends Pick<IP, interactPost>, Pick<BasicUserInterface, "username"> {
   handleLike: () => void,
   handleShare: () => void,
-  handleShowComments: () => boolean,
-
+  fetchCommentsUpdated: () => void
   likes: number,
-  comments: number,
   shares: number,
-}
-
-export interface PostHeaderMenuInterface {
   postId: string,
-  authorPostId: string
-}
-
-export interface EditPostFormInterface {
-  open: boolean,
-  handleCloseEditForm: () => void,
-  postId: string
+  comments: IC[],
+  limit: number,
 }

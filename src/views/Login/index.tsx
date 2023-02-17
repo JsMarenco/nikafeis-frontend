@@ -14,7 +14,6 @@ import { changeTitle } from "../../utils/basic"
 import { messageContext } from "../../context/MessageContext"
 import loginUserService from "../../services/api/loginUserService"
 import { setMainUser } from "../../features/users/userSlice"
-import { RESET_PASSWORD } from "../../constants/routes"
 import { LOGIN } from "../../constants/titles"
 import { login_form, Login_form_title, login_image_container } from "../../styles/login-register"
 import { LoginForm, LoginFormTexts } from "../../constants/enums/login"
@@ -149,7 +148,7 @@ const Form = () => {
         <Button
           variant="text"
           color="primary"
-          onClick={() => navigate(RESET_PASSWORD)}
+          onClick={() => navigate(AppRoutes.resetPassword)}
           size={LoginForm.button_size}
         >
           {FORGOT_PASSWORD_BUTTON}

@@ -36,7 +36,6 @@ const userSlice = createSlice({
   reducers: {
     setMainUser(state, action) {
       state.user = action.payload
-      console.log("🚀 ~ file: userSlice.ts:39 ~ setMainUser ~ action.payload", action.payload)
       state.token = action.payload.token
       state.friendRequests = action.payload.friendRequests
       state.friends = action.payload.friends

@@ -10,10 +10,10 @@ import { BasicUserInterface } from "../../../../interface/user"
 import { NO_PEOPLE_HERE } from "../../../../constants/messages"
 import getUerConnectionsService from "../../../../services/api/getUerConnectionsService"
 import FriendRequestCard from "../../../Cards/FriendRequestCard"
-import SendFriendRequestButton from "../../../FunctionsButtons/SendFriendRequestButton"
 import NoContent from "../../../NoContent"
 import FriendRequestSkeleton from "../../../Skeletons/FriendRequestSkeleton"
 import LoadMore from "../../../LoadMore"
+import SendFriendRequestButton from "components/Buttons/SendFriendRequestButton"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const notFriends = require("../../../../assets/woman_using_phone.png")
 
@@ -31,7 +31,6 @@ export default function ConnectionsListLarge() {
   const fetchUserConnections = async () => {
     setLoading(true)
     const { data, statusCode, success } = await getUerConnectionsService(state.user.id, offset, limit)
-    console.log("🚀 ~ file: index.tsx:34 ~ fetchUserConnections ~ data", data)
 
     if (success && statusCode === 200) {
       setFriendConnections([...friendConnections, ...data])
@@ -86,7 +85,7 @@ export default function ConnectionsListLarge() {
                       fullName={`${friendConnection.firstName} ${friendConnection.lastName}`}
                       variant="large"
                     >
-                      <SendFriendRequestButton customStyles={{ borderRadius: "15px" }} username={friendConnection.username} v2 />
+                      <SendFriendRequestButton version="large" username={friendConnection.username} />
                     </FriendRequestCard>
                   </Grid>
                 ))

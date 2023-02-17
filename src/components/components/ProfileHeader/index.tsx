@@ -7,12 +7,12 @@ import { useParams } from "react-router-dom"
 
 // Current project dependencies
 import { RootState } from "../../../app/store"
-import { USER_USERNAME_APP_ROUTE } from "../../../constants/routes"
 import { default_cover } from "../../../constants"
 import UserOptions from "../../UserOptions"
 import VisitorOption from "../../VisitorOptions"
 import IUser from "../../../interface/users"
 import profileStyles from "../../../styles/pages/profile"
+import AppRoutes from "constants/app/routes"
 
 export default function ProfileHeader() {
   const state = useSelector((state: RootState) => state.user)
@@ -21,7 +21,7 @@ export default function ProfileHeader() {
   const [userInfo, setUserInfo] = useState<IUser>({} as IUser)
 
   useEffect(() => {
-    if (the_username === USER_USERNAME_APP_ROUTE || the_username === state.user.username) {
+    if (the_username === AppRoutes.userUsernameApp || the_username === state.user.username) {
       setUserInfo(state.user)
     } else {
       setUserInfo(visitedUserState.user as IUser)
@@ -76,7 +76,7 @@ export default function ProfileHeader() {
                 justifyItems="center"
               >
                 {
-                  the_username === USER_USERNAME_APP_ROUTE || the_username === state.user.username ? (
+                  the_username === AppRoutes.userUsernameApp || the_username === state.user.username ? (
                     <UserOptions />
                   ) : (
                     <VisitorOption />

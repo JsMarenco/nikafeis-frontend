@@ -10,13 +10,13 @@ import { useNavigate, useParams } from "react-router-dom"
 import { RootState } from "app/store"
 import ButtonProfileSkeleton from "components/Skeletons/ButtonProfileSkeleton"
 import getFriendRequestInfoService from "services/api/getFriendRequestInfoService"
-import AcceptFriendRequestButton from "components/FunctionsButtons/AcceptFriendRequestButton"
-import RejectFriendRequestButton from "components/FunctionsButtons/RejectFriendRequestButton"
-import CancelFriendRequestButton from "components/FunctionsButtons/CancelFriendRequestButton"
-import RemoveFriendButton from "components/FunctionsButtons/RemoveFriendButton"
-import SendFriendRequestButton from "components/FunctionsButtons/SendFriendRequestButton"
 import AppRoutes from "constants/app/routes"
 import profileStyles from "styles/pages/profile"
+import AcceptFriendRequestButton from "components/Buttons/AcceptFriendRequestButton"
+import RejectFriendRequestButton from "components/Buttons/RejectFriendRequestButton"
+import SendFriendRequestButton from "components/Buttons/SendFriendRequestButton"
+import CancelFriendRequestButton from "components/Buttons/CancelFriendRequestButton"
+import RemoveFriendButton from "components/Buttons/RemoveFriendButton"
 
 export default function VisitorOption() {
   const state = useSelector((state: RootState) => state.user)
@@ -41,7 +41,7 @@ export default function VisitorOption() {
 
     if (isFriend) {
       setDynamicButton(
-        <RemoveFriendButton friendId={visitedUserState.user.id} customStyles={profileStyles.optionButton} />
+        <RemoveFriendButton friendId={visitedUserState.user.id} version="small" />
       )
     }
 
@@ -56,7 +56,7 @@ export default function VisitorOption() {
 
       if (isSender) {
         setDynamicButton(
-          <CancelFriendRequestButton username={the_username || ""} customStyles={profileStyles.optionButton} />
+          <CancelFriendRequestButton username={the_username || ""} version="small" />
         )
       }
 
@@ -66,19 +66,16 @@ export default function VisitorOption() {
       if (isReceiver) {
         setDynamicButton(
           <>
-            <AcceptFriendRequestButton friendRequestId={data.id} customStyles={profileStyles.optionButton} />
+            <AcceptFriendRequestButton friendRequestId={data.id} version={"small"} />
 
-            <RejectFriendRequestButton friendRequestId={data.id} customStyles={profileStyles.optionButton} />
+            <RejectFriendRequestButton friendRequestId={data.id} version={"small"} />
           </>
         )
       }
 
       if (!isSender && !isReceiver) {
         setDynamicButton(
-          <SendFriendRequestButton
-            username={the_username || ""}
-            customStyles={profileStyles.optionButton}
-          />
+          <SendFriendRequestButton username={the_username || ""} version="small" />
         )
       }
     }

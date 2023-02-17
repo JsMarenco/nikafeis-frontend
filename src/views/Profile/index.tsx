@@ -12,12 +12,13 @@ import { changeTitle } from "../../utils/basic"
 import CustomLoader from "../../components/CustomLoader"
 import getUserByUsernameService from "../../services/api/getUserByUsernameService"
 import ProfileHeader from "../../components/components/ProfileHeader"
-import PostsLst from "../../components/PostsLst"
 import CreatePost from "../../components/CreatePost"
 import { setVisitedUser } from "../../features/users/visitedUserSlice"
 import AboutUser from "../../components/components/AboutUser"
 import ConnectionsList from "../../components/ConnectionsList"
 import AppRoutes from "../../constants/app/routes"
+import { setMainUser } from "features/users/userSlice"
+import UserPosts from "components/UserPost"
 
 export default function Profile() {
   const state = useSelector((state: RootState) => state.user)
@@ -34,18 +35,13 @@ export default function Profile() {
       !state.user.username && navigate(AppRoutes.login)
       the_username === state.user.username && navigate(AppRoutes.mainUserProfile)
 
-      if (the_username === AppRoutes.userUsernameApp) {
-        usernameToFind = state.user.username
-      }
-
-      if (the_username !== AppRoutes.userUsernameApp) {
-        usernameToFind = the_username as string
-      }
+      usernameToFind = the_username === AppRoutes.userUsernameApp ? state.user.username : the_username as string
 
       const { data, statusCode, success } = await getUserByUsernameService(usernameToFind || "")
 
       if (success) {
-        the_username !== AppRoutes.userUsernameApp && dispatch(setVisitedUser(data))
+        the_username !== AppRoutes.userUsernameApp ? dispatch(setVisitedUser(data)) : dispatch(setMainUser(data))
+
         changeTitle(`${data.firstName} ${data.lastName}`)
 
         setLoading(false)
@@ -76,9 +72,7 @@ export default function Profile() {
 
                 {
                   the_username === AppRoutes.userUsernameApp && (
-                    <>
-                      <ConnectionsList variant="small" />
-                    </>
+                    <ConnectionsList variant="small" />
                   )
                 }
               </Stack>
@@ -92,7 +86,7 @@ export default function Profile() {
                   )
                 }
 
-                <PostsLst />
+                <UserPosts />
               </Stack>
             </Grid>
           </Grid>

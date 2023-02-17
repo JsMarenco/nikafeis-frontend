@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react"
 
 // Third-party dependencies
 import { useNavigate } from "react-router-dom"
-import { Stack, Button, TextField, Divider, Container } from "@mui/material"
+import { Stack, Button, TextField, Divider } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
 import Grid from "@mui/material/Unstable_Grid2"
 
@@ -12,9 +12,9 @@ import { messageContext } from "../../../context/MessageContext"
 import updateAccountInfoService from "../../../services/api/updateAccountInfoService"
 import { setMainUser } from "../../../features/users/userSlice"
 import { PROFILE_UPDATE_MESSAGE } from "../../../constants/messages"
-import { MAIN_USER_PROFILE_ROUTE } from "../../../constants/routes"
 import { AccountSettingForm } from "../../../constants/enums/accountSettings"
 import settingsStyles from "styles/pages/settings"
+import AppRoutes from "constants/app/routes"
 
 export default function AccountSettings() {
   return (
@@ -49,7 +49,7 @@ const Form = () => {
     if (success && statusCode !== 400) {
       dispath(setMainUser(data))
       handleMessage(PROFILE_UPDATE_MESSAGE)
-      navigate(MAIN_USER_PROFILE_ROUTE)
+      navigate(AppRoutes.mainUserProfile)
     }
 
     if (statusCode === 400) {

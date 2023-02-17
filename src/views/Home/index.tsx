@@ -8,7 +8,7 @@ import Grid from "@mui/material/Unstable_Grid2"
 import ConnectionsList from "components/ConnectionsList"
 import CreatePost from "components/CreatePost"
 import FriendRequestReceive from "components/FriendRequestReceive"
-import PostsLst from "components/PostsLst"
+import RecentPost from "components/RecentPost"
 
 export default function Home() {
   return (
@@ -18,7 +18,7 @@ export default function Home() {
           <Stack spacing={2} sx={{ width: "100%", }}>
             <CreatePost />
 
-            <PostsLst />
+            <RecentPost />
           </Stack>
         </Grid>
 

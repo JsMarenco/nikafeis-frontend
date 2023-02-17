@@ -1,8 +1,12 @@
 import React, { useEffect } from "react"
+
+// Third-party dependencies
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
+
+// Current project dependencies
+import AppRoutes from "constants/app/routes"
 import CustomLoader from "../../components/CustomLoader"
-import { LOGOUT_ROUTE } from "../../constants/routes"
 import { logout } from "../../features/users/userSlice"
 
 export default function Logout() {
@@ -12,7 +16,7 @@ export default function Logout() {
   useEffect(() => {
     dispath(logout())
 
-    navigate(LOGOUT_ROUTE)
+    navigate(AppRoutes.logout)
   }, [])
 
   return (

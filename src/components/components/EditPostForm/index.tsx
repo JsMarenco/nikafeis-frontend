@@ -1,7 +1,7 @@
-import React, { FormEvent, useContext, useEffect, useState } from "react"
+import React, { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react"
 
 // Third-party dependencies
-import { Button, Dialog, DialogContent, DialogActions, Stack, InputBase, Avatar } from "@mui/material"
+import { Button, Dialog, DialogContent, Stack, InputBase, Avatar } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
 
 // Current project dependencies
@@ -11,9 +11,9 @@ import { RootState } from "../../../app/store"
 import updatePostService from "../../../services/api/updatePostService"
 import { setMainUserPosts } from "../../../features/users/userSlice"
 import { UpdatePostForm } from "../../../constants/enums/updatePost"
-import { input } from "../../../styles/inputs"
 import getPostByIdService from "../../../services/api/getPostByIdService"
 import cardStyles from "../../../styles/components/cards"
+import inputStyles from "styles/components/input"
 
 export default function EditPostForm(props: EditPostFormInterface) {
   const { open, handleCloseEditForm, postId } = props
@@ -26,7 +26,7 @@ export default function EditPostForm(props: EditPostFormInterface) {
     [UpdatePostForm.content_updated_input_name]: ""
   })
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPostInfoUpdated({
       ...postInfoUpdated,
       [e.target.name]: e.target.value,
@@ -92,11 +92,11 @@ export default function EditPostForm(props: EditPostFormInterface) {
               name={UpdatePostForm.title_updated_input_name}
               type={UpdatePostForm.title_updated_input_type}
               value={postInfoUpdated[UpdatePostForm.title_updated_input_name]}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
               autoComplete={UpdatePostForm.autocomplete}
               placeholder={UpdatePostForm.title_updated_input_placeholder}
               fullWidth
-              sx={input}
+              sx={inputStyles.input}
               disabled={loading}
               startAdornment={
                 <Avatar
@@ -115,27 +115,26 @@ export default function EditPostForm(props: EditPostFormInterface) {
               name={UpdatePostForm.content_updated_input_name}
               type={UpdatePostForm.content_updated_input_type}
               value={postInfoUpdated[UpdatePostForm.content_updated_input_name]}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
               autoComplete={UpdatePostForm.autocomplete}
               placeholder={UpdatePostForm.content_updated_input_placeholder.replace("%user_firsname", state.user.firstName)}
               fullWidth
               multiline
               rows={4}
               disabled={loading}
-              sx={input}
+              sx={inputStyles.input}
             />
+
+            <Stack spacing={1} direction="row" justifyContent="flex-end" alignItems="center">
+              <Button variant="outlined" disabled={loading} type="submit">
+                Update
+              </Button>
+              <Button variant="outlined" onClick={handleClose} disabled={loading}>
+                Cancel
+              </Button>
+            </Stack>
           </Stack>
         </DialogContent>
-
-        <DialogActions
-          sx={{ bgcolor: "background.paper", }}>
-          <Button variant="outlined" disabled={loading} type="submit">
-            Update
-          </Button>
-          <Button variant="outlined" onClick={handleClose} disabled={loading}>
-            Cancel
-          </Button>
-        </DialogActions>
       </Dialog>
     </>
   )

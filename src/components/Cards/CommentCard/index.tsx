@@ -2,14 +2,13 @@ import React from "react"
 
 // Third-party dependencies
 import { useNavigate } from "react-router-dom"
-import { Avatar, Stack, Typography, Tooltip, Box, Divider } from "@mui/material"
+import { Avatar, Typography, CardHeader, Card, CardContent, CardMedia, CardActions } from "@mui/material"
 import FavoriteIcon from "@mui/icons-material/Favorite"
 // import ReplyIcon from "@mui/icons-material/Reply"
 
 // Current project dependencies
 import { CommentInterface } from "../../../interface/commet"
 import { convertDate } from "../../../utils/basic"
-import DownloadImageButton from "../../components/DownloadImageButton"
 import OptionButton from "../../components/OptionButton"
 import CommentOptionsMenu from "../../Menus/CommentOptionsMenu"
 import cardStyles from "../../../styles/components/cards"
@@ -60,9 +59,10 @@ export default function CommentCard(props: CommentInterface) {
   // }
 
   return (
-    <Box sx={cardStyles.container} >
-      <Stack spacing={1} direction="row">
-        <Stack direction={"column"} spacing={.5}>
+    <Card sx={{ ...cardStyles.container, backgroundImage: "none", boxShadow: 0 }}>
+      <CardHeader
+        sx={{ p: 0 }}
+        avatar={
           <Avatar
             src={avatarUrl}
             sizes="small"
@@ -71,55 +71,49 @@ export default function CommentCard(props: CommentInterface) {
           >
             {firstName.charAt(0)}
           </Avatar>
-        </Stack>
+        }
+        action={
+          <CommentOptionsMenu
+            commentId={commentId}
+            authorCommentId={id}
+          />
+        }
+        title={
+          <Typography
+            variant="subtitle1"
+            color="text.primary"
+            sx={cardStyles.profileLink}
+            onClick={() => navigate(AppRoutes.visitUserProfile.replace("%username", username))}
+            fontWeight={400}
+          >
+            {`${firstName} ${lastName}`}
+          </Typography>
+        }
+        subheader={
+          <Typography variant="subtitle2" color="text.secondary" fontWeight={300}>
+            {`${convertDate(createdAt)}${updatedAt !== createdAt ? " - edited" : ""}`}
+          </Typography>
+        }
+      />
 
-        <Stack spacing={1} flexGrow={1}>
-          <Box>
-            <Tooltip title="View profile" arrow>
-              <Typography
-                variant="subtitle1"
-                color="text.primary"
-                sx={cardStyles.profileLink}
-                onClick={() => navigate(AppRoutes.visitUserProfile.replace("%username", username))}
-              >
-                {`${firstName} ${lastName}`}
-              </Typography>
-            </Tooltip>
+      <CardContent sx={{ px: 0 }}>
+        <Typography variant="body1" color="text.primary">{content}</Typography>
+      </CardContent>
 
-            <Typography variant="caption" color="text.secondary">
-              {
-                updatedAt === createdAt ? (
-                  convertDate(createdAt)
-                ) : (
-                  `${convertDate(createdAt)} edited`
-                )
-              }
-            </Typography>
-          </Box>
+      {
+        commentImageUrl && (
+          <CardMedia
+            component="img"
+            image={commentImageUrl}
+            alt={globalsTexts.altImage.replace("%username", username)}
+            sx={{
+              borderRadius: "15px"
+            }}
+          />
+        )
+      }
 
-          <Typography variant="body1" color="text.primary">{content}</Typography>
-
-          {
-            commentImageUrl && (
-              <Box sx={{ width: "100%", position: "relative" }}>
-                <img
-                  src={commentImageUrl}
-                  alt={globalsTexts.altImage.replace("%username", username)}
-                  style={{
-                    borderRadius: "15px"
-                  }}
-                />
-
-                <DownloadImageButton url={commentImageUrl} />
-              </Box>
-            )
-          }
-        </Stack>
-      </Stack>
-
-      <Divider sx={{ my: 1.5 }} orientation="horizontal" />
-
-      <Stack direction="row" spacing={1} justifyContent="center">
+      {/* <CardActions>
         <OptionButton
           toolTipLabel="Like"
           customFunction={handleLike}
@@ -127,18 +121,13 @@ export default function CommentCard(props: CommentInterface) {
           icon={<FavoriteIcon />}
         />
 
-        {/* <OptionButton
+        <OptionButton
           toolTipLabel={`Reply to ${firstName} ${lastName}`}
           customFunction={handleReply}
           textContent={String(replies.length)}
           icon={<ReplyIcon />}
-        /> */}
-
-        <CommentOptionsMenu
-          commentId={commentId}
-          authorCommentId={id}
         />
-      </Stack>
-    </Box>
+      </CardActions> */}
+    </Card>
   )
 }

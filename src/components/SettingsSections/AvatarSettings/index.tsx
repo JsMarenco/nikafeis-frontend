@@ -12,13 +12,13 @@ import ClearIcon from "@mui/icons-material/Clear"
 import { RootState } from "../../../app/store"
 import { AvatarForm } from "../../../constants/enums/avatar"
 import { AVATAR_UPDATED_MESSAGE } from "../../../constants/messages"
-import { MAIN_USER_PROFILE_ROUTE } from "../../../constants/routes"
 import { messageContext } from "../../../context/MessageContext"
 import { setMainUser } from "../../../features/users/userSlice"
 import { UserPayloadInterface } from "../../../interface/user"
 import updateUserAvatarService from "../../../services/api/updateUserAvatarService"
 import PreviewAvatar from "../../components/PreviewAvatar"
 import settingsStyles from "styles/pages/settings"
+import AppRoutes from "constants/app/routes"
 
 interface Props {
   icon_size: "small" | "large" | "medium"
@@ -50,7 +50,7 @@ export default function AvatarSettings(props: Props) {
     if (success) {
       dispatch(setMainUser(data as UserPayloadInterface))
       handleMessage(AVATAR_UPDATED_MESSAGE)
-      navigate(MAIN_USER_PROFILE_ROUTE)
+      navigate(AppRoutes.mainUserProfile)
     }
 
     handleMessage(message)

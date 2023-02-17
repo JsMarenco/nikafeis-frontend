@@ -1,7 +1,6 @@
 import React, { useContext } from "react"
 
 // Third-party dependencies
-import { IconButton, Tooltip, Button } from "@mui/material"
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1"
 import { useDispatch, useSelector } from "react-redux"
 
@@ -11,11 +10,12 @@ import sendFriendRequestService from "services/api/sendFriendRequestService"
 import { RootState } from "app/store"
 import { messageContext } from "context/MessageContext"
 import { setMainUserFriendRequestsSent } from "features/users/userSlice"
-import { SendFriendRequestInterface } from "interface/functionsButtons"
-import { SEND_FRIEND_REQUEST } from "constants/buttons"
+import { ISFR } from "interface/friendRequest"
+import BaseFriendRequestButton from "../BaseFriendRequestButton"
+import buttonTexts from "lang/en/components/buttons"
 
-export default function SendFriendRequestButton(props: SendFriendRequestInterface) {
-  const { username, customStyles, v2 = false, size = "large" } = props
+export default function SendFriendRequestButton(props: ISFR) {
+  const { username, version = "large"  } = props
   const state = useSelector((state: RootState) => state.user)
   const { handleMessage } = useContext(messageContext)
   const dispatch = useDispatch()
@@ -31,31 +31,12 @@ export default function SendFriendRequestButton(props: SendFriendRequestInterfac
   }
 
   return (
-    <>
-      {
-        v2 ? (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSendFriendRequest}
-            sx={customStyles}
-            size={size}
-            fullWidth
-          >
-            {SEND_FRIEND_REQUEST}
-          </Button>
-        ) : (
-          <Tooltip title={SEND_FRIEND_REQUEST} arrow>
-            <IconButton
-              onClick={handleSendFriendRequest}
-              sx={customStyles}
-              size={size}
-            >
-              <PersonAddAlt1Icon />
-            </IconButton>
-          </Tooltip>
-        )
-      }
-    </>
+    <BaseFriendRequestButton
+      tooltipText={buttonTexts.sendFriendRequest}
+      buttonText={buttonTexts.sendFriendRequest}
+      onClick={handleSendFriendRequest}
+      icon={<PersonAddAlt1Icon />}
+      version={version}
+    />
   )
 }

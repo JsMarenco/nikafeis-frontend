@@ -50,7 +50,7 @@ export default function FriendRequestSkeletonLarge() {
 export const FriendRequestSkeletonLargeList = () => {
   return (
     <>
-      <Grid container spacing={2}>
+      <Grid container gap={2}>
         <Grid item xs={12}>
           <Skeleton animation={stylesVars.skeletonAnimation} variant="rectangular" sx={{ width: "70%", height: 30 }} />
         </Grid>

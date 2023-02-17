@@ -11,7 +11,6 @@ import ClearIcon from "@mui/icons-material/Clear"
 // Current project dependencies
 import { RootState } from "../../../app/store"
 import { COVER_UPDATED_MESSAGE } from "../../../constants/messages"
-import { MAIN_USER_PROFILE_ROUTE } from "../../../constants/routes"
 import { messageContext } from "../../../context/MessageContext"
 import { setMainUser } from "../../../features/users/userSlice"
 import { UserPayloadInterface } from "../../../interface/user"
@@ -19,6 +18,7 @@ import updateUserCoverService from "../../../services/api/updateUserCoverService
 import { CoverForm } from "../../../constants/enums/cover"
 import PreviewCover from "../../components/PreviewCover"
 import settingsStyles from "styles/pages/settings"
+import AppRoutes from "constants/app/routes"
 
 interface Props { icon_size: "small" | "large" | "medium" }
 
@@ -48,7 +48,7 @@ export default function CoverSettings(props: Props) {
     if (success) {
       dispatch(setMainUser(data as UserPayloadInterface))
       handleMessage(COVER_UPDATED_MESSAGE)
-      navigate(MAIN_USER_PROFILE_ROUTE)
+      navigate(AppRoutes.mainUserProfile)
     }
 
     handleMessage(message)

@@ -1,17 +1,18 @@
-import React from "react"
+import React, { useState } from "react"
 
 // Third-party dependencies
-import { Box, Button, Tooltip } from "@mui/material"
+import { Button, CardActions, Dialog, DialogContent, Tooltip } from "@mui/material"
 import ShareIcon from "@mui/icons-material/Share"
 import FavoriteIcon from "@mui/icons-material/Favorite"
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer"
 
 // Current project dependencies
-import { InteractPostInterface } from "../../../interface/post"
 import cardStyles from "../../../styles/components/cards"
 import postCardText from "../../../lang/en/components/postCard"
+import CommentList from "components/CommentList"
+import { IIP } from "interface/post"
 
-export default function InteractPost(props: InteractPostInterface) {
+export default function InteractPost(props: IIP) {
   const {
     handleLike = () => {
       console.log("liked")
@@ -19,68 +20,93 @@ export default function InteractPost(props: InteractPostInterface) {
     handleShare = () => {
       console.log("shared")
     },
-    handleShowComments = () => {
-      console.log("show comments")
-    },
 
     likes = 0,
-    comments = 0,
-    shares = 0
+    comments = [],
+    shares = 0,
+    postId
   } = props
 
+  const [open, setOpen] = useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   return (
-    <Box sx={cardStyles.interactContainer}>
-      <Tooltip
-        title={postCardText.likeButtonTooltip}
-        arrow
-        placement={"top"}
-        componentsProps={cardStyles.tooltip}
-      >
-        <Button
-          variant="text"
-          color="primary"
-          endIcon={<FavoriteIcon />}
-          onClick={handleLike}
-          sx={cardStyles.interactButton}
+    <>
+      <CardActions sx={cardStyles.interactContainer}>
+        <Tooltip
+          title={postCardText.likeButtonTooltip}
+          arrow
+          placement={"top"}
+          componentsProps={cardStyles.tooltip}
         >
-          {likes}
-        </Button>
-      </Tooltip>
+          <Button
+            variant="text"
+            color="primary"
+            endIcon={<FavoriteIcon />}
+            onClick={handleLike}
+            sx={cardStyles.interactButton}
+          >
+            {likes}
+          </Button>
+        </Tooltip>
 
-      <Tooltip
-        title={postCardText.commentsButtonTooltip}
-        arrow
-        placement={"top"}
-        componentsProps={cardStyles.tooltip}
-      >
-        <Button
-          variant="text"
-          color="primary"
-          endIcon={<QuestionAnswerIcon />}
-          onClick={handleShowComments}
-          sx={cardStyles.interactButton}
+        <Tooltip
+          title={postCardText.commentsButtonTooltip}
+          arrow
+          placement={"top"}
+          componentsProps={cardStyles.tooltip}
         >
-          {comments}
-        </Button>
+          <Button
+            variant="text"
+            color="primary"
+            endIcon={<QuestionAnswerIcon />}
+            onClick={handleClickOpen}
+            sx={cardStyles.interactButton}
+          >
+            {comments.length}
+          </Button>
+        </Tooltip>
 
-      </Tooltip>
-
-      <Tooltip
-        title={postCardText.sharePostButtonTooltip}
-        arrow
-        placement={"top"}
-        componentsProps={cardStyles.tooltip}
-      >
-        <Button
-          variant="text"
-          color="primary"
-          startIcon={<ShareIcon />}
-          onClick={handleShare}
-          sx={cardStyles.interactButton}
+        <Tooltip
+          title={postCardText.sharePostButtonTooltip}
+          arrow
+          placement={"top"}
+          componentsProps={cardStyles.tooltip}
         >
-          {shares}
-        </Button>
-      </Tooltip>
-    </Box>
+          <Button
+            variant="text"
+            color="primary"
+            startIcon={<ShareIcon />}
+            onClick={handleShare}
+            sx={cardStyles.interactButton}
+          >
+            {shares}
+          </Button>
+        </Tooltip>
+      </CardActions>
+
+      <Dialog
+        fullWidth
+        maxWidth={"md"}
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          sx: {
+            borderRadius: "15px"
+          }
+        }}
+      >
+        <DialogContent>
+          <CommentList postId={postId} />
+        </DialogContent>
+      </Dialog>
+    </>
   )
 }

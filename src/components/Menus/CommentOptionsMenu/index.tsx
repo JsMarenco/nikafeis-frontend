@@ -3,7 +3,7 @@ import React, { useState } from "react"
 // Third-party dependencies
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
-import { ListItemIcon, Menu, MenuItem } from "@mui/material"
+import { IconButton, ListItemIcon, Menu, MenuItem } from "@mui/material"
 import { Flag } from "@mui/icons-material"
 import { useSelector } from "react-redux"
 import EditIcon from "@mui/icons-material/Edit"
@@ -31,12 +31,9 @@ export default function CommentOptionsMenu(props: CommentOptionMenuInterface) {
 
   return (
     <>
-      <OptionButton
-        toolTipLabel="More options"
-        customFunction={handleClick}
-        textContent="More"
-        icon={open ? <MoreHorizIcon /> : <MoreVertIcon />}
-      />
+      <IconButton onClick={handleClick}>
+        {open ? <MoreHorizIcon /> : <MoreVertIcon />}
+      </IconButton>
 
       <Menu
         PaperProps={menuStyles.paperProps}

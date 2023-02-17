@@ -7,7 +7,7 @@ const Theme = createTheme({
       primary: "rgb(239,242,232)",
     },
     background: {
-      paper: "#1F0757",
+      paper: "#1B1B3A",
       default: "#030205",
     },
     divider: "rgb(67,73,85)",

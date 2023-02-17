@@ -31,6 +31,7 @@ enum AppRoutes {
   accountSettings = "/settings/account",
   socialAccountsSettings = "/settings/account/social",
   profileSettings = "/settings/account/profile",
+  viewPost = "/post/%id"
 }
 
 export default AppRoutes

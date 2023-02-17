@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react"
 
 // Third-party dependencies
-import { Box, Divider, } from "@mui/material"
+import { Card, Divider } from "@mui/material"
 import { useSelector } from "react-redux"
 
 // Current project dependencies
@@ -9,17 +9,17 @@ import { copyToClipboard, generateShareLink } from "../../../utils/basic"
 import HeaderPost from "../../components/HeaderPost"
 import ContentPost from "../../components/ContentPost"
 import InteractPost from "../../components/InteractPost"
-import PostInterface from "../../../interface/post"
 import { RootState } from "../../../app/store"
 import likePostService from "../../../services/api/likePostService"
 import { messageContext } from "../../../context/MessageContext"
-import CommentSection from "../../CommentSection"
 import getCommentsByIdServices from "../../../services/api/getCommentsByIdServices"
 import { CommentInterface } from "../../../interface/commet"
 import AppMessages from "../../../constants/app/messages"
 import cardStyles from "../../../styles/components/cards"
+import { IP } from "interface/post"
+import AppRoutes from "constants/app/routes"
 
-export default function PostCard(props: PostInterface) {
+export default function PostCard(props: IP) {
   const {
     id = "",
     title = "",
@@ -38,12 +38,11 @@ export default function PostCard(props: PostInterface) {
   const { handleMessage } = useContext(messageContext)
   const [postLikes, setPostLikes] = useState<string[]>(likes)
   const [commentsUpdated, setCommentsUpdated] = useState<CommentInterface[]>([])
-  const [showComments, setShowComments] = useState(false)
   const [offset, setOffset] = useState(0)
   const limit = 5
 
   const handleShare = () => {
-    const link = generateShareLink(`/posts/${id}`)
+    const link = generateShareLink(AppRoutes.viewPost.replace("%id", id))
 
     copyToClipboard(link)
 
@@ -70,18 +69,12 @@ export default function PostCard(props: PostInterface) {
     }
   }
 
-  const handleShowComments = () => {
-    setShowComments(!showComments)
-
-    return showComments
-  }
-
   const handleReport = () => {
     handleMessage("Post reported")
   }
 
   return (
-    <Box sx={cardStyles.container}>
+    <Card sx={{ ...cardStyles.container, p: 2 }}>
       <HeaderPost
         postId={id}
         authorPostId={author.id}
@@ -105,25 +98,19 @@ export default function PostCard(props: PostInterface) {
       <Divider sx={{ mt: 2, mb: 2 }} />
 
       <InteractPost
-        comments={commentsUpdated.length}
+        comments={commentsUpdated}
         likes={postLikes.length}
         shares={shares.length}
-
         handleLike={handleLike}
         handleShare={handleShare}
-        handleShowComments={handleShowComments}
-      />
-
-      <Divider sx={{ mt: 2, mb: 2 }} />
-
-      <CommentSection
-        comments={commentsUpdated}
-        handleShowComments={handleShowComments}
-        showComments={showComments}
+        title={""}
+        content={""}
+        postImages={[]}
+        username={""}
         postId={id}
         fetchCommentsUpdated={fetchCommentsUpdated}
         limit={limit}
       />
-    </Box>
+    </Card>
   )
 }

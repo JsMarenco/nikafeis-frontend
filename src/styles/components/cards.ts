@@ -3,7 +3,8 @@ import stylesVars from "../globals/vars"
 const container = {
   bgcolor: "background.paper",
   p: 2,
-  borderRadius: "15px"
+  borderRadius: "15px",
+  backgroundImage: "none"
 }
 
 const title = {
@@ -58,7 +59,7 @@ const tooltip = {
     sx: {
       bgcolor: "primary",
       p: 1,
-      fontSize: 14,
+      fontSize: 13,
       borderRadius: "10px",
     }
   }

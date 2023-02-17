@@ -11,12 +11,12 @@ import { NO_FRIEND_REQUEST_MESSAGE } from "../../../../constants/messages"
 import { BasicUserInterface } from "../../../../interface/user"
 import getUerConnectionsService from "../../../../services/api/getUerConnectionsService"
 import FriendRequestCard from "../../../Cards/FriendRequestCard"
-import SendFriendRequestButton from "../../../FunctionsButtons/SendFriendRequestButton"
 import NoContent from "../../../NoContent"
 import FriendRequestSkeleton from "../../../Skeletons/FriendRequestSkeleton"
 import stylesVars from "../../../../styles/globals/vars"
 import AppRoutes from "../../../../constants/app/routes"
 import cardStyles from "../../../../styles/components/cards"
+import SendFriendRequestButton from "components/Buttons/SendFriendRequestButton"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const notFriends = require("../../../../assets/woman_using_phone.png")
 
@@ -73,14 +73,7 @@ export default function ConnectionsListSmall() {
                 fullName={`${req.firstName} ${req.lastName}`}
                 variant="small"
               >
-                <SendFriendRequestButton
-                  username={req.username}
-                  v2
-                  size="small"
-                  customStyles={{
-                    borderRadius: "15px"
-                  }}
-                />
+                <SendFriendRequestButton version="large" username={req.username} />
               </FriendRequestCard>
             ))
           }

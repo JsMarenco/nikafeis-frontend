@@ -28,7 +28,12 @@ export default function FriendRequestCardLarge(props: FRBaseProps) {
       </Avatar>
 
       <Box>
-        <Tooltip title={globalsTexts.viewProfile} arrow>
+        <Tooltip
+          title={globalsTexts.viewProfile}
+          arrow
+          componentsProps={cardStyles.tooltip}
+          placement="top"
+        >
           <Typography
             sx={cardStyles.profileLink}
             variant="subtitle1"

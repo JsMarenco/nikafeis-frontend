@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react"
+import React, { useEffect, useState, useContext, FormEvent } from "react"
 
 // Third-party dependencies
 import { Avatar, Stack, IconButton, Box, Button, InputBase, } from "@mui/material"
@@ -11,9 +11,9 @@ import { CreateCommentInterface } from "../../interface/commet"
 import { RootState } from "../../app/store"
 import createNewCommentService from "../../services/api/createNewCommentService"
 import { messageContext } from "../../context/MessageContext"
-import { input } from "../../styles/inputs"
 import stylesVars from "../../styles/globals/vars"
 import cardStyles from "../../styles/components/cards"
+import inputStyles from "styles/components/input"
 
 export default function CreateComment(props: CreateCommentInterface) {
   const { postId = "", fetchCommentsUpdated } = props
@@ -51,7 +51,8 @@ export default function CreateComment(props: CreateCommentInterface) {
     setSelectedFile(e.target.files[0])
   }
 
-  const onSubmit = async () => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     setLoading(true)
 
     const { statusCode, message, success } = await createNewCommentService(state.user.id, state.token, postId)
@@ -73,6 +74,7 @@ export default function CreateComment(props: CreateCommentInterface) {
       }}
       component="form"
       id="create-comment-form"
+      onSubmit={onSubmit}
     >
       {
         preview && (
@@ -82,7 +84,7 @@ export default function CreateComment(props: CreateCommentInterface) {
             <Button
               variant="text"
               color="primary"
-              sx={{ display: "block", margin: "0 auto", width: "150px", height: "auto", mt: 2, }}
+              sx={{ display: "block", margin: "0 auto", width: "150px", height: "auto", my: 2, }}
               onClick={() => setSelectedFile(undefined)}
               disabled={loading}
             >
@@ -92,62 +94,56 @@ export default function CreateComment(props: CreateCommentInterface) {
         )
       }
 
-      <Stack
-        direction={"row"}
-        spacing={1}
-        alignItems={"center"}
-        sx={{
-          width: "100%",
-          mt: 2,
-        }}
-      >
-        <Avatar
-          sizes="small"
-          src={state.user.avatarUrl}
-          alt={`${state.user.firstName}-${state.user.lastName}`}
-          sx={cardStyles.userAvatar}
-        >
-          {state.user.firstName.charAt(0)}
-        </Avatar>
-
-        <InputBase
-          name="contentInput"
-          disabled={loading}
-          placeholder="Add a comment"
-          fullWidth
-          autoComplete="off"
-          sx={input}
-        />
-
-        <label htmlFor="contained-button-file">
-          <input
-            accept="image/*"
-            id="contained-button-file"
-            type="file"
-            style={{ display: "none" }}
-            onChange={onSelectFile}
-            name="comment_image_url"
-          />
-
-          <IconButton
-            color="primary"
-            aria-label="upload picture"
-            component="span"
-            disabled={loading}
+      <InputBase
+        name="contentInput"
+        disabled={loading}
+        placeholder="Add a comment"
+        fullWidth
+        autoComplete="off"
+        sx={inputStyles.input}
+        startAdornment={
+          <Avatar
+            sizes="small"
+            src={state.user.avatarUrl}
+            alt={`${state.user.firstName}-${state.user.lastName}`}
+            sx={{ ...cardStyles.userAvatar, mr: 2 }}
           >
-            <PhotoCamera />
-          </IconButton>
-        </label>
+            {state.user.firstName.charAt(0)}
+          </Avatar>
+        }
+        endAdornment={
+          <>
+            <label htmlFor="contained-button-file">
+              <input
+                accept="image/*"
+                id="contained-button-file"
+                type="file"
+                style={{ display: "none" }}
+                onChange={onSelectFile}
+                name="comment_image_url"
+              />
 
-        <IconButton
-          aria-label="Comment"
-          disabled={loading}
-          sx={{ ml: 2 }}
-          onClick={onSubmit}
-        >
-          <SendIcon />
-        </IconButton>
-      </Stack>
+              <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="span"
+                disabled={loading}
+              >
+                <PhotoCamera />
+              </IconButton>
+            </label>
+
+            <IconButton
+              aria-label="Comment"
+              disabled={loading}
+              sx={{ ml: 2 }}
+              type="submit"
+            >
+              <SendIcon />
+            </IconButton>
+          </>
+        }
+      />
     </Box>
   )
 }

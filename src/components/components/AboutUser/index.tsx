@@ -19,13 +19,12 @@ import TwitterIcon from "@mui/icons-material/Twitter"
 // Current project dependencies
 import { convertDate } from "../../../utils/basic"
 import { RootState } from "../../../app/store"
-import { USER_USERNAME_APP_ROUTE } from "../../../constants/routes"
-import { main__container_grid } from "../../../styles/container"
 import { facebook_url, github_url, instagram_url, linkedin_url, twitter_url } from "../../../constants"
 import IUser from "../../../interface/users"
 import stylesVars from "../../../styles/globals/vars"
 import cardStyles from "../../../styles/components/cards"
 import profileStyles from "styles/pages/profile"
+import AppRoutes from "constants/app/routes"
 
 const icon_size = "large"
 
@@ -44,7 +43,7 @@ export default function AboutUser() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (the_username === USER_USERNAME_APP_ROUTE || the_username === state.user.username) {
+    if (the_username === AppRoutes.userUsernameApp || the_username === state.user.username) {
       const info = {
         user: state.user,
         friends: state.friends,
@@ -75,7 +74,7 @@ export default function AboutUser() {
             xd
           </>
         ) : (
-          <Box sx={main__container_grid}>
+          <Box sx={cardStyles.container}>
             <Box>
               <Typography
                 sx={{ mb: 1 }}
